@@ -1,5 +1,7 @@
 # salesforce-einstein-platform-apex
 
+[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](http://localhost:8080/deploy?template=https://github.com/wadewegner/salesforce-einstein-platform-apex)
+
 This repository showcases how to use the [Salesforce Einstein Platform API](https://metamind.readme.io/) using an Apex based wrapper.
 
 Please check the [product documentation](https://metamind.readme.io/) for general information about what the Salesforce Einstein Platform API is, how to use it and when it'll be available for you.
