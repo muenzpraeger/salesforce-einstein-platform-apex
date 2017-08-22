@@ -1,7 +1,6 @@
 {
     "orgName": "muenzpraeger - René Winkelmeyer",
     "edition": "Developer",
-    "hasSampleData": true,
     "orgPreferences" : {
         "enabled": ["S1DesktopEnabled"]
     }
