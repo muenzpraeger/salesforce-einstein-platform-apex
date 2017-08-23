@@ -1,6 +1,6 @@
 # salesforce-einstein-platform-apex
 
-[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](http://localhost:8080/deploy?template=https://github.com/wadewegner/salesforce-einstein-platform-apex)
+[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/deploy?template=https://github.com/muenzpraeger/salesforce-einstein-platform-apex)
 
 This repository showcases how to use the [Salesforce Einstein Platform API](https://metamind.readme.io/) using an Apex based wrapper.
 
@@ -30,7 +30,7 @@ git clone https://github.com/muenzpraeger/salesforce-einstein-platform-apex
 Change into the git repo directory and create a new scratch org
 
 ```
-sfdx force:org:create -s -f config/example-scratch-def.json
+sfdx force:org:create -s -f config/project-scratch-def.json
 ```
 
 Push the source to the newly created org.
@@ -94,7 +94,7 @@ Einstein_PredictionResult result = service.predictImageUrl('GeneralImageClassifi
 The prediction for intent or sentiment is similar. Like this example for intent.
 
 ```
-Einstein_PredictionResult result = service.('yourModelId', 'theText', 0, '');
+Einstein_PredictionResult result = service.predictIntent('yourModelId', 'theText', 0, '');
 ```
 
 
