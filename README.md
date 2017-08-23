@@ -1,6 +1,6 @@
-# salesforce-einstein-platform-apex
+[![Build Status](https://travis-ci.org/muenzpraeger/salesforce-einstein-platform-apex.svg?branch=master)](https://travis-ci.org/muenzpraeger/salesforce-einstein-platform-apex)
 
-[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/deploy?template=https://github.com/muenzpraeger/salesforce-einstein-platform-apex)
+# salesforce-einstein-platform-apex
 
 This repository showcases how to use the [Salesforce Einstein Platform API](https://metamind.readme.io/) using an Apex based wrapper.
 
@@ -44,6 +44,11 @@ If you want to add the wrapper to an existing org you can either copy the conten
 
 Alternatively you can use [Wade's OSS plugin for Salesforce DX](https://github.com/wadewegner/sfdx-oss-plugin).
 
+### Salesforce DX - deploy online into a scratch org
+
+Again thanks to Wade for creating this neat feature.
+
+[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/deploy?template=https://github.com/muenzpraeger/salesforce-einstein-platform-apex)
 
 ## Configuration
 
