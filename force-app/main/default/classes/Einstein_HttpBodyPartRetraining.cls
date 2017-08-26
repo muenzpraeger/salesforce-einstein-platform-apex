@@ -6,6 +6,7 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
     private String trainParams;
     
     private boolean hasEpochs = true;
+    private boolean hasLearningRate = true;
     
     private static Decimal DEFAULT_LEARNING_RATE = 0.0001;
     private static Decimal MIN_LEARNING_RATE = 0.0001;
@@ -15,13 +16,13 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
         if (modelId==null || modelId.equals('')) {
             throw new Einstein_StringIsEmptyException('modelId');
         }
-        if (epochs==0) {
+        if (epochs==null || epochs==0) {
             hasEpochs = false;
         } else if (epochs>100) {
             throw new Einstein_NumberTooBigException('epochs', 100, epochs);
         }
-        if (learningRate==0) {
-            learningRate = DEFAULT_LEARNING_RATE;
+        if (learningRate == null || learningRate==0) {
+            hasLearningRate = false;
         } else {
             if (learningRate < MIN_LEARNING_RATE) {
                 throw new Einstein_NumberTooSmallException('learningRate', MIN_LEARNING_RATE, learningRate);
@@ -43,9 +44,11 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
             body += WriteBoundary();
             body += WriteBodyParameter('epochs', String.valueOf(epochs));
         }
-        body += WriteBoundary();
-        body += WriteBodyParameter('learningRate', String.valueOf(learningRate));
-        if (trainParams!=null && !trainParams.equals('')) {
+        if(hasLearningRate) {
+        	body += WriteBoundary();
+        	body += WriteBodyParameter('learningRate', String.valueOf(learningRate));
+        }
+        if (!String.isBlank(trainParams)) {
 	        body += WriteBoundary();
             body += WriteBodyParameter('trainParams', trainParams);
         }
