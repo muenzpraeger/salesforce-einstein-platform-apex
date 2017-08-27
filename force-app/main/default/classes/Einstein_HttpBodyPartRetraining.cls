@@ -13,26 +13,12 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
     private static Decimal MAX_LEARNING_RAGE = 0.01;
     
     public Einstein_HttpBodyPartRetraining(String modelId, Integer epochs, Decimal learningRate, String trainParams) {
-        if (modelId==null || modelId.equals('')) {
-            throw new Einstein_StringIsEmptyException('modelId');
-        }
-        if (epochs==null || epochs==0) {
-            hasEpochs = false;
-        } else if (epochs>100) {
-            throw new Einstein_NumberTooBigException('epochs', 100, epochs);
-        }
-        if (learningRate == null || learningRate==0) {
-            hasLearningRate = false;
-        } else {
-            if (learningRate < MIN_LEARNING_RATE) {
-                throw new Einstein_NumberTooSmallException('learningRate', MIN_LEARNING_RATE, learningRate);
-            } else if (learningRate > MAX_LEARNING_RAGE) {
-                throw new Einstein_NumberTooBigException('learningRate', MAX_LEARNING_RAGE, learningRate);
-            }
-        }
-        this.modelId = modelId;
-        this.epochs = epochs;
-        this.learningRate = learningRate;
+        
+        setModelId(modelId);
+        setEpochs(epochs);
+        setLearningRate(learningRate);
+        
+        // Check valid JSON?
         this.trainParams = trainParams;
     }
     
@@ -62,7 +48,7 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
     }
 
     public void setModelId(String modelId) {
-        if (modelId==null || modelId.equals('')) {
+        if (String.isEmpty(modelId)) {
             throw new Einstein_StringIsEmptyException('modelId');
         }
         this.modelId = modelId;
@@ -73,7 +59,8 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
     }
 
     public void setEpochs(Integer epochs) {
-        if (epochs==0) {
+        
+        if (epochs==null || epochs==0) {
             hasEpochs = false;
         } else if (epochs>100) {
             throw new Einstein_NumberTooBigException('epochs', 100, epochs);
@@ -86,8 +73,8 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
     }
 
     public void setLearningRate(Decimal learningRate) {
-        if (learningRate==0) {
-            learningRate = DEFAULT_LEARNING_RATE;
+        if (learningRate == null || learningRate==0) {
+            hasLearningRate = false;
         } else {
             if (learningRate < MIN_LEARNING_RATE) {
                 throw new Einstein_NumberTooSmallException('learningRate', MIN_LEARNING_RATE, learningRate);
