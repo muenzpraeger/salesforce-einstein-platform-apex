@@ -103,8 +103,9 @@ public with sharing class Test_Einstein {
         
         try {
             dataset = service.createExamplesFromUrl(1000022, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
         
     }
@@ -147,46 +148,53 @@ public with sharing class Test_Einstein {
         
         try {
             model = service.trainDataset(0, 'Beach and Mountain Model', 0, 0, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
             System.debug('Error is: ' + e.getTypeName());
-            System.assert(e.getTypeName().equals('Einstein_NoValuesException'));
+            System.assert(e instanceof Einstein_NoValuesException);
         }
         
         try {
             model = service.trainDataset(57, '', 0, 0, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
         
         try {
             String nameTooLong = 'AbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefg';
             model = service.trainDataset(57, nameTooLong, 0, 0, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringTooLongException'));
+            System.assert(e instanceof Einstein_StringTooLongException);
         }
         
         try {
             model = service.trainDataset(57, 'Beach and Mountain Model', 101, 0, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NumberTooBigException'));
+            System.assert(e instanceof Einstein_NumberTooBigException);
         }
         
         try {
             model = service.trainDataset(57, 'Beach and Mountain Model', 101, 0, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NumberTooBigException'));
+            System.assert(e instanceof Einstein_NumberTooBigException);
         }
         
         try {
             model = service.trainDataset(57, 'Beach and Mountain Model', 0, 0.00001, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NumberTooSmallException'));
+            System.assert(e instanceof Einstein_NumberTooSmallException);
         }
         
         try {
             model = service.trainDataset(57, 'Beach and Mountain Model', 0, 0.1, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NumberTooBigException'));
+            System.assert(e instanceof Einstein_NumberTooBigException);
         }
         
     }
@@ -329,9 +337,56 @@ public with sharing class Test_Einstein {
         
         Test.setMock(HttpCalloutMock.class, new Test_Einstein_HttpMockResponses());
 
-        Einstein_Model model = service.retrainDataset('modelId', 0, 0, '');
+        // Valid Values
+        Einstein_Model model = service.retrainDataset('modelId', 3, 0.001, '{"withFeedback" : true}');
         System.assertEquals(57, model.datasetId);
-
+        
+        // Zero Defaults
+        model = service.retrainDataset('modelId', 0, 0, '');
+        System.assertEquals(57, model.datasetId);
+        
+        // Null Defaults
+        Integer epochs = null;
+        Decimal learningRate = null;
+        String trainParams = '';
+         
+        model = service.retrainDataset('modelId', epochs, learningRate, trainParams);
+        System.assertEquals(57, model.datasetId);
+        
+        Einstein_HttpBodyPartRetraining parts = new Einstein_HttpBodyPartRetraining('modelId', epochs, learningRate, trainParams);
+        System.assertEquals('modelId', parts.getModelId());
+		System.assertEquals(null, parts.getEpochs());
+        System.assertEquals(null, parts.getLearningRate());
+        
+        // Validation
+        try {
+            model = service.retrainDataset(null, epochs, learningRate, trainParams);
+            System.assert(false, 'Exception Expected');
+        } catch (Exception e) {
+            System.assert(e instanceof Einstein_StringIsEmptyException);
+        }
+        
+        try {
+            model = service.retrainDataset('modelId', 101, learningRate, trainParams);
+            System.assert(false, 'Exception Expected');
+        } catch (Exception e) {
+            System.assert(e instanceof Einstein_NumberTooBigException);
+        }
+        
+        try {
+            model = service.retrainDataset('modelId', epochs, 0.00001, trainParams);
+            System.assert(false, 'Exception Expected');
+        } catch (Exception e) {
+            System.assert(e instanceof Einstein_NumberTooSmallException);
+        }
+        
+        try {
+            model = service.retrainDataset('modelId', epochs, 0.1, trainParams);
+            System.assert(false, 'Exception Expected');
+        } catch (Exception e) {
+            System.assert(e instanceof Einstein_NumberTooBigException);
+        }
+        
     }
     
     static testMethod void apiUsage() {
@@ -372,34 +427,39 @@ public with sharing class Test_Einstein {
 
         try {
             bodyPartExampleInit = new Einstein_HttpBodyPartExample('', 0, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
 
         try {
             bodyPartExampleInit = new Einstein_HttpBodyPartExample('123', 0, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NullPointerException'));
+            System.assert(e instanceof Einstein_NullPointerException);
         }
 
         try {
             bodyPartExampleInit = new Einstein_HttpBodyPartExample('123', 1, '');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
         
         Einstein_HttpBodyPartExample bodyPartExample = new Einstein_HttpBodyPartExample('name', 1, 'data');
         
         try {
             bodyPartExample.setName('');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }     
 
         try {
             bodyPartExample.setData('');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
         
 
@@ -410,8 +470,9 @@ public with sharing class Test_Einstein {
         
         try {
             bodyPartDatasetUrl.setUrl('');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
         
         Einstein_HttpBodyPartPrediction bodyPartPrediction = new Einstein_HttpBodyPartPrediction('modelId1', 'testData1', 0, '', Einstein_HttpBodyPartPrediction.TYPES.BASE64);
@@ -435,8 +496,9 @@ public with sharing class Test_Einstein {
         
         try {
             bodyPartTraining.setDatasetId(0);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NoValuesException'));
+            System.assert(e instanceof Einstein_NoValuesException);
         }  
         
         bodyPartTraining.setName('Test2');
@@ -444,15 +506,17 @@ public with sharing class Test_Einstein {
         
         try {
             bodyPartTraining.setName('');
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }     
         
         try {
             String nameTooLong = 'AbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefg';
             bodyPartTraining.setName(nameTooLong);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringTooLongException'));
+            System.assert(e instanceof Einstein_StringTooLongException);
         }
         
         bodyPartTraining.setEpochs(5);
@@ -460,8 +524,9 @@ public with sharing class Test_Einstein {
         
         try {
             bodyPartTraining.setEpochs(101);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NumberTooBigException'));
+            System.assert(e instanceof Einstein_NumberTooBigException);
         }
         
         bodyPartTraining.setLearningRate(0.001);
@@ -469,40 +534,46 @@ public with sharing class Test_Einstein {
         
         try {
             bodyPartTraining.setLearningRate(0.1);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NumberTooBigException'));
+            System.assert(e instanceof Einstein_NumberTooBigException);
         }
         
         try {
             bodyPartTraining.setLearningRate(0.00001);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_NumberTooSmallException'));
+            System.assert(e instanceof Einstein_NumberTooSmallException);
         }
 
         Einstein_HttpBodyPartFeedbackExample bodyPartFeedbackExample;
 
         try {
             bodyPartFeedbackExample = new Einstein_HttpBodyPartFeedbackExample('', '', '', '', Einstein_HttpBodyPartFeedbackExample.Types.BASE64);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
 
         try {
             bodyPartFeedbackExample = new Einstein_HttpBodyPartFeedbackExample('asdf', '', '', '', Einstein_HttpBodyPartFeedbackExample.Types.BASE64);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
 
         try {
             bodyPartFeedbackExample = new Einstein_HttpBodyPartFeedbackExample('asdf', 'asdf', '', '', Einstein_HttpBodyPartFeedbackExample.Types.BASE64);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
 
         try {
             bodyPartFeedbackExample = new Einstein_HttpBodyPartFeedbackExample('asdf', 'sadf', 'sadf', '', Einstein_HttpBodyPartFeedbackExample.Types.BASE64);
+            System.assert(false, 'Exception Expected');
         } catch (Exception e) {
-            System.assert(e.getTypeName().equals('Einstein_StringIsEmptyException'));
+            System.assert(e instanceof Einstein_StringIsEmptyException);
         }
         
     }
