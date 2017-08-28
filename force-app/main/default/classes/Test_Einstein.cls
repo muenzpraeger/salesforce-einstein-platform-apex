@@ -128,7 +128,7 @@ public with sharing class Test_Einstein {
         
         Test.setMock(HttpCalloutMock.class, new Test_Einstein_HttpMockResponses());
         
-        Einstein_Model model = service.trainDataset(57, 'Beach and Mountain Model', 0, 0, '');
+        Einstein_Model model = service.trainDataset(57, 'Beach and Mountain Model', 0, 0, null);
         
         System.assertEquals(DateTime.newInstanceGmt(2016,9,16,18,3,21), model.createdAt);
         System.assertEquals(DateTime.newInstanceGmt(2016,9,16,18,3,21), model.updatedAt);
@@ -147,7 +147,7 @@ public with sharing class Test_Einstein {
         System.assertEquals(null, model.failureMsg);
         
         try {
-            model = service.trainDataset(0, 'Beach and Mountain Model', 0, 0, '');
+            model = service.trainDataset(0, 'Beach and Mountain Model', 0, 0, null);
             System.assert(false, 'Exception Expected');
         } catch (Exception e) {
             System.debug('Error is: ' + e.getTypeName());
@@ -155,7 +155,7 @@ public with sharing class Test_Einstein {
         }
         
         try {
-            model = service.trainDataset(57, '', 0, 0, '');
+            model = service.trainDataset(57, '', 0, 0, null);
             System.assert(false, 'Exception Expected');
         } catch (Exception e) {
             System.assert(e instanceof Einstein_StringIsEmptyException);
@@ -163,35 +163,35 @@ public with sharing class Test_Einstein {
         
         try {
             String nameTooLong = 'AbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefgAbcdefg';
-            model = service.trainDataset(57, nameTooLong, 0, 0, '');
+            model = service.trainDataset(57, nameTooLong, 0, 0, null);
             System.assert(false, 'Exception Expected');
         } catch (Exception e) {
             System.assert(e instanceof Einstein_StringTooLongException);
         }
         
         try {
-            model = service.trainDataset(57, 'Beach and Mountain Model', 101, 0, '');
+            model = service.trainDataset(57, 'Beach and Mountain Model', 101, 0, null);
             System.assert(false, 'Exception Expected');
         } catch (Exception e) {
             System.assert(e instanceof Einstein_NumberTooBigException);
         }
         
         try {
-            model = service.trainDataset(57, 'Beach and Mountain Model', 101, 0, '');
+            model = service.trainDataset(57, 'Beach and Mountain Model', 101, 0, null);
             System.assert(false, 'Exception Expected');
         } catch (Exception e) {
             System.assert(e instanceof Einstein_NumberTooBigException);
         }
         
         try {
-            model = service.trainDataset(57, 'Beach and Mountain Model', 0, 0.00001, '');
+            model = service.trainDataset(57, 'Beach and Mountain Model', 0, 0.00001, null);
             System.assert(false, 'Exception Expected');
         } catch (Exception e) {
             System.assert(e instanceof Einstein_NumberTooSmallException);
         }
         
         try {
-            model = service.trainDataset(57, 'Beach and Mountain Model', 0, 0.1, '');
+            model = service.trainDataset(57, 'Beach and Mountain Model', 0, 0.1, null);
             System.assert(false, 'Exception Expected');
         } catch (Exception e) {
             System.assert(e instanceof Einstein_NumberTooBigException);
@@ -217,7 +217,6 @@ public with sharing class Test_Einstein {
         System.assertEquals(0.001, model.learningRate);
         System.assertEquals(3, model.epochs);
         System.assertEquals('7JXCXTRXTMNLJCEF2DR5CJ46QU', model.modelId);
-        // TODO System.assertEquals('{"trainSplitRatio": 0.7}', model.trainParams);
         System.assertEquals(null, model.trainStats);
         System.assertEquals('image', model.modelType);
         
@@ -338,17 +337,18 @@ public with sharing class Test_Einstein {
         Test.setMock(HttpCalloutMock.class, new Test_Einstein_HttpMockResponses());
 
         // Valid Values
-        Einstein_Model model = service.retrainDataset('modelId', 3, 0.001, '{"withFeedback" : true}');
+        Einstein_TrainParams trainParams = new Einstein_TrainParams();
+        trainParams.withFeedback = true;
+        Einstein_Model model = service.retrainDataset('modelId', 3, 0.001, trainParams);
         System.assertEquals(57, model.datasetId);
         
         // Zero Defaults
-        model = service.retrainDataset('modelId', 0, 0, '');
+        model = service.retrainDataset('modelId', 0, 0, trainParams);
         System.assertEquals(57, model.datasetId);
         
         // Null Defaults
         Integer epochs = null;
         Decimal learningRate = null;
-        String trainParams = '';
          
         model = service.retrainDataset('modelId', epochs, learningRate, trainParams);
         System.assertEquals(57, model.datasetId);
@@ -489,7 +489,7 @@ public with sharing class Test_Einstein {
         bodyPartPrediction.setType(Einstein_HttpBodyPartPrediction.Types.URL);
         System.assertEquals(Einstein_HttpBodyPartPrediction.Types.URL, bodyPartPrediction.getType());
         
-        Einstein_HttpBodyPartTraining bodyPartTraining = new Einstein_HttpBodyPartTraining(1, 'Test1', 0, 0, '');
+        Einstein_HttpBodyPartTraining bodyPartTraining = new Einstein_HttpBodyPartTraining(1, 'Test1', 0, 0, null);
         
         bodyPartTraining.setDatasetId(2);
         System.assertEquals(2, bodyPartTraining.getDatasetId());

@@ -3,7 +3,7 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
     private String modelId;
     private Integer epochs;
     private Decimal learningRate;
-    private String trainParams;
+    private Einstein_TrainParams trainParams;
     
     private boolean hasEpochs = true;
     private boolean hasLearningRate = true;
@@ -12,14 +12,13 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
     private static Decimal MIN_LEARNING_RATE = 0.0001;
     private static Decimal MAX_LEARNING_RAGE = 0.01;
     
-    public Einstein_HttpBodyPartRetraining(String modelId, Integer epochs, Decimal learningRate, String trainParams) {
+    public Einstein_HttpBodyPartRetraining(String modelId, Integer epochs, Decimal learningRate, Einstein_TrainParams trainParams) {
         
         setModelId(modelId);
         setEpochs(epochs);
         setLearningRate(learningRate);
+        setTrainParams(trainParams);
         
-        // Check valid JSON?
-        this.trainParams = trainParams;
     }
     
     public Blob build() {
@@ -34,9 +33,9 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
         	body += WriteBoundary();
         	body += WriteBodyParameter('learningRate', String.valueOf(learningRate));
         }
-        if (!String.isBlank(trainParams)) {
+        if (trainParams!=null) {
 	        body += WriteBoundary();
-            body += WriteBodyParameter('trainParams', trainParams);
+            body += WriteBodyParameter('trainParams', JSON.serialize(trainParams), null);
         }
         body += WriteBoundary(EndingType.CrLf);
         Blob bodyBlob = EncodingUtil.base64Decode(body);
@@ -83,6 +82,14 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
             }
         }
         this.learningRate = learningRate;
+    }
+
+    public Einstein_TrainParams getTrainParams() {
+        return trainParams;
+    }
+
+    public void setTrainParams(Einstein_TrainParams trainParams) {
+        this.trainParams = trainParams;
     }
 
 }

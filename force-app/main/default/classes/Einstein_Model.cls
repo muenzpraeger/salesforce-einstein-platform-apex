@@ -27,7 +27,7 @@ public class Einstein_Model {
     @AuraEnabled
     public String modelType {get; set;}
     @AuraEnabled
-    public String trainParams {get; set;}
+    public Einstein_TrainParams trainParams {get; set;}
     @AuraEnabled
     public String trainStats {get; set;}
     @AuraEnabled

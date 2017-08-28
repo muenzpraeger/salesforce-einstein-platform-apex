@@ -4,7 +4,7 @@ public class Einstein_HttpBodyPartTraining extends Einstein_HttpBodyPart {
     private String name;
     private Integer epochs;
     private Decimal learningRate;
-    private String trainParams;
+    private Einstein_TrainParams trainParams;
     
     private boolean hasEpochs = true;
     
@@ -12,7 +12,8 @@ public class Einstein_HttpBodyPartTraining extends Einstein_HttpBodyPart {
     private static Decimal MIN_LEARNING_RATE = 0.0001;
     private static Decimal MAX_LEARNING_RAGE = 0.01;
     
-    public Einstein_HttpBodyPartTraining(Long datasetId, String name, Integer epochs, Decimal learningRate, String trainParams) {
+    public Einstein_HttpBodyPartTraining(Long datasetId, String name, Integer epochs, Decimal learningRate, Einstein_TrainParams trainParams) {
+
         if (datasetId == 0) {
             throw new Einstein_NoValuesException('datasetId');
         }
@@ -55,9 +56,9 @@ public class Einstein_HttpBodyPartTraining extends Einstein_HttpBodyPart {
         }
         body += WriteBoundary();
         body += WriteBodyParameter('learningRate', String.valueOf(learningRate));
-        if (trainParams!=null && !trainParams.equals('')) {
+        if (trainParams != null) {
 	        body += WriteBoundary();
-            body += WriteBodyParameter('trainParams', trainParams);
+            body += WriteBodyParameter('trainParams', JSON.serialize(trainParams), null);
         }
         body += WriteBoundary(EndingType.CrLf);
         Blob bodyBlob = EncodingUtil.base64Decode(body);

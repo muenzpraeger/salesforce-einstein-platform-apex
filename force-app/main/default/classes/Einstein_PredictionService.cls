@@ -399,7 +399,7 @@ public class Einstein_PredictionService {
     * @return
     * An object of type Einstein_Model
     */
-    public Einstein_Model trainDataset(Long datasetId, String name, Integer epochs, Decimal learningRate, String trainParams) {
+    public Einstein_Model trainDataset(Long datasetId, String name, Integer epochs, Decimal learningRate, Einstein_TrainParams trainParams) {
         Einstein_Dataset dataset = getDataset(datasetId);
         if (dataset != null) {
             if (dataset.totalExamples>0) {
@@ -439,7 +439,7 @@ public class Einstein_PredictionService {
     * @return
     * An object of type Einstein_Model
     */
-    public Einstein_Model retrainDataset(String modelId, Integer epochs, Decimal learningRate, String trainParams) {
+    public Einstein_Model retrainDataset(String modelId, Integer epochs, Decimal learningRate, Einstein_TrainParams trainParams) {
         System.debug('Starting retrainDataset call with name ' + modelId);
         Einstein_HttpBodyPartRetraining parts = new Einstein_HttpBodyPartRetraining(modelId, epochs, learningRate, trainParams);
         Einstein_HttpClient client = new Einstein_HttpClient(this, '/retrain', parts.build());
