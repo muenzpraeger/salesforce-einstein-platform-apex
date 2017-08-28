@@ -4,14 +4,8 @@ public with sharing class Einstein_HttpBodyPartDatasetUrl extends Einstein_HttpB
     private String type;
     
     public Einstein_HttpBodyPartDatasetUrl(String url, String type)  {
-        if (url==null || url.equals('')) {
-            throw new Einstein_StringIsEmptyException('url');
-        }
-        if (type==null || type.equals('')) {
-            throw new Einstein_StringIsEmptyException('type');
-        }
-        this.url = url;
-        this.type = type;
+        setUrl(url);
+        setType(type);
     }
     
     public Blob build() {
@@ -30,10 +24,21 @@ public with sharing class Einstein_HttpBodyPartDatasetUrl extends Einstein_HttpB
     }
 
     public void setUrl(String url)  {
-        if (url==null || url.equals('')) {
+        if (String.isEmpty(url)) {
             throw new Einstein_StringIsEmptyException('url');
         }
         this.url = url;
+    }
+
+    public String getType() {
+        return url;
+    }
+
+    public void setType(String type)  {
+        if (String.isEmpty(type)) {
+            throw new Einstein_StringIsEmptyException('type');
+        }
+        this.type = type;
     }
     
 }

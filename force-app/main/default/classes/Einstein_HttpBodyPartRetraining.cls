@@ -13,12 +13,10 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
     private static Decimal MAX_LEARNING_RAGE = 0.01;
     
     public Einstein_HttpBodyPartRetraining(String modelId, Integer epochs, Decimal learningRate, Einstein_TrainParams trainParams) {
-        
         setModelId(modelId);
         setEpochs(epochs);
         setLearningRate(learningRate);
         setTrainParams(trainParams);
-        
     }
     
     public Blob build() {
@@ -35,7 +33,7 @@ public class Einstein_HttpBodyPartRetraining extends Einstein_HttpBodyPart {
         }
         if (trainParams!=null) {
 	        body += WriteBoundary();
-            body += WriteBodyParameter('trainParams', JSON.serialize(trainParams), null);
+            body += WriteBodyParameter('trainParams', JSON.serialize(trainParams, true));
         }
         body += WriteBoundary(EndingType.CrLf);
         Blob bodyBlob = EncodingUtil.base64Decode(body);

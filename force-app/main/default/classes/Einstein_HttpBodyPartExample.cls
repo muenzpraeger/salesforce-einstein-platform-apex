@@ -5,21 +5,9 @@ public class Einstein_HttpBodyPartExample extends Einstein_HttpBodyPart {
     private String name;
     
     public Einstein_HttpBodyPartExample(String name, long labelId, String data) {
-        if (name==null || name.equals('')) {
-            throw new Einstein_StringIsEmptyException('name');
-        }
-        if (name.length()>180) {
-            throw new Einstein_StringTooLongException('name', 180, name.length());
-        }
-        if (labelId<1) {  
-            throw new Einstein_NullPointerException('Labels cannot be null');
-        }
-        if (data==null || data.equals('')) {
-            throw new Einstein_StringIsEmptyException('data');
-        }
-        this.name = name;
-        this.data = data;
-        this.labelId = labelId;
+        setName(name);
+        setLabelId(labelId);
+        setData(data);
     }
     
     public Blob build() {
@@ -40,7 +28,7 @@ public class Einstein_HttpBodyPartExample extends Einstein_HttpBodyPart {
     }
 
     public void setName(String name) {
-        if (name==null || name.equals('')) {
+        if (String.isEmpty(name)) {
             throw new Einstein_StringIsEmptyException('name');
         }
         if (name.length()>180) {
@@ -65,7 +53,7 @@ public class Einstein_HttpBodyPartExample extends Einstein_HttpBodyPart {
     }
 
     public void setData(String data) {
-        if (data==null || data.equals('')) {
+        if (String.isEmpty(data)) {
             throw new Einstein_StringIsEmptyException('data');
         }
         this.data = data;

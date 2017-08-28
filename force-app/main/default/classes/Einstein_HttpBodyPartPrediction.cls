@@ -14,18 +14,18 @@ public class Einstein_HttpBodyPartPrediction extends Einstein_HttpBodyPart {
     private Integer numResults;
 
     public Einstein_HttpBodyPartPrediction(String modelId, String data, Integer numResults, String sampleId, Einstein_HttpBodyPartPrediction.Types type) {
-        this.modelId = modelId;
-        this.data = data;
-        this.numResults = numResults;
-        this.sampleId = sampleId;
-        this.type = type;
+        setModelId(modelId);
+        setData(data);
+        setNumResults(numResults);
+        setSampleId(sampleId);
+        setType(type);
     }
     
     public Blob build() {
         String body = '';
         body += WriteBoundary();
         body += WriteBodyParameter('modelId', modelId);
-        if (sampleId!=null && !sampleId.equals('')) {
+        if (String.isEmpty(sampleId)) {
             body += WriteBoundary();
             body += WriteBodyParameter('sampleId', sampleId);
         }
@@ -76,6 +76,14 @@ public class Einstein_HttpBodyPartPrediction extends Einstein_HttpBodyPart {
 
     public void setType(Types type) {
         this.type = type;
+    }
+
+    public Integer getNumResults() {
+        return numResults;
+    }
+
+    public void setNumResults(Integer numResults) {
+        this.numResults = numResults;
     }
 
 }
