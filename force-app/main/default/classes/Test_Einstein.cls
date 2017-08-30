@@ -7,7 +7,8 @@ public with sharing class Test_Einstein {
             Einstein_PredictionService.getAccessToken();
             System.assert(false, 'Expected Einstein_ConfigurationException');
         }
-        catch (Einstein_ConfigurationException e) {
+        catch (Exception e) {
+            System.assert(e instanceof Einstein_ConfigurationException);
             System.AssertEquals(e.getMessage().contains('email setting'), true);
         }
         Test.stopTest();
@@ -23,7 +24,8 @@ public with sharing class Test_Einstein {
             Einstein_PredictionService.getAccessToken();
             System.assert(false, 'Expected Einstein_ConfigurationException');
         }
-        catch (Einstein_ConfigurationException e) {
+        catch (Exception e) {
+            System.assert(e instanceof Einstein_ConfigurationException);
             System.AssertEquals(e.getMessage().contains('certificate file'), true);
         }
         Test.stopTest();
