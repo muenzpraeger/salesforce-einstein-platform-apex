@@ -837,8 +837,9 @@ public class Einstein_PredictionService {
     public static String getAccessToken() {
         // Try to retrieve email setting
         Einstein_Settings__c settings = Einstein_Settings__c.getOrgDefaults();
-        if (settings.Einstein_EMail__c == null)
+        if (settings.Einstein_EMail__c == null) {
             throw new Einstein_ConfigurationException('Missing Einstein email setting. Check your Custom Settings.');
+        }
         ContentVersion base64Content;
         // Try to retrieve certificate
         try {
