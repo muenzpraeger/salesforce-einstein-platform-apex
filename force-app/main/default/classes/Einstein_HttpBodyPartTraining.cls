@@ -20,7 +20,7 @@ public class Einstein_HttpBodyPartTraining extends Einstein_HttpBodyPart {
         setLearningRate(learningRate);
         setTrainParams(trainParams);
     }
-    
+
     public Blob build() {
         String body = '';
         body += WriteBoundary();

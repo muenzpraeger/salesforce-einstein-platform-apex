@@ -400,29 +400,21 @@ public class Einstein_PredictionService {
     * An object of type Einstein_Model
     */
     public Einstein_Model trainDataset(Long datasetId, String name, Integer epochs, Decimal learningRate, Einstein_TrainParams trainParams) {
-        Einstein_Dataset dataset = getDataset(datasetId);
-        if (dataset != null) {
-            if (dataset.totalExamples>0) {
-                System.debug('Starting trainDataset call with name ' + name);
-                Einstein_HttpBodyPartTraining parts = new Einstein_HttpBodyPartTraining(datasetId, name, epochs, learningRate, trainParams);
-                Einstein_HttpClient client = new Einstein_HttpClient(this, '/train', parts.build());
-                System.debug('Target URL is ' + client.getUrl());
-                client.execute();
-                while(isExecuting()) {
-                    System.debug('Status is: ' + isExecuting());
-                }
-                System.debug('Call trainDataset has been executed.');
-                if (!client.isError()) {
-                    Einstein_Model model = (Einstein_Model)client.getParser().readValueAs(Einstein_Model.class);
-                    System.debug('New Model with id ' + model.modelId + ' has been created.');
-                    return model;
-                }
-                handleError(client.getStatusCode(), client.getResponseError());
-                return null;
-            } else {
-                System.debug('The dataset with id ' + datasetId + ' has no configured examples.');
-            }
+        System.debug('Starting trainDataset call with name ' + name);
+        Einstein_HttpBodyPartTraining parts = new Einstein_HttpBodyPartTraining(datasetId, name, epochs, learningRate, trainParams);
+        Einstein_HttpClient client = new Einstein_HttpClient(this, '/train', parts.build());
+        System.debug('Target URL is ' + client.getUrl());
+        client.execute();
+        while(isExecuting()) {
+        System.debug('Status is: ' + isExecuting());
         }
+        System.debug('Call trainDataset has been executed.');
+        if (!client.isError()) {
+            Einstein_Model model = (Einstein_Model)client.getParser().readValueAs(Einstein_Model.class);
+            System.debug('New Model with id ' + model.modelId + ' has been created.');
+            return model;
+        }
+        handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
 
