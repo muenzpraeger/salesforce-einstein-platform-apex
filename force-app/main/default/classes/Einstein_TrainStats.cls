@@ -1,7 +1,7 @@
 public class Einstein_TrainStats {
 
     @AuraEnabled
-	  public Integer labels {get;set;}
+	public Integer labels {get;set;}
     @AuraEnabled
     public Integer examples {get;set;}
     @AuraEnabled
@@ -27,7 +27,7 @@ public class Einstein_TrainStats {
     @AuraEnabled
     public String postProcessStats {get;set;}
     
-    @AuraEnabled
+
     public class Transforms {
         @AuraEnabled
 	    public Boolean toFlip {get;set;}
