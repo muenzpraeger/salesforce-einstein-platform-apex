@@ -775,9 +775,9 @@ public class Einstein_PredictionService {
         } else if (this.typeEnum == Einstein_PredictionService.Types.IMAGE_MULTI_LABEL) {
             return 'image-multi-label';
         } else if (this.typeEnum == Einstein_PredictionService.Types.SENTIMENT) {
-            return 'sentiment';
+            return 'text-sentiment';
         } else if (this.typeEnum == Einstein_PredictionService.Types.INTENT) {
-            return 'intent';
+            return 'text-intent';
         }
         return '';
     }
@@ -845,6 +845,7 @@ public class Einstein_PredictionService {
         
         if (!Test.isRunningTest()) {
             accessToken = Einstein_JWTBearerFlow.getAccessToken(OAUTH2, jwt);
+            System.debug(accessToken);
         }
         
         return accessToken;    

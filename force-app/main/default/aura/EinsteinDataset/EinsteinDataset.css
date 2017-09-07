@@ -1,0 +1,11 @@
+.THIS {
+    height: 320px;
+}
+
+.THIS .slds-card__body {
+    padding: 0 12px;
+}
+
+.THIS .slds-tabs--default .slds-card {
+    border: 1px solid #d8dde6;
+}
