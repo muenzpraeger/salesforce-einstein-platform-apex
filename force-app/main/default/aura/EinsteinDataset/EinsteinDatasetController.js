@@ -31,7 +31,8 @@
           console.log("Unknown error");
         }
       }
-      $A.get("e.force:refreshView").fire();
+      var event = component.getEvent("databaseEvent");
+      event.fire();
     });
     $A.enqueueAction(action);
   },

@@ -9,17 +9,20 @@
     <aura:attribute name="pictureSrc" type="String" />
     <aura:attribute name="fileName" type="String" />
     <aura:attribute name="selectionModels" type="List" />
+    <aura:attribute name="defaultUrl" type="String" default="http://einstein.ai/images/mountainvsbeach.zip" />
 
     <div>
-        <lightning:select name="selectImageType" value="{!v.imageType}">
+
+        <lightning:select name="selectImageType" value="{!v.imageType}" onchange="{!c.switchDefaultUrl}">
             <option value="image">Image (standard)</option>
             <option value="image-multi-label">Image (multi-label)</option>
         </lightning:select>
+        <br></br>
         <lightning:tabset>
-            <lightning:tab label="Data and Training">
-                <c:EinsteinDataAndTraining dataType="{!v.imageType}" defaultUrl="http://einstein.ai/images/mountainvsbeach.zip" />
+            <lightning:tab label="1. Data and Training">
+                <c:EinsteinDataAndTraining dataType="{!v.imageType}" defaultUrl="{!v.defaultUrl}" />
             </lightning:tab>
-            <lightning:tab label="Prediction">
+            <lightning:tab label="2. Prediction">
                 <lightning:layout class="request-response">
                     <lightning:layoutitem size="6" class="request">
                         <div class="slds-text-title_caps">Request</div>
@@ -32,7 +35,7 @@
                             onchange="{! c.readFile }" label="Image:" />
                         <img src="{!v.pictureSrc}" />
                         <div>
-                            <lightning:button label="Send" onclick="{!c.predict}" />
+                            <lightning:button label="Send" onclick="{!c.predict}" disabled="{!empty(v.pictureSrc)}" />
                         </div>
                     </lightning:layoutitem>
                     <lightning:layoutitem size="6" class="response">

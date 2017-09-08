@@ -36,15 +36,10 @@ public class Einstein_PlaygroundController {
     }
 
     @AuraEnabled
-    public static List<Einstein_Model> getModels(String dataType) {
+    public static List<Einstein_Model> getModels(Long datasetId, String dataType) {
         setType(dataType);
-        Einstein_Dataset[] datasets = service.getDatasets();
-        Einstein_Model[] modelsAll = new Einstein_Model[]{};
-        for (Einstein_Dataset dataset : datasets) {
-            Einstein_Model[] models = service.getModels(dataset.id);
-            modelsAll.addAll(models);
-        }
-        return modelsAll;
+        Einstein_Model[] models = service.getModels(datasetId);
+        return models;
     }
 
     @AuraEnabled

@@ -5,7 +5,7 @@
     <aura:attribute name="datasetModels" type="Einstein_Model[]"></aura:attribute>
     <aura:attribute name="defaultUrl" type="String"></aura:attribute>
     <aura:registerEvent name="waitingEvent" type="c:EventEinsteinWaiting" />
-    <aura:registerEvent name="modelEvent" type="c:EventEinsteinModels" />
+    <aura:handler name="databaseEvent" event="c:EventEinsteinDataset" action="{!c.onLoadDatasets}" />
     <aura:handler name="init" value="{!this}" action="{!c.onLoadDatasets}" />
 
 

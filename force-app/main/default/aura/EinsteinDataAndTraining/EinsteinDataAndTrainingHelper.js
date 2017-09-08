@@ -49,44 +49,11 @@
         }
       }
       component.set("v.datasets", response.getReturnValue());
-      var dataset = response.getReturnValue();
-      if (dataset.length > 0) {
-        self.onModelStatus(component, dataset);
-      } else {
-        var event = component.getEvent("waitingEvent");
-        event.fire();
-      }
+      var event = component.getEvent("waitingEvent");
+      event.fire();
     });
     var event = component.getEvent("waitingEvent");
     event.fire();
-    $A.enqueueAction(action);
-  },
-  onModelStatus: function(component, datasets) {
-    var action = component.get("c.getModels");
-    var dataType = component.get("v.dataType");
-    action.setParams({
-      dataType: dataType
-    });
-    action.setCallback(this, function(response) {
-      var event = component.getEvent("waitingEvent");
-      event.fire();
-      var state = response.getState();
-      if (state === "ERROR") {
-        var errors = response.getError();
-        if (errors) {
-          if (errors[0] && errors[0].message) {
-            return alert(errors[0].message);
-          }
-        } else {
-          return console.log("Unknown error");
-        }
-      } else {
-        event = component.getEvent("modelEvent");
-        event.setParams({ type: dataType, models: response.getReturnValue() });
-        event.fire();
-        component.set("v.datasetModels", response.getReturnValue());
-      }
-    });
     $A.enqueueAction(action);
   },
   onDeleteDataset: function(component, event) {

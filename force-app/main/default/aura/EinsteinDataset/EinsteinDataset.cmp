@@ -5,6 +5,8 @@
     <aura:attribute name="currentTab" type="String" default="labels" />
 
     <aura:registerEvent name="waitingEvent" type="c:EventEinsteinWaiting" />
+    <aura:registerEvent name="modelEvent" type="c:EventEinsteinModels" />
+    <aura:registerEvent name="databaseEvent" type="c:EventEinsteinDataset" />
 
     <div class="slds-card">
         <lightning:card title="{!v.dataset.name}" iconName="utility:preview">

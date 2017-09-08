@@ -12,10 +12,10 @@
 
     <div>
         <lightning:tabset >
-            <lightning:tab label="Data and Training">
+            <lightning:tab label="1. Data and Training">
                 <c:EinsteinDataAndTraining dataType="text-sentiment" />
             </lightning:tab>
-            <lightning:tab label="Prediction">
+            <lightning:tab label="2. Prediction">
                 <lightning:layout class="request-response">
                     <lightning:layoutitem size="6" class="request">
                         <div class="slds-text-title_caps">Request</div>
@@ -25,7 +25,7 @@
                             </aura:iteration>
                         </lightning:select>
                         <lightning:textarea label="Text:" value="{!v.phrase}"></lightning:textarea>
-                        <lightning:button label="Send" onclick="{!c.predict}" />
+                        <lightning:button label="Send" onclick="{!c.predict}" disabled="{!empty(v.phrase)}"/>
                     </lightning:layoutitem>
                     <lightning:layoutitem size="6" class="response">
                         <div class="slds-text-title_caps">Response</div>

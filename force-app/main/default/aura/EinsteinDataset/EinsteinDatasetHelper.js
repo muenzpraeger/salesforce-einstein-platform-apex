@@ -2,9 +2,10 @@
   getModelsByDataset: function(component) {
     var action = component.get("c.getModels");
     var dataset = component.get("v.dataset");
+    var datasetType = dataset.type;
     action.setParams({
       datasetId: dataset.id,
-      dataType: dataset.type
+      dataType: datasetType
     });
     action.setCallback(this, function(response) {
       var event = component.getEvent("waitingEvent");
@@ -22,6 +23,9 @@
         }
       }
       component.set("v.models", response.getReturnValue());
+      event = component.getEvent("modelEvent");
+      event.setParams({ type: datasetType, models: response.getReturnValue() });
+      event.fire();
     });
     var event = component.getEvent("waitingEvent");
     event.fire();

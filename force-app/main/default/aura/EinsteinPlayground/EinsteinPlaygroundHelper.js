@@ -17,12 +17,16 @@
     var modelComponent = component.get(componentName);
     var models = event.getParam("models");
     for (var i = 0; i < models.length; i++) {
-      var data = modelComponent.filter(model => model.id === models[i].modelId);
-      if (data.length == 0) {
-        var model = {};
-        model.id = models[i].modelId;
-        model.label = models[i].datasetId + " - " + models[i].modelId;
-        modelComponent.push(model);
+      if (models[i].progress == 1) {
+        var data = modelComponent.filter(function(model) {
+          return model.id === models[i].modelId;
+        });
+        if (data.length == 0) {
+          var model = {};
+          model.id = models[i].modelId;
+          model.label = models[i].datasetId + " - " + models[i].modelId;
+          modelComponent.push(model);
+        }
       }
     }
     component.set(componentName, modelComponent);

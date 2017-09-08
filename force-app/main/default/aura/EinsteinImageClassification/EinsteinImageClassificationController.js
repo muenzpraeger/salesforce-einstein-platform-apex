@@ -19,5 +19,13 @@
     var dataURL = component.get("v.pictureSrc");
     var fileName = component.get("v.fileName");
     helper.upload(component, fileName, dataURL.match(/,(.*)$/)[1]);
+  },
+  switchDefaultUrl: function(component) {
+    component.set(
+      "v.defaultUrl",
+      component.get("v.imageType") === "image"
+        ? "http://einstein.ai/images/mountainvsbeach.zip"
+        : "http://einstein.ai/images/mountainvsbeach.zip"
+    );
   }
 });
