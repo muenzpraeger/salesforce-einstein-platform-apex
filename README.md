@@ -8,11 +8,18 @@ Please check the [product documentation](https://metamind.readme.io/) for genera
 
 The wrapper supersedes the old wrapper for the [Salesforce Einstein Vision API](https://github.com/muenzpraeger/salesforce-einstein-vision-apex). Besided breaking changes compared to the old wrapper this repo contains the v2 of the API (including image-multi-label, language intent and language sentiment).
 
+See the included Playground in action.
+
+[![Playground](https://img.youtube.com/vi/poY8wR0pVks/0.jpg)](https://www.youtube.com/watch?v=poY8wR0pVks)
+
+## Version history
+
+The current version is 2.1.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md)).
 
 ## Prerequisites
 
 For using the wrapper you'll need to fulfill the following requirements:
-* Access to a Salesforce org, i. e. a Developer Edition or a scratch org (you can [signup here for free](https://developer.salesforce.com/signup) if you don't have one).
+* Access to a Salesforce org that as minimum API version 41, i. e. a Developer Edition or a scratch org (you can [signup here for free](https://developer.salesforce.com/signup) if you don't have one).
 * An API account for Salesforce Einstein Platform.
 
 Please find the detailed instructions for how to setup access to the [Einstein Platform API here](https://metamind.readme.io/docs/what-you-need-to-call-api).
@@ -42,7 +49,7 @@ sfdx force:source:push
 
 If you want to add the wrapper to an existing org you can either copy the contents manually from this repo.
 
-Alternatively you can use [Wade's OSS plugin for Salesforce DX](https://github.com/wadewegner/sfdx-oss-plugin).
+Alternatively you can use [Wade's OSS plugin for Salesforce DX](https://www.npmjs.com/package/sfdx-waw-plugin).
 
 ### Salesforce DX - deploy online into a scratch org
 
@@ -54,8 +61,8 @@ Again thanks to Wade for creating this neat feature.
 
 After you've added the wrapper files two steps are required:
 
-* Set the value for _Einstein EMail_ in Custom Settings => Einstein Settings for that org to the email address that you've used to sign up for Einstein Platform.
-* Store the Einstein Platform file as file in the org. The name must be _einstein_platform.pem_.
+* Set the value for _Einstein EMail_ in Custom Settings => Einstein Settings (via the _Manage_ button) for that org to the email address that you've used to sign up for Einstein Platform.
+* Store the Einstein Platform file as File in the org. The name must be _einstein_platform_.
 
 If you went through [my Trailhead project](https://trailhead.salesforce.com/projects/build-a-cat-rescue-app-that-recognizes-cat-breeds) you likely went through that excercise already.
 
@@ -105,7 +112,7 @@ Einstein_PredictionResult result = service.predictIntent('yourModelId', 'theText
 
 ## Contribution
 
-Feel free to contribute to this project via pull requests.
+Feel free to contribute to this project via pull requests. Please read the [contribution](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CONTRIBUTION.md) before you start working on something.
 
 ## License
 
