@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event template">
+    <aura:attribute name="models" type="Einstein_Model[]"></aura:attribute>
+    <aura:attribute name="type" type="String"></aura:attribute>
+</aura:event>

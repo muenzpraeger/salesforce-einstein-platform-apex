@@ -1,0 +1,45 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="Einstein_PlaygroundController" access="global">
+
+    <aura:attribute name="spinnerWaiting" type="Boolean" default="false" />
+    <aura:attribute name="datasetModelsImageClassification" type="List"></aura:attribute>
+    <aura:attribute name="datasetModelsIntent" type="List"></aura:attribute>
+    <aura:attribute name="datasetModelsSentiment" type="List"></aura:attribute>
+    <aura:handler name="waitingEvent" event="c:EventEinsteinWaiting" action="{!c.changeSpinner}" />
+    <aura:handler name="modelEvent" event="c:EventEinsteinModels" action="{!c.updateModelSelection}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInitModels}" />
+
+    <div>
+        <lightning:tabset>
+            <lightning:tab>
+                <aura:set attribute="label">
+                    <lightning:icon iconName="utility:info" size="small" /> Introduction
+                </aura:set>
+                <c:EinsteinPlaygroundIntroduction />
+            </lightning:tab>
+            <lightning:tab>
+                <aura:set attribute="label">
+                    <lightning:icon iconName="utility:preview" size="small" /> Image Classification
+                </aura:set>
+                <c:EinsteinImageClassification selectionModels="{! v.datasetModelsImageClassification }" />
+            </lightning:tab>
+            <lightning:tab>
+                <aura:set attribute="label">
+                    <lightning:icon iconName="utility:like" size="small" /> Language Sentiment
+                </aura:set>
+                <c:EinsteinSentiment selectionModels="{! v.datasetModelsSentiment }" />
+            </lightning:tab>
+            <lightning:tab>
+                <aura:set attribute="label">
+                    <lightning:icon iconName="utility:signpost" size="small" /> Language Intent
+                </aura:set>
+                <c:EinsteinIntent selectionModels="{! v.datasetModelsIntent }" />
+            </lightning:tab>
+        </lightning:tabset>
+
+        <aura:if isTrue="{! v.spinnerWaiting }">
+            <lightning:spinner size="large" />
+        </aura:if>
+
+    </div>
+
+</aura:component>

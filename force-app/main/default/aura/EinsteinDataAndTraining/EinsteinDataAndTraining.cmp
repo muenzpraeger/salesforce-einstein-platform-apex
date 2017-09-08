@@ -1,0 +1,30 @@
+<aura:component controller="Einstein_PlaygroundController" access="global">
+
+    <aura:attribute name="dataType" type="String"></aura:attribute>
+    <aura:attribute name="datasets" type="Einstein_Dataset[]"></aura:attribute>
+    <aura:attribute name="datasetModels" type="Einstein_Model[]"></aura:attribute>
+    <aura:attribute name="defaultUrl" type="String"></aura:attribute>
+    <aura:registerEvent name="waitingEvent" type="c:EventEinsteinWaiting" />
+    <aura:handler name="databaseEvent" event="c:EventEinsteinDataset" action="{!c.onLoadDatasets}" />
+    <aura:handler name="init" value="{!this}" action="{!c.onLoadDatasets}" />
+
+
+    <lightning:layout verticalAlign="end" class="slds-m-around--small">
+        <lightning:layoutitem flexibility="grow">
+            <lightning:input type="URL" label="File url:" aura:id="fileUrl" value="{!v.defaultUrl}" />
+        </lightning:layoutitem>
+        <lightning:layoutitem>
+            <lightning:button onclick="{!c.onCreateDataset}">Create Dataset</lightning:button>
+            <lightning:button onclick="{!c.onLoadDatasets}">Refresh Datasets</lightning:button>
+        </lightning:layoutitem>
+    </lightning:layout>
+
+    <lightning:layout multipleRows="true">
+        <aura:iteration items="{!v.datasets}" var="dataset">
+            <lightning:layoutitem size="6" padding="around-small">
+                <c:EinsteinDataset dataset="{!dataset}" />
+            </lightning:layoutitem>
+        </aura:iteration>
+    </lightning:layout>
+
+</aura:component>

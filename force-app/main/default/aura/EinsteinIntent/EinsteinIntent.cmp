@@ -1,0 +1,55 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="Einstein_PlaygroundController" access="global">
+
+    <aura:attribute name="modelId" type="String" />
+    <aura:attribute name="phrase" type="String" />
+
+    <aura:attribute name="files" type="Object[]" />
+    <aura:attribute name="predictions" type="Object[]" />
+    <aura:attribute name="rawPredictions" type="String" />
+    <aura:attribute name="selectionModels" type="Einstein_Model[]" />
+
+    <aura:registerEvent name="waitingEvent" type="c:EventEinsteinWaiting" />
+
+    <div>
+        <lightning:tabset>
+            <lightning:tab label="1. Data and Training">
+                <c:EinsteinDataAndTraining dataType="text-intent" defaultUrl="http://einstein.ai/text/case_routing_intent.csv" />
+            </lightning:tab>
+            <lightning:tab label="2. Prediction">
+                <lightning:layout class="request-response">
+                    <lightning:layoutitem size="6" class="request">
+                        <div class="slds-text-title_caps">Request</div>
+                        <lightning:select name="selectModel" label="Model:" required="true" value="{!v.modelId}">
+                            <aura:iteration items="{!v.selectionModels}" var="model">
+                                <option value="{!model.id}" text="{!model.label}"></option>
+                            </aura:iteration>
+                        </lightning:select>
+                        <lightning:textarea label="Text:" value="{!v.phrase}"></lightning:textarea>
+                        <lightning:button label="Send" onclick="{!c.predict}" disabled="{!empty(v.phrase)}"/>
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="6" class="response">
+                        <div class="slds-text-title_caps">Response</div>
+                        <lightning:tabset>
+                            <lightning:tab label="Formatted">
+                                <aura:iteration items="{!v.predictions}" var="prediction">
+                                    <lightning:layout class="result-grid">
+                                        <lightning:layoutitem>
+                                            <lightning:icon iconName="utility:signpost" size="x-small" /></lightning:layoutitem>
+                                        <lightning:layoutitem>{! prediction.formattedProbability}</lightning:layoutitem>
+                                        <lightning:layoutitem flexibility="grow">{!prediction.label}</lightning:layoutitem>
+                                    </lightning:layout>
+                                </aura:iteration>
+                            </lightning:tab>
+                            <lightning:tab label="Raw">
+                                <pre>{!v.rawPredictions}</pre>
+                            </lightning:tab>
+                        </lightning:tabset>
+
+                    </lightning:layoutitem>
+                </lightning:layout>
+            </lightning:tab>
+        </lightning:tabset>
+
+    </div>
+
+</aura:component>

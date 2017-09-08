@@ -12,33 +12,20 @@ public class Einstein_HttpBodyPartFeedbackExample extends Einstein_HttpBodyPart 
     private Types types;
 
     public Einstein_HttpBodyPartFeedbackExample(String name, String expectedLabel, String modelId, String data, Einstein_HttpBodyPartFeedbackExample.Types types) {
-        if (name==null) {
-            throw new Einstein_StringIsEmptyException('name');
-        }
-        if (name.length()>180) {
-            throw new Einstein_StringTooLongException('name', 180, name.length());
-        }
-        if (expectedLabel==null || expectedLabel.equals('')) {  
-            throw new Einstein_StringIsEmptyException('expectedLabel');
-        }
-        if (modelId==null || modelId.equals('')) {  
-            throw new Einstein_StringIsEmptyException('modelId');
-        }
-        if (data==null || data.equals('')) {
-            throw new Einstein_StringIsEmptyException('data');
-        }
-        this.name = name;
-        this.data = data;
-        this.modelId = modelId;
-        this.expectedLabel = expectedLabel;
-        this.types = types;
+        setName(name);
+        setExpectedLabel(expectedLabel);
+        setModelId(modelId);
+        setData(data);
+        setType(types);
     }
     
     public Blob build() {
         String body = '';
         body += WriteBoundary();
-        body += WriteBodyParameter('name', name);
-        body += WriteBoundary();
+        if (!String.isEmpty(name)) {
+            body += WriteBodyParameter('name', name);
+            body += WriteBoundary();
+        }
         body += WriteBodyParameter('expectedLabel', expectedLabel);
         body += WriteBoundary();
         body += WriteBodyParameter('modelId', modelId);
@@ -58,11 +45,10 @@ public class Einstein_HttpBodyPartFeedbackExample extends Einstein_HttpBodyPart 
     }
 
     public void setName(String name) {
-        if (name==null || name.equals('')) {
-            throw new Einstein_StringIsEmptyException('name');
-        }
-        if (name.length()>180) {
-            throw new Einstein_StringTooLongException('name', 180, name.length());
+        if (!String.isEmpty(name)) {
+            if (name.length()>180) {
+                throw new Einstein_StringTooLongException('name', 180, name.length());
+            }
         }
         this.name = name;
     }
@@ -72,10 +58,40 @@ public class Einstein_HttpBodyPartFeedbackExample extends Einstein_HttpBodyPart 
     }
 
     public void setData(String data) {
-        if (data==null || data.equals('')) {
+        if (String.isEmpty(data)) {
             throw new Einstein_StringIsEmptyException('data');
         }
         this.data = data;
+    }
+
+    public String getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(String modelId) {
+        if (String.isEmpty(modelId)) {
+            throw new Einstein_StringIsEmptyException('modelId');
+        }
+        this.modelId = modelId;
+    }
+
+    public String getExpectedLabel() {
+        return expectedLabel;
+    }
+
+    public void setExpectedLabel(String expectedLabel) {
+        if (String.isEmpty(expectedLabel)) {
+            throw new Einstein_StringIsEmptyException('expectedLabel');
+        }
+        this.expectedLabel = expectedLabel;
+    }
+
+    public Types getType() {
+        return types;
+    }
+
+    public void setType(Einstein_HttpBodyPartFeedbackExample.Types types) {
+        this.types = types;
     }
     
 }

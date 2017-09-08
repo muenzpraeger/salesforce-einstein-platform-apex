@@ -399,30 +399,22 @@ public class Einstein_PredictionService {
     * @return
     * An object of type Einstein_Model
     */
-    public Einstein_Model trainDataset(Long datasetId, String name, Integer epochs, Decimal learningRate, String trainParams) {
-        Einstein_Dataset dataset = getDataset(datasetId);
-        if (dataset != null) {
-            if (dataset.totalExamples>0) {
-                System.debug('Starting trainDataset call with name ' + name);
-                Einstein_HttpBodyPartTraining parts = new Einstein_HttpBodyPartTraining(datasetId, name, epochs, learningRate, trainParams);
-                Einstein_HttpClient client = new Einstein_HttpClient(this, '/train', parts.build());
-                System.debug('Target URL is ' + client.getUrl());
-                client.execute();
-                while(isExecuting()) {
-                    System.debug('Status is: ' + isExecuting());
-                }
-                System.debug('Call trainDataset has been executed.');
-                if (!client.isError()) {
-                    Einstein_Model model = (Einstein_Model)client.getParser().readValueAs(Einstein_Model.class);
-                    System.debug('New Model with id ' + model.modelId + ' has been created.');
-                    return model;
-                }
-                handleError(client.getStatusCode(), client.getResponseError());
-                return null;
-            } else {
-                System.debug('The dataset with id ' + datasetId + ' has no configured examples.');
-            }
+    public Einstein_Model trainDataset(Long datasetId, String name, Integer epochs, Decimal learningRate, Einstein_TrainParams trainParams) {
+        System.debug('Starting trainDataset call with name ' + name);
+        Einstein_HttpBodyPartTraining parts = new Einstein_HttpBodyPartTraining(datasetId, name, epochs, learningRate, trainParams);
+        Einstein_HttpClient client = new Einstein_HttpClient(this, '/train', parts.build());
+        System.debug('Target URL is ' + client.getUrl());
+        client.execute();
+        while(isExecuting()) {
+        System.debug('Status is: ' + isExecuting());
         }
+        System.debug('Call trainDataset has been executed.');
+        if (!client.isError()) {
+            Einstein_Model model = (Einstein_Model)client.getParser().readValueAs(Einstein_Model.class);
+            System.debug('New Model with id ' + model.modelId + ' has been created.');
+            return model;
+        }
+        handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
 
@@ -439,7 +431,7 @@ public class Einstein_PredictionService {
     * @return
     * An object of type Einstein_Model
     */
-    public Einstein_Model retrainDataset(String modelId, Integer epochs, Decimal learningRate, String trainParams) {
+    public Einstein_Model retrainDataset(String modelId, Integer epochs, Decimal learningRate, Einstein_TrainParams trainParams) {
         System.debug('Starting retrainDataset call with name ' + modelId);
         Einstein_HttpBodyPartRetraining parts = new Einstein_HttpBodyPartRetraining(modelId, epochs, learningRate, trainParams);
         Einstein_HttpClient client = new Einstein_HttpClient(this, '/retrain', parts.build());
@@ -783,9 +775,9 @@ public class Einstein_PredictionService {
         } else if (this.typeEnum == Einstein_PredictionService.Types.IMAGE_MULTI_LABEL) {
             return 'image-multi-label';
         } else if (this.typeEnum == Einstein_PredictionService.Types.SENTIMENT) {
-            return 'sentiment';
+            return 'text-sentiment';
         } else if (this.typeEnum == Einstein_PredictionService.Types.INTENT) {
-            return 'intent';
+            return 'text-intent';
         }
         return '';
     }
@@ -835,8 +827,19 @@ public class Einstein_PredictionService {
     }
     
     public static String getAccessToken() {
+        // Try to retrieve email setting
         Einstein_Settings__c settings = Einstein_Settings__c.getOrgDefaults();
-        ContentVersion base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' LIMIT 1];
+        if (settings.Einstein_EMail__c == null) {
+            throw new Einstein_ConfigurationException('Missing Einstein email setting. Check your Custom Settings.');
+        }
+        ContentVersion base64Content;
+        // Try to retrieve certificate
+        try {
+            base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' LIMIT 1];
+        }
+        catch (QueryException e) {
+            throw new Einstein_ConfigurationException('Could not retrieve the Einstein Platform certificate file: einstein_platform', e);
+        }
         String keyContents = base64Content.VersionData.tostring();
         keyContents = keyContents.replace('-----BEGIN RSA PRIVATE KEY-----', '');
         keyContents = keyContents.replace('-----END RSA PRIVATE KEY-----', '');
@@ -853,6 +856,7 @@ public class Einstein_PredictionService {
         
         if (!Test.isRunningTest()) {
             accessToken = Einstein_JWTBearerFlow.getAccessToken(OAUTH2, jwt);
+            System.debug(accessToken);
         }
         
         return accessToken;    

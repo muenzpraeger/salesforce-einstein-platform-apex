@@ -1,0 +1,42 @@
+<aura:component controller="Einstein_PlaygroundController">
+
+    <aura:attribute name="firstSection" type="String" /> This Playground is an example showcase for how to use the Einstein Platform Services. It is provided as an <a href="https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/LICENSE.md"
+        target="_blank">open-source
+    project AS IS</a>. Use it at your own fun and risk.
+
+    <lightning:accordion activeSectionName="Setup">
+        <lightning:accordionSection name="Setup" label="Setup information">
+            <ul>
+                <li>- Set the value for <strong>Einstein EMail</strong> in <i>Setup => Custom Settings => Einstein Settings (via the "Manage" button)</i>                    for your org to the email address that you've used to sign up for Einstein Platform.</li>
+                <li>- Store the Einstein Platform file as File in the org. The name must be
+                    <i>einstein_platform</i>.</li>
+            </ul>
+        </lightning:accordionSection>
+        <lightning:accordionSection name="HowTo" label="Playground How To">
+            The basic workflow for using the Playground is:
+            <ul>
+                <li>- Create a dataset from a remote URL</li>
+                <li>- Once labels are visible you can train the model.</li>
+                <li>- When a model training has reached 100% you can run the prediction.</li>
+            </ul>
+            <br /> Check out the video to see the Playground in action.
+            <br />
+            <iframe width="420" height="315" src="https://www.youtube.com/embed/poY8wR0pVks">
+            </iframe>
+        </lightning:accordionSection>
+        <lightning:accordionSection name="Resources" label="Resources">
+            <ul>
+                <li>- Check out the documentation on <a href="https://einstein.ai" target="_blank">Einstein.AI</a>.</li>
+                <li>- Explore the Einstein_PredictionService Apex class and learn how to retrain models, get your API usage and
+                    more.
+                </li>
+                <li>- Go to <a href="https://trailhead.salesforce.com" target="_blank">Trailhead</a> and get hands-on by
+                    <a target="_blank" href="https://trailhead.salesforce.com/en/projects/build-a-cat-rescue-app-that-recognizes-cat-breeds">building an app that recognizes cat breeds</a>                    with Einstein.</li>
+            </ul>
+        </lightning:accordionSection>
+        <lightning:accordionSection name="Contribution" label="Contribution">You have ideas how to extend the Playground or the Apex wrappers? Great! Please read the <a href="https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CONTRIBUTION.md"
+                target="_blank">contribution guidelines</a>.</lightning:accordionSection>
+    </lightning:accordion>
+
+
+</aura:component>
