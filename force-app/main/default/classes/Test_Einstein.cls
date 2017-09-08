@@ -1,7 +1,50 @@
 @isTest
 public with sharing class Test_Einstein {
 
-    
+    static testMethod void getAccessToken_failsWithoutEmailSetting() {
+        Test.startTest();
+        try {
+            Einstein_PredictionService.getAccessToken();
+            System.assert(false, 'Expected Einstein_ConfigurationException');
+        }
+        catch (Exception e) {
+            System.assert(e instanceof Einstein_ConfigurationException);
+            System.AssertEquals(e.getMessage().contains('email setting'), true);
+        }
+        Test.stopTest();
+    }
+
+    static testMethod void getAccessToken_failsWithoutCertificate() {
+        Einstein_Settings__c settings = Einstein_Settings__c.getOrgDefaults();
+        settings.Einstein_EMail__c = 'test@mail.com';
+        upsert settings;
+
+        Test.startTest();
+        try {
+            Einstein_PredictionService.getAccessToken();
+            System.assert(false, 'Expected Einstein_ConfigurationException');
+        }
+        catch (Exception e) {
+            System.assert(e instanceof Einstein_ConfigurationException);
+            System.AssertEquals(e.getMessage().contains('certificate file'), true);
+        }
+        Test.stopTest();
+    }
+
+    static testMethod void getAccessToken_works() {
+        Einstein_Settings__c settings = Einstein_Settings__c.getOrgDefaults();
+        settings.Einstein_EMail__c = 'test@mail.com';
+        upsert settings;
+
+        ContentVersion certificate = new ContentVersion(Title = 'einstein_platform', PathOnClient='.', VersionData=Blob.valueOf('someData'));
+        insert certificate;
+
+        Test.startTest();
+        String token = Einstein_PredictionService.getAccessToken();
+        System.assertEquals(token, '');
+        Test.stopTest();
+    }
+
     static testMethod void createDataset() {
 
         Einstein_PredictionService service = new Einstein_PredictionService('123', Einstein_PredictionService.Types.IMAGE);

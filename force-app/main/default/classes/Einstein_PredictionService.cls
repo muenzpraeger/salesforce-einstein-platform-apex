@@ -827,8 +827,19 @@ public class Einstein_PredictionService {
     }
     
     public static String getAccessToken() {
+        // Try to retrieve email setting
         Einstein_Settings__c settings = Einstein_Settings__c.getOrgDefaults();
-        ContentVersion base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' LIMIT 1];
+        if (settings.Einstein_EMail__c == null) {
+            throw new Einstein_ConfigurationException('Missing Einstein email setting. Check your Custom Settings.');
+        }
+        ContentVersion base64Content;
+        // Try to retrieve certificate
+        try {
+            base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' LIMIT 1];
+        }
+        catch (QueryException e) {
+            throw new Einstein_ConfigurationException('Could not retrieve the Einstein Platform certificate file: einstein_platform', e);
+        }
         String keyContents = base64Content.VersionData.tostring();
         keyContents = keyContents.replace('-----BEGIN RSA PRIVATE KEY-----', '');
         keyContents = keyContents.replace('-----END RSA PRIVATE KEY-----', '');
