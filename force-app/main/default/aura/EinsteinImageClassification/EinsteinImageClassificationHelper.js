@@ -7,7 +7,8 @@
       base64: base64Data
     });
     action.setCallback(this, function(a) {
-      component.set("v.spinnerWaiting", false);
+      var event = component.getEvent("waitingEvent");
+      event.fire();
       var state = a.getState();
       console.log(state);
       if (state === "ERROR") {
@@ -32,7 +33,8 @@
     });
     component.set("v.predictions", null);
     component.set("v.rawPredictions", null);
-    component.set("v.spinnerWaiting", true);
+    var event = component.getEvent("waitingEvent");
+    event.fire();
     $A.enqueueAction(action);
   }
 });

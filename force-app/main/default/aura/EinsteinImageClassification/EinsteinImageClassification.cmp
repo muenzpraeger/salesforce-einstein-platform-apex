@@ -11,6 +11,8 @@
     <aura:attribute name="selectionModels" type="List" />
     <aura:attribute name="defaultUrl" type="String" default="http://einstein.ai/images/mountainvsbeach.zip" />
 
+    <aura:registerEvent name="waitingEvent" type="c:EventEinsteinWaiting" />
+
     <div>
 
         <lightning:select name="selectImageType" value="{!v.imageType}" onchange="{!c.switchDefaultUrl}">
