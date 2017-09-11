@@ -32,11 +32,8 @@
                             </aura:iteration>
                         </lightning:select>
                         <lightning:input aura:id="fileInput" type="file" name="file" multiple="false" accept="image/*;capture=camera" files="{!v.files}"
-                            onchange="{! c.readFile }" label="Image:" />
+                            onchange="{! c.readFile }" label="Image (max. 750KB):" />
                         <img src="{!v.pictureSrc}" />
-                        <div>
-                            <lightning:button label="Send" onclick="{!c.predict}" disabled="{!empty(v.pictureSrc)}" />
-                        </div>
                     </lightning:layoutitem>
                     <lightning:layoutitem size="6" class="response">
                         <div class="slds-text-title_caps">Response</div>
