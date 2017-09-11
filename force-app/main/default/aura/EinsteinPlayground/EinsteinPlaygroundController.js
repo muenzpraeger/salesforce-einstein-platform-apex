@@ -6,7 +6,7 @@
   updateModelSelection: function(component, event, helper) {
     helper.updateModelSelection(component, event);
   },
-  doInitModels: function(component, event, helper) {
+  doInitPlayground: function(component, event, helper) {
     var modelsDefaultImageclassification = [
       { id: "FoodImageClassifier", label: "Pre-Build - Food Image Classifier" },
       {
@@ -27,5 +27,13 @@
       { id: "CommunitySentiment", label: "Pre-Build - Community Sentiment" }
     ];
     component.set("v.datasetModelsSentiment", modelsDefaultSentiment);
+    var action = component.get("c.validateEinsteinPlatformSetup");
+		action.setCallback(this, function(a) {
+      var result = a.getReturnValue();
+      component.set("v.setupComplete", result.einsteinEmail==true && result.einsteinFile==true);
+			component.set("v.einsteinEmail", result.einsteinEmail);
+      component.set("v.einsteinFile", result.einsteinFile);
+		});
+		$A.enqueueAction(action);
   }
 });

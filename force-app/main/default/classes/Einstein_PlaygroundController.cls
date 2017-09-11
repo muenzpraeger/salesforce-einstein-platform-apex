@@ -1,12 +1,11 @@
 public class Einstein_PlaygroundController {
 
-    public static Einstein_PredictionService service = new Einstein_PredictionService(Einstein_PredictionService.Types.IMAGE);
-
-    public static boolean checkEinsteinSetup() {
-        return false;
-    }
+    public static Einstein_PredictionService service;
 
     private static void setType(String dataType) {
+        if (service==null) {
+            service = new Einstein_PredictionService(Einstein_PredictionService.Types.IMAGE);
+        }
         if (dataType=='image') {
             service.setType(Einstein_PredictionService.Types.IMAGE);
         } else if (dataType=='text-intent') {
@@ -57,6 +56,7 @@ public class Einstein_PlaygroundController {
 
     @AuraEnabled
     public static Einstein_PredictionResult predictImageClassification(String modelId, String base64) {
+        setType('');
         service.setType(Einstein_PredictionService.Types.IMAGE);
         Einstein_PredictionResult result = service.predictImageBase64(modelId, base64, 0, '');
         return result;
@@ -64,6 +64,7 @@ public class Einstein_PlaygroundController {
 
     @AuraEnabled
     public static Einstein_PredictionResult predictIntent(String modelId, String phrase) {
+        setType('');
         service.setType(Einstein_PredictionService.Types.INTENT);
         Einstein_PredictionResult result = service.predictIntent(modelId, phrase, 0, '');
         return result;
@@ -71,9 +72,31 @@ public class Einstein_PlaygroundController {
 
     @AuraEnabled
     public static Einstein_PredictionResult predictSentiment(String modelId, String phrase) {
+        setType('');
         service.setType(Einstein_PredictionService.Types.SENTIMENT);
         Einstein_PredictionResult result = service.predictSentiment(modelId, phrase, 0, '');
         return result;
+    }
+
+    @AuraEnabled
+    public static Map<String, Boolean> validateEinsteinPlatformSetup() {
+        Map<String, Boolean> mapSettings = new Map<String, Boolean>();
+        Einstein_Settings__c settings = Einstein_Settings__c.getOrgDefaults();
+        if (settings.Einstein_EMail__c == null) {
+            mapSettings.put('einsteinEmail', false);
+        } else {
+            mapSettings.put('einsteinEmail', true);
+        }
+        ContentVersion base64Content;
+        try {
+            base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' LIMIT 1];
+            mapSettings.put('einsteinFile', true);
+        }
+        catch (QueryException e) {
+            mapSettings.put('einsteinFile', false);
+        }
+        System.debug('blubber');
+        return mapSettings;
     }
 
 }
