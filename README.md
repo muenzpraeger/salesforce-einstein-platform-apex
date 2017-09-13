@@ -14,12 +14,12 @@ See the included Playground in action.
 
 ## Version history
 
-The current version is 2.1.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md)).
+The current version is 2.2.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md).
 
 ## Prerequisites
 
 For using the wrapper you'll need to fulfill the following requirements:
-* Access to a Salesforce org that as minimum API version 41, i. e. a Developer Edition or a scratch org (you can [signup here for free](https://developer.salesforce.com/signup) if you don't have one).
+* Access to a Salesforce org that as **minimum API version 41**, i. e. a Developer Edition or a scratch org (you can [signup here for free](https://developer.salesforce.com/signup) if you don't have one).
 * An API account for Salesforce Einstein Platform.
 
 Please find the detailed instructions for how to setup access to the [Einstein Platform API here](https://metamind.readme.io/docs/what-you-need-to-call-api).
