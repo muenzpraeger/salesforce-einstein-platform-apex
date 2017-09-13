@@ -66,6 +66,9 @@ After you've added the wrapper files two steps are required:
 
 If you went through [my Trailhead project](https://trailhead.salesforce.com/projects/build-a-cat-rescue-app-that-recognizes-cat-breeds) you likely went through that excercise already.
 
+The installation adds a new Lightning App to your Salesforce org for the included Playground.
+![playground](resources/einstein_platform.png)
+
 ## Usage examples
 ### Creating a PredictionService
 
