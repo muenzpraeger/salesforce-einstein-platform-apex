@@ -1,0 +1,9 @@
+.THIS .error {
+    color: #CB2929;
+    font-weight: bold;
+}
+
+.THIS .success {
+    color: #029605;
+    font-weight: bold;
+}

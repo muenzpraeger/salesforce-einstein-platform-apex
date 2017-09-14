@@ -14,12 +14,12 @@ See the included Playground in action.
 
 ## Version history
 
-The current version is 2.1.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md)).
+The current version is 2.2.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md).
 
 ## Prerequisites
 
 For using the wrapper you'll need to fulfill the following requirements:
-* Access to a Salesforce org that as minimum API version 41, i. e. a Developer Edition or a scratch org (you can [signup here for free](https://developer.salesforce.com/signup) if you don't have one).
+* Access to a Salesforce org that as **minimum API version 41**, i. e. a Developer Edition or a scratch org (you can [signup here for free](https://developer.salesforce.com/signup) if you don't have one).
 * An API account for Salesforce Einstein Platform.
 
 Please find the detailed instructions for how to setup access to the [Einstein Platform API here](https://metamind.readme.io/docs/what-you-need-to-call-api).
@@ -55,7 +55,7 @@ Alternatively you can use [Wade's OSS plugin for Salesforce DX](https://www.npmj
 
 Again thanks to Wade for creating this neat feature.
 
-[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/deploy?template=https://github.com/muenzpraeger/salesforce-einstein-platform-apex)
+[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/deploy)
 
 ## Configuration
 
@@ -65,6 +65,9 @@ After you've added the wrapper files two steps are required:
 * Store the Einstein Platform file as File in the org. The name must be _einstein_platform_.
 
 If you went through [my Trailhead project](https://trailhead.salesforce.com/projects/build-a-cat-rescue-app-that-recognizes-cat-breeds) you likely went through that excercise already.
+
+The installation adds a new Lightning App to your Salesforce org for the included Playground.
+![playground](resources/einstein_platform.png)
 
 ## Usage examples
 ### Creating a PredictionService

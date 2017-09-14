@@ -4,9 +4,12 @@
     <aura:attribute name="datasetModelsImageClassification" type="List"></aura:attribute>
     <aura:attribute name="datasetModelsIntent" type="List"></aura:attribute>
     <aura:attribute name="datasetModelsSentiment" type="List"></aura:attribute>
+    <aura:attribute name="setupComplete" type="Boolean" />
+    <aura:attribute name="einsteinEmail" type="Boolean" />
+    <aura:attribute name="einsteinFile" type="Boolean" />
     <aura:handler name="waitingEvent" event="c:EventEinsteinWaiting" action="{!c.changeSpinner}" />
     <aura:handler name="modelEvent" event="c:EventEinsteinModels" action="{!c.updateModelSelection}" />
-    <aura:handler name="init" value="{!this}" action="{!c.doInitModels}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInitPlayground}" />
 
     <div>
         <lightning:tabset>
@@ -14,26 +17,29 @@
                 <aura:set attribute="label">
                     <lightning:icon iconName="utility:info" size="small" /> Introduction
                 </aura:set>
-                <c:EinsteinPlaygroundIntroduction />
+                <c:EinsteinPlaygroundIntroduction setupComplete="{!v.setupComplete}" einsteinEmail="{!v.einsteinEmail}" einsteinFile="{!v.einsteinEmail}"
+                />
             </lightning:tab>
-            <lightning:tab>
-                <aura:set attribute="label">
-                    <lightning:icon iconName="utility:preview" size="small" /> Image Classification
-                </aura:set>
-                <c:EinsteinImageClassification selectionModels="{! v.datasetModelsImageClassification }" />
-            </lightning:tab>
-            <lightning:tab>
-                <aura:set attribute="label">
-                    <lightning:icon iconName="utility:like" size="small" /> Language Sentiment
-                </aura:set>
-                <c:EinsteinSentiment selectionModels="{! v.datasetModelsSentiment }" />
-            </lightning:tab>
-            <lightning:tab>
-                <aura:set attribute="label">
-                    <lightning:icon iconName="utility:signpost" size="small" /> Language Intent
-                </aura:set>
-                <c:EinsteinIntent selectionModels="{! v.datasetModelsIntent }" />
-            </lightning:tab>
+            <aura:if isTrue="{!v.setupComplete}">
+                <lightning:tab>
+                    <aura:set attribute="label">
+                        <lightning:icon iconName="utility:preview" size="small" /> Image Classification
+                    </aura:set>
+                    <c:EinsteinImageClassification selectionModels="{! v.datasetModelsImageClassification }" />
+                </lightning:tab>
+                <lightning:tab>
+                    <aura:set attribute="label">
+                        <lightning:icon iconName="utility:like" size="small" /> Language Sentiment
+                    </aura:set>
+                    <c:EinsteinSentiment selectionModels="{! v.datasetModelsSentiment }" />
+                </lightning:tab>
+                <lightning:tab>
+                    <aura:set attribute="label">
+                        <lightning:icon iconName="utility:signpost" size="small" /> Language Intent
+                    </aura:set>
+                    <c:EinsteinIntent selectionModels="{! v.datasetModelsIntent }" />
+                </lightning:tab>
+            </aura:if>
         </lightning:tabset>
 
         <aura:if isTrue="{! v.spinnerWaiting }">
