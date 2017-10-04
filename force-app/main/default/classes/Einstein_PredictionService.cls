@@ -835,7 +835,7 @@ public class Einstein_PredictionService {
         ContentVersion base64Content;
         // Try to retrieve certificate
         try {
-            base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' LIMIT 1];
+            base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' AND IsLatest=true LIMIT 1];
         }
         catch (QueryException e) {
             throw new Einstein_ConfigurationException('Could not retrieve the Einstein Platform certificate file: einstein_platform', e);
