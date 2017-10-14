@@ -638,15 +638,13 @@ public class Einstein_PredictionService {
             System.debug('Status is: ' + isExecuting());
         }
         System.debug('Call detect has been executed.');
-        //if (!client.isError()) {
-            //Einstein_PredictionResult predictions = (Einstein_PredictionResult)client.getParser().readValueAs(Einstein_PredictionResult.class);
-            String jsonString = '{"probabilities":[{"label":"box","probability":0.57033634,"boundingBox":{"minX":150,"minY":75,"maxX":320,"maxY":207}}]}';
-            Einstein_PredictionResult predictions = (Einstein_PredictionResult)JSON.deserialize(jsonString, Einstein_PredictionResult.class);
+        if (!client.isError()) {
+            Einstein_PredictionResult predictions = (Einstein_PredictionResult)client.getParser().readValueAs(Einstein_PredictionResult.class);
             System.debug('Image has been detected.');
             return predictions;
-        //}
-        //handleError(client.getStatusCode(), client.getResponseError());
-        //return null;
+        }
+        handleError(client.getStatusCode(), client.getResponseError());
+        return null;
     }
     
     /**
