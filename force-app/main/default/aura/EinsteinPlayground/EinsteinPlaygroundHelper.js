@@ -7,6 +7,8 @@
         "v.datasetModelsImageClassification",
         event
       );
+    } else if (type == "image-detection") {
+      this.validateModelContent(component, "v.datasetModelsObjectDetection", event);
     } else if (type == "text-intent") {
       this.validateModelContent(component, "v.datasetModelsIntent", event);
     } else if (type == "text-sentiment") {
