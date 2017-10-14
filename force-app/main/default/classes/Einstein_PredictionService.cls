@@ -713,7 +713,7 @@ public class Einstein_PredictionService {
         return null;
     }
     
-    /**
+   /**
     * Predicts the association of the given image in Base64 format to a trained model.
     * @param model
     * The Einstein_Model that should be used for the prediction.
@@ -749,7 +749,7 @@ public class Einstein_PredictionService {
     * Predicts the association of the given image as Blob to a trained model.
     * @param modelId
     * The Einstein_Model that should be used for the prediction.
-    * @param base64
+    * @param fileBob
     * The image that should be predicted.
     * @param numResults
     * The number of results that should be max. returned.
@@ -781,8 +781,8 @@ public class Einstein_PredictionService {
     * Predicts the association of the given image on a remote url to a trained model.
     * @param modelId
     * The Einstein_Model that should be used for the prediction.
-    * @param base64
-    * The image that should be predicted.
+    * @param url
+    * The image url that should be predicted.
     * @param numResults
     * The number of results that should be max. returned.
     * @param sampleId
