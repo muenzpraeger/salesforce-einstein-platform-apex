@@ -16,10 +16,10 @@
                 <aura:set attribute="else">
                     <div class="error">
                         <ul>
-                            <aura:if isTrue="{!v.einsteinEmail}">
+                            <aura:if isTrue="{!!v.einsteinEmail}">
                                 <li>- Set the value for <strong>Einstein EMail</strong> in <i>Setup => Custom Settings => Einstein Settings (via the "Manage" button)</i>                                    for your org to the email address that you've used to sign up for Einstein Platform.</li>
                             </aura:if>
-                            <aura:if isTrue="{!v.einsteinFile}">
+                            <aura:if isTrue="{!!v.einsteinFile}">
                                 <li>- Store the Einstein Platform file as File in the org. The name must be
                                     <i>einstein_platform</i>.</li>
                             </aura:if>
