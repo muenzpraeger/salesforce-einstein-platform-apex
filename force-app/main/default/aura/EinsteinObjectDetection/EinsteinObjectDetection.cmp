@@ -9,7 +9,7 @@
     <aura:attribute name="pictureSrc" type="String" />
     <aura:attribute name="fileName" type="String" />
     <aura:attribute name="selectionModels" type="List" />
-    <aura:attribute name="defaultUrl" type="String" default="" />
+    <aura:attribute name="defaultUrl" type="String" default="https://s3.eu-central-1.amazonaws.com/salesforce-demos/object-detection-beta.zip" />
     <aura:handler name="change" value="{!v.selectionModels}" action="{!c.modelChange}"/>    
     
     <ltng:require scripts="{! $Resource.resize }" afterScriptsLoaded="{!c.loadResizeListener}" />
