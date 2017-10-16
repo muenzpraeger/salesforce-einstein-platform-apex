@@ -1,5 +1,9 @@
 ## Changelog
 
+* 2.3.0 - 10/16/17
+    - Adding Einstein Image Detection (beta) 
+    - Minor UI changes
+
 * 2.2.0 - 09/13/17
     - Added setup UI/information to playground - [Link](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/issues/14)
     - Restrict file size upload for image classification - [Link](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/issues/17)
