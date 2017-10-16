@@ -32,6 +32,7 @@
 
 .THIS .image-container img {
     height:auto;
+    max-height: 300px;
 }
 
 .THIS .image-container .after {

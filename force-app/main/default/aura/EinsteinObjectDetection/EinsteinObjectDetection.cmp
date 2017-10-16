@@ -10,6 +10,7 @@
     <aura:attribute name="fileName" type="String" />
     <aura:attribute name="selectionModels" type="List" />
     <aura:attribute name="defaultUrl" type="String" default="" />
+    <aura:handler name="change" value="{!v.selectionModels}" action="{!c.modelChange}"/>    
     
     <ltng:require scripts="{! $Resource.resize }" afterScriptsLoaded="{!c.loadResizeListener}" />
 
@@ -18,7 +19,7 @@
     <div>
         <lightning:tabset >
             <lightning:tab label="1. Data and Training">
-                <c:EinsteinDataAndTraining dataType="{!v.imageType}" defaultUrl="{!v.defaultUrl}" />
+                <c:EinsteinDataAndTraining dataType="image-detection" defaultUrl="{!v.defaultUrl}" />
             </lightning:tab>
             <lightning:tab label="2. Prediction">
                 <lightning:layout class="request-response">
@@ -30,7 +31,7 @@
                             </aura:iteration>
                         </lightning:select>
                         <lightning:input aura:id="fileInput" type="file" name="file" multiple="false" accept="image/*;capture=camera" files="{!v.files}"
-                            onchange="{! c.readFile }" label="Image (max. 750KB):" />
+                            onchange="{! c.readFile }" label="Image (max. 900KB):" />
                         <img src="{!v.pictureSrc}" />
                     </lightning:layoutitem>
                     <lightning:layoutitem size="6" class="response">

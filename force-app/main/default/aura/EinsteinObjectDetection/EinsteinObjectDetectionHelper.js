@@ -103,7 +103,7 @@
     imgContainer.appendChild(svg);
   },
   getObjectHighlightColor: function(label) {
-    if (label === "box") {
+    if (label === "Astro") {
       return "red";
     }
     return "yellow";
