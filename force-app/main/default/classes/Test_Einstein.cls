@@ -333,6 +333,16 @@ public with sharing class Test_Einstein {
 
         result = service.predictImageUrl('YCQ4ZACEPJFGXZNRA6ERF3GL5E', 'https://theurl', 0, '');
         result = service.predictImageBlob('modelId', Blob.valueof('somedata'), 0, 'sampleId');
+
+        result = service.detectImageBase64('YCQ4ZACEPJFGXZNRA6ERF3GL5E', 'aaabbbccc', 0, '');
+
+        System.assertEquals(100, result.probabilities[0].boundingBox.maxX);
+        System.assertEquals(100, result.probabilities[0].boundingBox.maxY);
+        System.assertEquals(100, result.probabilities[0].boundingBox.minX);
+        System.assertEquals(100, result.probabilities[0].boundingBox.minX);
+
+        result = service.detectImageBlob('YCQ4ZACEPJFGXZNRA6ERF3GL5E', Blob.valueof('somedata'), 0, '');
+        result = service.detectImageUrl('YCQ4ZACEPJFGXZNRA6ERF3GL5E', 'aaabbbccc', 0, '');
     }
 
     static testMethod void predictLanguage() {

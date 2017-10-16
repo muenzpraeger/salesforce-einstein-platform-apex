@@ -16,12 +16,10 @@
       reader.readAsDataURL(file);
     }
   },
-  switchDefaultUrl: function(component) {
-    component.set(
-      "v.defaultUrl",
-      component.get("v.imageType") === "image"
-        ? "http://einstein.ai/images/mountainvsbeach.zip"
-        : "http://einstein.ai/images/mountainvsbeach.zip"
-    );
+  modelChange: function(component) {
+    var models = component.get("v.selectionModels");
+    if (models.length===1) {
+      component.set("v.modelId", models[0].id);
+    }
   }
 });

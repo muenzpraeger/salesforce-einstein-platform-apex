@@ -8,6 +8,8 @@ public class Einstein_PlaygroundController {
         }
         if (dataType=='image') {
             service.setType(Einstein_PredictionService.Types.IMAGE);
+        } else if (dataType=='image-detection') {
+            service.setType(Einstein_PredictionService.Types.IMAGE_DETECTION);
         } else if (dataType=='text-intent') {
             service.setType(Einstein_PredictionService.Types.INTENT);
         } else if (dataType=='text-sentiment') {
@@ -59,6 +61,14 @@ public class Einstein_PlaygroundController {
         setType('');
         service.setType(Einstein_PredictionService.Types.IMAGE);
         Einstein_PredictionResult result = service.predictImageBase64(modelId, base64, 0, '');
+        return result;
+    }
+
+    @AuraEnabled
+    public static Einstein_PredictionResult predictImageDetection(String modelId, String base64) {
+        setType('');
+        service.setType(Einstein_PredictionService.Types.IMAGE_DETECTION);
+        Einstein_PredictionResult result = service.detectImageBase64(modelId, base64, 0, '');
         return result;
     }
 

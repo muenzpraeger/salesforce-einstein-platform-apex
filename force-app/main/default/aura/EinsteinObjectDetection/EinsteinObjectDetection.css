@@ -1,0 +1,55 @@
+.THIS .slds-text-title_caps {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.THIS .request-response {
+    margin-top: 16px;
+}
+
+.THIS .request {
+    padding-right: 20px !important;
+}
+
+.THIS .response {
+    padding-left: 20px !important;
+    border-left: solid 1px #D8DDE6;
+}
+
+.THIS {
+    position: relative;
+}
+
+.THIS img {
+    margin: 8px 0;
+    height: 150px;
+}
+
+.THIS .image-container {
+    position: relative;
+    height: 300px;
+}
+
+.THIS .image-container img {
+    height:auto;
+    max-height: 300px;
+}
+
+.THIS .image-container .after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.THIS .image-container .after svg {
+    width: 100%;
+    height: 100%;
+}
+
+.THIS .result-grid > div {
+    padding: 2px 3px 0 3px;
+    font-size: 12px;
+    border-bottom: 1px dashed rgb(216, 221, 230);
+}
