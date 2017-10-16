@@ -16,6 +16,7 @@ public class Einstein_PredictionService {
     public enum Types {
         IMAGE,
         IMAGE_MULTI_LABEL,
+        IMAGE_DETECTION,
         SENTIMENT,
         INTENT
     }
@@ -613,8 +614,104 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
+
+    /**
+    * Detects objects in the given image in Base64 format based a trained model.
+    * @param model
+    * The Einstein_Model that should be used for the prediction.
+    * @param base64
+    * The image that should be used for detecting objects in it.
+    * @param numResults
+    * The number of results that should be max. returned.
+    * @param sampleId
+    * Optional. A string that gets returned as an association with the image.
+    * @return
+    * An object of type Einstein_PredictionResult.
+    */
+    public Einstein_PredictionResult detectImageBase64(String modelId, String base64, Integer numResults, String sampleId) {
+        System.debug('Starting detect call with model ' + modelId + ' for base64');
+        Einstein_HttpBodyPartPrediction parts = new Einstein_HttpBodyPartPrediction(modelId, base64, numResults, sampleId, Einstein_HttpBodyPartPrediction.Types.BASE64);
+        Einstein_HttpClient client = new Einstein_HttpClient(this, '/detect', parts.build());
+        System.debug('Target URL is ' + client.getUrl());
+        client.execute();
+        while(isExecuting()) {
+            System.debug('Status is: ' + isExecuting());
+        }
+        System.debug('Call detect has been executed.');
+        if (!client.isError()) {
+            Einstein_PredictionResult predictions = (Einstein_PredictionResult)client.getParser().readValueAs(Einstein_PredictionResult.class);
+            System.debug('Image has been detected.');
+            return predictions;
+        }
+        handleError(client.getStatusCode(), client.getResponseError());
+        return null;
+    }
     
     /**
+    * Detects objects in the given image in Base64 format based a trained model.
+    * @param model
+    * The Einstein_Model that should be used for the prediction.
+    * @param fileBlob
+    * The image that should be used for detecting objects in it.
+    * @param numResults
+    * The number of results that should be max. returned.
+    * @param sampleId
+    * Optional. A string that gets returned as an association with the image.
+    * @return
+    * An object of type Einstein_PredictionResult.
+    */
+    public Einstein_PredictionResult detectImageBlob(String modelId, Blob fileBlob, Integer numResults, String sampleId) {
+        System.debug('Starting detect call with model ' + modelId + ' for blob');
+        Einstein_HttpBodyPartPrediction parts = new Einstein_HttpBodyPartPrediction(modelId, EncodingUtil.base64Encode(fileBlob), numResults, sampleId, Einstein_HttpBodyPartPrediction.Types.BASE64);
+        Einstein_HttpClient client = new Einstein_HttpClient(this, '/detect', parts.build());
+        System.debug('Target URL is ' + client.getUrl());
+        client.execute();
+        while(isExecuting()) {
+            System.debug('Status is: ' + isExecuting());
+        }
+        System.debug('Call predict has been executed.');
+        if (!client.isError()) {
+            Einstein_PredictionResult predictions = (Einstein_PredictionResult)client.getParser().readValueAs(Einstein_PredictionResult.class);
+            System.debug('Image has been detected.');
+            return predictions;
+        }
+        handleError(client.getStatusCode(), client.getResponseError());
+        return null;
+    }
+    
+    /**
+    * Detects objects in the given image in Base64 format based a trained model.
+    * @param model
+    * The Einstein_Model that should be used for the prediction.
+    * @param url
+    * The image url that should be used for detecting objects in it.
+    * @param numResults
+    * The number of results that should be max. returned.
+    * @param sampleId
+    * Optional. A string that gets returned as an association with the image.
+    * @return
+    * An object of type Einstein_PredictionResult.
+    */
+    public Einstein_PredictionResult detectImageUrl(String modelId, String url, Integer numResults, String sampleId) {
+        System.debug('Starting detect call with model ' + modelId + ' for url');
+        Einstein_HttpBodyPartPrediction parts = new Einstein_HttpBodyPartPrediction(modelId, url, numResults, sampleId, Einstein_HttpBodyPartPrediction.Types.URL);
+        Einstein_HttpClient client = new Einstein_HttpClient(this, '/detect', parts.build());
+        System.debug('Target URL is ' + client.getUrl());
+        client.execute();
+        while(isExecuting()) {
+            System.debug('Status is: ' + isExecuting());
+        }
+        System.debug('Call predict has been executed.');
+        if (!client.isError()) {
+            Einstein_PredictionResult predictions = (Einstein_PredictionResult)client.getParser().readValueAs(Einstein_PredictionResult.class);
+            System.debug('Image has been detected.');
+            return predictions;
+        }
+        handleError(client.getStatusCode(), client.getResponseError());
+        return null;
+    }
+    
+   /**
     * Predicts the association of the given image in Base64 format to a trained model.
     * @param model
     * The Einstein_Model that should be used for the prediction.
@@ -650,7 +747,7 @@ public class Einstein_PredictionService {
     * Predicts the association of the given image as Blob to a trained model.
     * @param modelId
     * The Einstein_Model that should be used for the prediction.
-    * @param base64
+    * @param fileBob
     * The image that should be predicted.
     * @param numResults
     * The number of results that should be max. returned.
@@ -682,8 +779,8 @@ public class Einstein_PredictionService {
     * Predicts the association of the given image on a remote url to a trained model.
     * @param modelId
     * The Einstein_Model that should be used for the prediction.
-    * @param base64
-    * The image that should be predicted.
+    * @param url
+    * The image url that should be predicted.
     * @param numResults
     * The number of results that should be max. returned.
     * @param sampleId
@@ -774,6 +871,8 @@ public class Einstein_PredictionService {
             return 'image';
         } else if (this.typeEnum == Einstein_PredictionService.Types.IMAGE_MULTI_LABEL) {
             return 'image-multi-label';
+        } else if (this.typeEnum == Einstein_PredictionService.Types.IMAGE_DETECTION) {
+            return 'image-detection';
         } else if (this.typeEnum == Einstein_PredictionService.Types.SENTIMENT) {
             return 'text-sentiment';
         } else if (this.typeEnum == Einstein_PredictionService.Types.INTENT) {
@@ -786,6 +885,8 @@ public class Einstein_PredictionService {
         if (this.typeEnum == Einstein_PredictionService.Types.IMAGE) {
             return BASE_URL + '/vision';
         } else if (this.typeEnum == Einstein_PredictionService.Types.IMAGE_MULTI_LABEL) {
+            return BASE_URL + '/vision';
+        } else if (this.typeEnum == Einstein_PredictionService.Types.IMAGE_DETECTION) {
             return BASE_URL + '/vision';
         } else if (this.typeEnum == Einstein_PredictionService.Types.SENTIMENT) {
             return BASE_URL + '/language';
@@ -835,7 +936,7 @@ public class Einstein_PredictionService {
         ContentVersion base64Content;
         // Try to retrieve certificate
         try {
-            base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' LIMIT 1];
+            base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' AND IsLatest=true LIMIT 1];
         }
         catch (QueryException e) {
             throw new Einstein_ConfigurationException('Could not retrieve the Einstein Platform certificate file: einstein_platform', e);
@@ -856,7 +957,6 @@ public class Einstein_PredictionService {
         
         if (!Test.isRunningTest()) {
             accessToken = Einstein_JWTBearerFlow.getAccessToken(OAUTH2, jwt);
-            System.debug(accessToken);
         }
         
         return accessToken;    

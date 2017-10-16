@@ -2,6 +2,7 @@
 
     <aura:attribute name="spinnerWaiting" type="Boolean" default="false" />
     <aura:attribute name="datasetModelsImageClassification" type="List"></aura:attribute>
+    <aura:attribute name="datasetModelsObjectDetection" type="List"></aura:attribute>
     <aura:attribute name="datasetModelsIntent" type="List"></aura:attribute>
     <aura:attribute name="datasetModelsSentiment" type="List"></aura:attribute>
     <aura:attribute name="setupComplete" type="Boolean" />
@@ -26,6 +27,12 @@
                         <lightning:icon iconName="utility:preview" size="small" /> Image Classification
                     </aura:set>
                     <c:EinsteinImageClassification selectionModels="{! v.datasetModelsImageClassification }" />
+                </lightning:tab>
+                <lightning:tab>
+                    <aura:set attribute="label">
+                        <lightning:icon iconName="utility:zoomin" size="small" /> Object Detection
+                    </aura:set>
+                    <c:EinsteinObjectDetection selectionModels="{! v.datasetModelsObjectDetection }" />
                 </lightning:tab>
                 <lightning:tab>
                     <aura:set attribute="label">
