@@ -49,6 +49,8 @@ public with sharing class Test_Einstein_HttpMockResponses implements HttpCallout
                 return mockCreateDatasetAsync(req);
             } else if (httpEndpoint.startsWith('https://api.einstein.ai/v2/vision/predict')) {
                 return mockPredictBase64(req);
+            } else if (httpEndpoint.startsWith('https://api.einstein.ai/v2/vision/detect')) {
+                return mockDetectBase64(req);
             } else if (httpEndpoint.startsWith('https://api.einstein.ai/v2/language/intent')) {
                 return mockPredictIntent(req);
             } else if (httpEndpoint.startsWith('https://api.einstein.ai/v2/language/sentiment')) {
@@ -322,6 +324,18 @@ public with sharing class Test_Einstein_HttpMockResponses implements HttpCallout
     private static HTTPResponse mockPredictBase64(HTTPRequest req) {
         
         String jsonResponse = '{"probabilities":[{"label":"beach","probability":0.96021104},{"label":"mountain","probability":0.039788953959941864}],"object":"predictresponse"}'; 
+        
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody(jsonResponse);
+        res.setStatusCode(200);
+        return res;
+        
+    }
+
+    private static HTTPResponse mockDetectBase64(HTTPRequest req) {
+        
+        String jsonResponse = '{"probabilities":[{"label":"box","probability":0.96021104, "boundingBox": {"maxX":100, "maxY":100, "minX":100, "minY":100}}],"object":"predictresponse"}'; 
         
         HttpResponse res = new HttpResponse();
         res.setHeader('Content-Type', 'application/json');
