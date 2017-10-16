@@ -957,7 +957,6 @@ public class Einstein_PredictionService {
         
         if (!Test.isRunningTest()) {
             accessToken = Einstein_JWTBearerFlow.getAccessToken(OAUTH2, jwt);
-            System.debug(accessToken);
         }
         
         return accessToken;    
