@@ -3,8 +3,8 @@
     var files = component.get("v.files");
     if (files && files.length > 0) {
       var file = files[0][0];
-      if (file.size>900000) {
-        return alert("The file exceeds the limit of 900kb.");
+      if (file.size>5000000) {
+        return alert("The file exceeds the limit of 5MB.");
       }
       var reader = new FileReader();
       reader.onloadend = function() {
