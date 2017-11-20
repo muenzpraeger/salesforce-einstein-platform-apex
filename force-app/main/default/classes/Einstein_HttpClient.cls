@@ -60,6 +60,7 @@ public class Einstein_HttpClient {
             HttpRequest request = new HttpRequest();
             request.setHeader('Authorization', 'Bearer ' + predictionService.getBearerToken());
             request.setHeader('Cache-Control', 'no-cache');
+            request.setTimeout(30000);
             
             request.setMethod('GET');
 
