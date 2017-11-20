@@ -31,7 +31,7 @@
                             </aura:iteration>
                         </lightning:select>
                         <lightning:input aura:id="fileInput" type="file" name="file" multiple="false" accept="image/*;capture=camera" files="{!v.files}"
-                            onchange="{! c.readFile }" label="Image (max. 900KB):" />
+                            onchange="{! c.readFile }" label="Image (max. 5MB):" />
                         <img src="{!v.pictureSrc}" />
                     </lightning:layoutitem>
                     <lightning:layoutitem size="6" class="response">

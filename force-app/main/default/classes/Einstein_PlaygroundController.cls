@@ -105,7 +105,6 @@ public class Einstein_PlaygroundController {
         catch (QueryException e) {
             mapSettings.put('einsteinFile', false);
         }
-        System.debug('blubber');
         return mapSettings;
     }
 

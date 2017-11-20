@@ -8,15 +8,15 @@
   },
   doInitPlayground: function(component, event, helper) {
     var modelsDefaultImageclassification = [
-      { id: "FoodImageClassifier", label: "Pre-Build - Food Image Classifier" },
+      { id: "FoodImageClassifier", label: "Pre-Built - Food Image Classifier" },
       {
         id: "GeneralImageClassifier",
-        label: "Pre-Build - General Image Classifier"
+        label: "Pre-Built - General Image Classifier"
       },
-      { id: "SceneClassifier", label: "Pre-Build - Scene Image Classifier" },
+      { id: "SceneClassifier", label: "Pre-Built - Scene Image Classifier" },
       {
         id: "MultiLabelImageClassifier",
-        label: "Pre-Build - Multi-Label Image Classifier"
+        label: "Pre-Built - Multi-Label Image Classifier"
       }
     ];
     component.set(
@@ -24,7 +24,7 @@
       modelsDefaultImageclassification
     );
     var modelsDefaultSentiment = [
-      { id: "CommunitySentiment", label: "Pre-Build - Community Sentiment" }
+      { id: "CommunitySentiment", label: "Pre-Built - Community Sentiment" }
     ];
     component.set("v.datasetModelsSentiment", modelsDefaultSentiment);
     var action = component.get("c.validateEinsteinPlatformSetup");
