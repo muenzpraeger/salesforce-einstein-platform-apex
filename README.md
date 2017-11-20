@@ -14,7 +14,7 @@ See the included Playground in action.
 
 ## Version history
 
-The current version is 2.3.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md).
+The current version is 2.4.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md).
 
 ## Prerequisites
 
@@ -43,6 +43,18 @@ sfdx force:org:create -s -f config/project-scratch-def.json
 Push the source to the newly created org.
 ```
 sfdx force:source:push
+```
+
+Assign the Einstein Platform Playground permission set to your user
+
+```
+sfdx force:user:permset:assign -n Einstein_Platform_Playground
+````
+
+Open the scratch org
+
+```
+sfdx force:org:open
 ```
 
 ### Salesforce DX - existing scratch org
