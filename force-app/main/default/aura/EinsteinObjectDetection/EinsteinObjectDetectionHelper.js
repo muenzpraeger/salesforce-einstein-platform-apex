@@ -24,7 +24,6 @@
       });
       var img = component.find("imgItself").getElement();
       ro.observe(img);
-      this.generateSvg(component, result.probabilities);
     });
     component.set("v.predictions", null);
     component.set("v.rawPredictions", null);
