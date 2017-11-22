@@ -13,7 +13,7 @@
                     Einstein Platform is set up successfully in this org.
                 </div>
             </aura:if>
-            <aura:if isTrue="{!v.setupComplete}">
+            <aura:if isTrue="{!!v.setupComplete}">
                 <div class="error">
                     <ul>
                         <aura:if isTrue="{!!v.einsteinEmail}">
