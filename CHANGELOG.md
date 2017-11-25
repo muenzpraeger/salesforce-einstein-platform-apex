@@ -1,6 +1,10 @@
 ## Changelog
 
-* 2.4.0 - 10/16/17
+* 2.4.5 - 11/25/17
+    - Cleaned up permissions in Admin profile
+    - Fixed display of setup page
+
+* 2.4.0 - 11/16/17
     - Added example [Process Builder](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/force-app/main/default/classes/PB_Einstein_Image_Classification.cls) implementation for image classification
     - Increased HTTP timeout to 30 seconds
     - Raised image upload limit to 5MB
