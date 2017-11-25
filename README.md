@@ -14,7 +14,7 @@ See the included Playground in action.
 
 ## Version history
 
-The current version is 2.4.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md).
+The current version is 2.5.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md).
 
 ## Prerequisites
 
@@ -68,6 +68,31 @@ Alternatively you can use [Wade's OSS plugin for Salesforce DX](https://www.npmj
 Again thanks to Wade for creating this neat feature.
 
 [![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/deploy)
+
+### Salesforce DX - deploy into developer edition or production org
+
+You can use the Salesforce CLI to deploy the source into a regular Salesforce org using the Metatdata API.
+
+Authenticate against the deployment org
+```
+sfdx force:auth:web:login -a yourOrgAlias
+```
+
+Create an output directory for the to be converted source
+```
+mkdir mdapi
+```
+
+Convert the source from Salesforce DX format to Metatdata API format
+```
+sfdx force:source:convert -r force-app -d mdapi
+```
+
+Deploy the source
+```
+sfdx force:mdapi:deploy -d mdapi -u yourOrgAlias
+```
+
 
 ## Configuration
 
