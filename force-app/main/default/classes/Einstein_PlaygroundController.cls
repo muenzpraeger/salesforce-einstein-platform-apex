@@ -21,6 +21,9 @@ public class Einstein_PlaygroundController {
     public static void createDatasetFromUrl(String url, String dataType) {
         setType(dataType);
         service.createDatasetFromUrlAsync(url);
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
     }
 
     @AuraEnabled
@@ -33,6 +36,9 @@ public class Einstein_PlaygroundController {
                 datasetsReturn.add(dataset);
             }
         }
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
         return datasetsReturn;
     }
 
@@ -40,6 +46,9 @@ public class Einstein_PlaygroundController {
     public static List<Einstein_Model> getModels(Long datasetId, String dataType) {
         setType(dataType);
         Einstein_Model[] models = service.getModels(datasetId);
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
         return models;
     }
 
@@ -47,6 +56,9 @@ public class Einstein_PlaygroundController {
     public static String trainDataset(Decimal datasetId, String modelName, String dataType) {
         setType(dataType);
         Einstein_Model model = service.trainDataset(datasetId.longValue(), modelName, 0, 0, null);
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
         return model.modelId;
     }
 
@@ -54,6 +66,9 @@ public class Einstein_PlaygroundController {
     public static void deleteDataset(Long datasetId, String dataType) {
         setType(dataType);
         service.deleteDataset(datasetId);
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
     }
 
     @AuraEnabled
@@ -61,6 +76,9 @@ public class Einstein_PlaygroundController {
         setType('');
         service.setType(Einstein_PredictionService.Types.IMAGE);
         Einstein_PredictionResult result = service.predictImageBase64(modelId, base64, 0, '');
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
         return result;
     }
 
@@ -69,6 +87,9 @@ public class Einstein_PlaygroundController {
         setType('');
         service.setType(Einstein_PredictionService.Types.IMAGE_DETECTION);
         Einstein_PredictionResult result = service.detectImageBase64(modelId, base64, 0, '');
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
         return result;
     }
 
@@ -77,6 +98,9 @@ public class Einstein_PlaygroundController {
         setType('');
         service.setType(Einstein_PredictionService.Types.INTENT);
         Einstein_PredictionResult result = service.predictIntent(modelId, phrase, 0, '');
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
         return result;
     }
 
@@ -85,6 +109,9 @@ public class Einstein_PlaygroundController {
         setType('');
         service.setType(Einstein_PredictionService.Types.SENTIMENT);
         Einstein_PredictionResult result = service.predictSentiment(modelId, phrase, 0, '');
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
         return result;
     }
 

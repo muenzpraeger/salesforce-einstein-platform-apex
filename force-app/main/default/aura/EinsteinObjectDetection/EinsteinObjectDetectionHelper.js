@@ -11,8 +11,13 @@
       event.fire();
       var state = a.getState();
       if (state === "ERROR") {
-        console.log(a.getError());
-        alert("An error has occurred");
+        var errors = a.getError();
+        if (errors) {
+          if (errors[0] && errors[0].message) {
+            alert("An error has occurred: " + errors[0].message);
+          }
+        }
+        console.log(errors);
         return;
       }
       var result = a.getReturnValue();
