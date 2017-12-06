@@ -9,6 +9,7 @@ public class Einstein_PredictionService {
     private boolean isExecuting = false;
     private String bearerToken = '';
     public Integer httpStatusCode = 0;
+    public String httpErrorMessage = '';
     private Types typeEnum;
     private String typeString;
     public String baseUrl;
@@ -852,6 +853,7 @@ public class Einstein_PredictionService {
     */
     private void handleError(Integer statusCode, String message) {
         httpStatusCode = statusCode;
+        httpErrorMessage = message;
         System.debug(LoggingLevel.Error, 'Response finished with Error: ' + message);
     }
 
