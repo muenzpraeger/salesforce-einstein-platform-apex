@@ -19,7 +19,7 @@ The current version is 2.5.0 (git tag). Check out the full [changelog](https://g
 ## Prerequisites
 
 For using the wrapper you'll need to fulfill the following requirements:
-* Access to a Salesforce org that as **minimum API version 41**, i. e. a Developer Edition or a scratch org (you can [signup here for free](https://developer.salesforce.com/signup) if you don't have one).
+* Access to a Salesforce org, i. e. a Developer Edition or a scratch org (you can [signup here for free](https://developer.salesforce.com/signup) if you don't have one).
 * An API account for Salesforce Einstein Platform.
 
 Please find the detailed instructions for how to setup access to the [Einstein Platform API here](https://metamind.readme.io/docs/what-you-need-to-call-api).
@@ -67,7 +67,7 @@ Alternatively you can use [Wade's OSS plugin for Salesforce DX](https://www.npmj
 
 Again thanks to Wade for creating this neat feature.
 
-[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/deploy)
+[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/)
 
 ### Salesforce DX - deploy into developer edition or production org
 

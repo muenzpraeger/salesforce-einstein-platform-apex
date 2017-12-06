@@ -1,5 +1,11 @@
 ## Changelog
 
+* 2.5.0
+    - Bubbling up errors to Lighting components in the Playground Apex controller
+    - Adjusting bounding box display for object detection
+    - Fixed Null Pointer Exception when user opens tab without data
+    - Addes .yaml configuration for deploy-to-sfdx button
+
 * 2.4.5 - 11/25/17
     - Cleaned up permissions in Admin profile
     - Fixed display of setup page
