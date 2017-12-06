@@ -22,10 +22,20 @@
           console.log("Unknown error");
         }
       }
-      component.set("v.models", response.getReturnValue());
-      event = component.getEvent("modelEvent");
-      event.setParams({ type: datasetType, models: response.getReturnValue() });
-      event.fire();
+      //Need to handle null response if user clicks tab before
+      //training an actual model
+      var resp = response.getReturnValue();
+      if (resp && resp.length > 0) {
+        component.set("v.models", response.getReturnValue());
+        event = component.getEvent("modelEvent");
+        event.setParams({
+          type: datasetType,
+          models: response.getReturnValue()
+        });
+        event.fire();
+      } else {
+        console.log("No model.");
+      }
     });
     var event = component.getEvent("waitingEvent");
     event.fire();

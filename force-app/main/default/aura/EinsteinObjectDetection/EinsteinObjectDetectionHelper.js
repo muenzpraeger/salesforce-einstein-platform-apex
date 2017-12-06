@@ -11,8 +11,13 @@
       event.fire();
       var state = a.getState();
       if (state === "ERROR") {
-        console.log(a.getError());
-        alert("An error has occurred");
+        var errors = a.getError();
+        if (errors) {
+          if (errors[0] && errors[0].message) {
+            alert("An error has occurred: " + errors[0].message);
+          }
+        }
+        console.log(errors);
         return;
       }
       var result = a.getReturnValue();
@@ -48,6 +53,9 @@
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     var svgNS = svg.namespaceURI;
 
+    var leftPos = img.offsetLeft;
+    var topPos = img.offsetTop;
+
     probabilities.forEach(function(probability) {
       var color = this.getObjectHighlightColor(probability.label);
       // create polygon for box
@@ -59,21 +67,25 @@
       var points = [];
       points.push(
         probability.boundingBox.minX * proportion +
+          leftPos +
           "," +
           probability.boundingBox.minY * proportion
       );
       points.push(
         probability.boundingBox.maxX * proportion +
+          leftPos +
           "," +
           probability.boundingBox.minY * proportion
       );
       points.push(
         probability.boundingBox.maxX * proportion +
+          leftPos +
           "," +
           probability.boundingBox.maxY * proportion
       );
       points.push(
         probability.boundingBox.minX * proportion +
+          leftPos +
           "," +
           probability.boundingBox.maxY * proportion
       );
@@ -87,7 +99,7 @@
         "position:absolute;top:" +
           probability.boundingBox.maxY * proportion +
           "px;left:" +
-          probability.boundingBox.minX * proportion +
+          (probability.boundingBox.minX * proportion + leftPos) +
           "px;width:" +
           (probability.boundingBox.maxX - probability.boundingBox.minX) *
             proportion +
