@@ -1,0 +1,9 @@
+<aura:component extensible="true" abstract="true">
+
+	<aura:attribute name="logErrors" type="boolean" access="global" default="false"/>
+
+	<c:lightningErrorHandler aura:id="leh" logErrors="{!v.logErrors}"/>
+
+	{!v.body}
+
+</aura:component>
