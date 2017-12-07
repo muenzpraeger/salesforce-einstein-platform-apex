@@ -18,6 +18,16 @@ public class Einstein_PlaygroundController {
     }
 
     @AuraEnabled
+    public static List<Einstein_ApiUsage> getUsage() {
+        setType('image');
+        List<Einstein_ApiUsage> usage = service.getApiUsage();
+        if (service.httpStatusCode>200) {
+            throw new AuraHandledException(service.httpErrorMessage);
+        }
+        return usage;
+    }
+
+    @AuraEnabled
     public static void createDatasetFromUrl(String url, String dataType) {
         setType(dataType);
         service.createDatasetFromUrlAsync(url);
