@@ -11,3 +11,7 @@
     border-radius: .25rem;
     background-clip: padding-box;
 }
+
+.THIS .slds-badge {
+    vertical-align: middle;
+}

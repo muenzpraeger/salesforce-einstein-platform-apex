@@ -23,7 +23,10 @@
 
             Dataset Id: {!v.dataset.id}
             <lightning:tabset>
-                <lightning:tab label="Labels" onactive="{!c.onLabelsTab}">
+                <lightning:tab onactive="{!c.onLabelsTab}">
+                    <aura:set attribute="label">
+                        Labels <lightning:badge class="slds-badge_inverse" label="{!v.dataset.labelSummary.labels.length}" />
+                    </aura:set>
                     <table class="slds-table slds-table--bordered slds-table--cell-buffer">
                         <thead>
                             <tr class="slds-text-title--caps">
@@ -49,7 +52,10 @@
                         </tbody>
                     </table>
                 </lightning:tab>
-                <lightning:tab label="Models" onactive="{!c.onModelsTab}">
+                <lightning:tab onactive="{!c.onModelsTab}">
+                    <aura:set attribute="label">
+                        Models <lightning:badge class="slds-badge_inverse" label="{!v.models.length}" />
+                    </aura:set>
                     <table class="slds-table slds-table--bordered slds-table--cell-buffer">
                         <thead>
                             <tr class="slds-text-title--caps">
