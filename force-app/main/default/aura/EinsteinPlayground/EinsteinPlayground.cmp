@@ -7,7 +7,7 @@
     <aura:attribute name="datasetModelsSentiment" type="List"></aura:attribute>
     <aura:attribute name="setupComplete" type="Boolean" />
     <aura:attribute name="einsteinEmail" type="Boolean" />
-    <aura:attribute name="einsteinFile" type="Boolean" />
+    <aura:attribute name="einsteinCert" type="Boolean" />
     <aura:handler name="waitingEvent" event="c:EventEinsteinWaiting" action="{!c.changeSpinner}" />
     <aura:handler name="modelEvent" event="c:EventEinsteinModels" action="{!c.updateModelSelection}" />
     <aura:handler name="init" value="{!this}" action="{!c.doInitPlayground}" />
@@ -18,7 +18,7 @@
                 <aura:set attribute="label">
                     <lightning:icon iconName="utility:info" size="small" /> Introduction
                 </aura:set>
-                <c:EinsteinPlaygroundIntroduction setupComplete="{!v.setupComplete}" einsteinEmail="{!v.einsteinEmail}" einsteinFile="{!v.einsteinEmail}"
+                <c:EinsteinPlaygroundIntroduction setupComplete="{!v.setupComplete}" einsteinEmail="{!v.einsteinEmail}" einsteinFile="{!v.einsteinCert}"
                 />
             </lightning:tab>
             <aura:if isTrue="{!v.setupComplete}">

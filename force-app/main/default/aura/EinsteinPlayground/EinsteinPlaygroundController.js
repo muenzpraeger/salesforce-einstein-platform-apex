@@ -27,12 +27,13 @@
       { id: "CommunitySentiment", label: "Pre-Built - Community Sentiment" }
     ];
     component.set("v.datasetModelsSentiment", modelsDefaultSentiment);
+
     var action = component.get("c.validateEinsteinPlatformSetup");
 		action.setCallback(this, function(a) {
       var result = a.getReturnValue();
-      component.set("v.setupComplete", result.einsteinEmail==true && result.einsteinFile==true);
+      component.set("v.setupComplete", result.einsteinEmail==true && result.einsteinCert==true);
 			component.set("v.einsteinEmail", result.einsteinEmail);
-      component.set("v.einsteinFile", result.einsteinFile);
+      component.set("v.einsteinCert", result.einsteinCert);
 		});
 		$A.enqueueAction(action);
   }
