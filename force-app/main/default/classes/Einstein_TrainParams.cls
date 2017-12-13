@@ -1,5 +1,5 @@
 public class Einstein_TrainParams {
-    
+
     @AuraEnabled
     public Decimal trainSplitRatio {get; set;}
     @AuraEnabled

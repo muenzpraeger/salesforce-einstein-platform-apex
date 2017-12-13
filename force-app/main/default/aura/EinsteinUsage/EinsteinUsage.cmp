@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes" extends="c:promiseErrorHandler" controller="Einstein_PlaygroundController">
+<aura:component implements="flexipage:availableForAllPageTypes" controller="Einstein_PlaygroundController">
 
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 	<c:LightningErrorHandler aura:id="leh"/>

@@ -5,7 +5,7 @@
         "default": true
       },
       {
-        "path": "promiseErrorHandler"
+        "path": "LightningErrorHandler"
       }
     ],
     "namespace": "",

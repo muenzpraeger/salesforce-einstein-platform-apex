@@ -18,7 +18,7 @@ public class Einstein_HttpBodyPartFeedbackExample extends Einstein_HttpBodyPart 
         setData(data);
         setType(types);
     }
-    
+
     public Blob build() {
         String body = '';
         body += WriteBoundary();
@@ -32,14 +32,14 @@ public class Einstein_HttpBodyPartFeedbackExample extends Einstein_HttpBodyPart 
         body += WriteBoundary();
         if (types==Einstein_HttpBodyPartFeedbackExample.Types.BASE64) {
             body += WriteBlobBodyParameter('data', data, name);
-        } else {
-            body += WriteBlobBodyParameter('document', data, name);
+        } else if (types==Einstein_HttpBodyPartFeedbackExample.Types.DOCUMENT) {
+            body += WriteBodyParameter('document', data);
         }
         body += WriteBoundary(EndingType.CrLf);
         Blob bodyBlob = EncodingUtil.base64Decode(body);
         return bodyBlob;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -93,5 +93,5 @@ public class Einstein_HttpBodyPartFeedbackExample extends Einstein_HttpBodyPart 
     public void setType(Einstein_HttpBodyPartFeedbackExample.Types types) {
         this.types = types;
     }
-    
+
 }

@@ -1,34 +1,5 @@
 ({
-  onCreateDataset: function(component) {
-    var action = component.get("c.createDatasetFromUrl");
-    var url = component.find("fileUrl").get("v.value");
-    var dataType = component.get("v.dataType");
-    var self = this;
-    action.setParams({
-      url: url,
-      dataType: dataType
-    });
-    action.setCallback(this, function(response) {
-      var event = component.getEvent("waitingEvent");
-      event.fire();
-      var state = response.getState();
-      if (state === "ERROR") {
-        var errors = response.getError();
-        if (errors) {
-          if (errors[0] && errors[0].message) {
-            return alert(errors[0].message);
-          }
-        } else {
-          return console.log("Unknown error");
-        }
-      }
-      var result = response.getReturnValue();
-      self.onLoadDatasets(component);
-    });
-    var event = component.getEvent("waitingEvent");
-    event.fire();
-    $A.enqueueAction(action);
-  },
+
   onLoadDatasets: function(component) {
     var self = this;
     var action = component.get("c.getDatasets");
@@ -56,6 +27,7 @@
     event.fire();
     $A.enqueueAction(action);
   },
+
   onDeleteDataset: function(component, event) {
     var action = component.get("c.deleteDataset");
     var datasetId = event.getSource().get("v.value");

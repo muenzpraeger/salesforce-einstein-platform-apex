@@ -519,6 +519,7 @@ public class Einstein_PredictionService {
         }
         System.debug('Call getModelMetrics has been executed.');
         if (!client.isError()) {
+            system.debug(client);
             Einstein_ModelMetrics modelMetrics = (Einstein_ModelMetrics)client.getParser().readValueAs(Einstein_ModelMetrics.class);
             System.debug('ModelMetrics have been read.');
             return modelMetrics;

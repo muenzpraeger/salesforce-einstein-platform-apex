@@ -1,0 +1,78 @@
+<aura:component controller="Einstein_PlaygroundController">
+
+	<aura:attribute name="modelId" type="string" access="public" required="true" />
+	<aura:attribute name="dataset" type="object" access="public" required="true" />
+	<aura:attribute name="dataType" type="string" access="public" required="false" default="image" />
+
+
+<aura:attribute name="data" type="object" />
+<aura:attribute name="indexCounter" type="integer[]" />
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+<aura:if isTrue="{!v.data.data}">
+	<lightning:card title="Model Epoch Details">
+		<table class="slds-table slds-table--bordered slds-table--cell-buffer">
+			<thead>
+				<tr class="slds-text-title--caps">
+					<th scope="col">
+						<div class="slds-truncate" title="Label">Epoch</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Label">Test Accuracy</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Label">Training Accuracy</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Label">Training Loss</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Label">F1</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Label">Confusion</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<aura:iteration items="{!v.data.data}" var="LC">
+					<tr>
+						<th scope="row" data-label="Epoch">
+							{!LC.epoch}
+						</th>
+						<th scope="row" data-label="Examples">
+							{!LC.metricsData.testAccuracy}
+						</th>
+						<th scope="row" data-label="Id">
+							{!LC.metricsData.trainingAccuracy}
+						</th>
+						<th scope="row" data-label="Id">
+							{!LC.metricsData.trainingLoss}
+						</th>
+						<th scope="row" data-label="Id">
+							<aura:iteration items="{!LC.preparedData.f1}" var="f1">
+								<p>{!f1.label}:
+									<ui:outputNumber value="{!f1.value}" format=".00" />
+								</p>
+							</aura:iteration>
+						</th>
+						<th scope="row" data-label="Id">
+							<aura:iteration items="{!LC.preparedData.confusion}" var="c">
+								<p>[{!c.value}]</p>
+							</aura:iteration>
+						</th>
+					</tr>
+				</aura:iteration>
+			</tbody>
+		</table>
+
+	</lightning:card>
+	<aura:set attribute="else">
+		<div class="slds-box slds-theme_shade">
+			<p class="slds-text-heading_medium slds-text-color_error">No learning curves were found for this model</p>
+		</div>
+	</aura:set>
+</aura:if>
+
+</aura:component>
