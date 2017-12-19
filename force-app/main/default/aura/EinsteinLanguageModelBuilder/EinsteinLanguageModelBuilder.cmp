@@ -1,4 +1,4 @@
-<aura:component controller="Einstein_PlaygroundController">
+<aura:component controller="Einstein_PlaygroundController" implements="flexipage:availableForAllPageTypes">
 
 	<aura:attribute name="objects" type="object[]" />
 	<aura:attribute name="selectedObject" type="string" />

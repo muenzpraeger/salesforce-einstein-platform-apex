@@ -5,3 +5,4 @@ einstein_platform.pem
 certs
 **apexScripts
 .gitignore
+.vscode/settings.json
