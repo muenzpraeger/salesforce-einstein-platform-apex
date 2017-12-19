@@ -10,11 +10,11 @@
 
 <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-<aura:if isTrue="{!v.data.data}">
+<aura:if isTrue="{!v.data}">
 	<lightning:card title="Model Epoch Details">
-		<table class="slds-table slds-table--bordered slds-table--cell-buffer">
+		<table class="slds-table slds-table_bordered slds-table_cell-buffer">
 			<thead>
-				<tr class="slds-text-title--caps">
+				<tr class="slds-text-title_caps">
 					<th scope="col">
 						<div class="slds-truncate" title="Label">Epoch</div>
 					</th>
@@ -36,29 +36,29 @@
 				</tr>
 			</thead>
 			<tbody>
-				<aura:iteration items="{!v.data.data}" var="LC">
+				<aura:iteration items="{!v.data}" var="epoch">
 					<tr>
 						<th scope="row" data-label="Epoch">
-							{!LC.epoch}
+							{!epoch.epoch}
 						</th>
 						<th scope="row" data-label="Examples">
-							{!LC.metricsData.testAccuracy}
+							{!epoch.metricsData.testAccuracy}
 						</th>
 						<th scope="row" data-label="Id">
-							{!LC.metricsData.trainingAccuracy}
+							{!epoch.metricsData.trainingAccuracy}
 						</th>
 						<th scope="row" data-label="Id">
-							{!LC.metricsData.trainingLoss}
+							{!epoch.metricsData.trainingLoss}
 						</th>
 						<th scope="row" data-label="Id">
-							<aura:iteration items="{!LC.preparedData.f1}" var="f1">
+							<aura:iteration items="{!epoch.preparedData.f1}" var="f1">
 								<p>{!f1.label}:
 									<ui:outputNumber value="{!f1.value}" format=".00" />
 								</p>
 							</aura:iteration>
 						</th>
 						<th scope="row" data-label="Id">
-							<aura:iteration items="{!LC.preparedData.confusion}" var="c">
+							<aura:iteration items="{!epoch.preparedData.confusion}" var="c">
 								<p>[{!c.value}]</p>
 							</aura:iteration>
 						</th>

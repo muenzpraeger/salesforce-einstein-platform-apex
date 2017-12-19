@@ -40,9 +40,11 @@
   },
 
   openMetrics : function(component, event, helper) {
+    console.log("opening metrics for type " + component.get("v.dataset.type"));
     $A.createComponent("c:einsteinModelMetrics", {
         "modelId": event.getSource().get("v.name"),
-        "dataset" : component.get("v.dataset")
+        "dataset" : component.get("v.dataset"),
+        "dataType" : component.get("v.dataset.type")
       },
       function (content, status) {
         if (status === "SUCCESS") {
