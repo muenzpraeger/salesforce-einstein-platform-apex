@@ -16,4 +16,4 @@ sfdx force:data:tree:import -f data/Account.json
 # sfdx force:apex:execute -f SetupScripting/apexDeletions.cls
 # sfdx force:data:tree:import -p data/masterImportPlan.json
 # sfdx force:apex:execute -f SetupScripting/urlSetup.cls
-sfdx force:org:open -p /one/one.app#/setup/home -p /one/one.app#/setup/CertificatesAndKeysManagement/home
+sfdx force:org:open -p /one/one.app#/setup/CertificatesAndKeysManagement/home
