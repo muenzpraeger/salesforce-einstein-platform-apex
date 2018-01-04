@@ -5,6 +5,6 @@ public class Einstein_ModelLearningCurve {
     @AuraEnabled
     public List<Einstein_EpochResult> epochResults {get; set;}
     @AuraEnabled
-    public Einstein_ModelMetrics modelMetrics {get; set;}
+    public Einstein_ModelMetrics metricsData {get; set;}
     
 }
