@@ -7,13 +7,5 @@ sfdx force:data:record:create -s Einstein_Settings__c -v "Einstein_EMail__c='sha
 
 # sample records for testing dataset generation
 sfdx force:data:tree:import -f data/Account.json
-# sfdx force:user:create -f config/userDef/cloudy-user-def.json
-# sfdx force:user:create -f config/userDef/codey-user-def.json
 
-# sfdx msm:user:photo -f assets/cloudy_lightning.png -l Cloudy
-# sfdx msm:user:photo -f assets/codey_lightning.png  -l CodeBear
-
-# sfdx force:apex:execute -f SetupScripting/apexDeletions.cls
-# sfdx force:data:tree:import -p data/masterImportPlan.json
-# sfdx force:apex:execute -f SetupScripting/urlSetup.cls
-sfdx force:org:open -p /one/one.app#/setup/home -p /one/one.app#/setup/CertificatesAndKeysManagement/home
+sfdx force:org:open -p /one/one.app#/setup/CertificatesAndKeysManagement/home
