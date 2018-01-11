@@ -933,23 +933,39 @@ public class Einstein_PredictionService {
     public static String getAccessToken() {
         // Try to retrieve email setting
         Einstein_Settings__c settings = Einstein_Settings__c.getOrgDefaults();
-        if (settings.Einstein_EMail__c == null) {
-            throw new Einstein_ConfigurationException('Missing Einstein email setting. Check your Custom Settings.');
-        }
-        if (settings.Einstein_EMail__c == null) {
-            throw new Einstein_ConfigurationException('Missing Einstein Certificate Name. Check your Custom Settings.');
-        }
-
-        // Get a new token
         Einstein_JWT jwt = new Einstein_JWT('RS256');
-        jwt.cert = settings.CertName__c;
-        jwt.iss = 'developer.force.com';
-        jwt.sub = settings.Einstein_EMail__c;
-        jwt.aud = OAUTH2;
-        jwt.exp = '3600';
         String accessToken = '';
 
         if (!Test.isRunningTest()) {
+
+            if (settings.Einstein_EMail__c == null) {
+                throw new Einstein_ConfigurationException('Missing Einstein email setting. Check your Custom Settings.');
+            }
+
+            if (settings.CertName__c == null) {
+                ContentVersion base64Content;
+                // Try to retrieve certificate
+                try {
+                    base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' AND IsLatest=true LIMIT 1];
+                } catch (QueryException e) {
+                    throw new Einstein_ConfigurationException('Could not retrieve the Einstein Platform certificate file: einstein_platform', e);
+                }
+
+                String keyContents = base64Content.VersionData.tostring();
+                keyContents = keyContents.replace('-----BEGIN RSA PRIVATE KEY-----', '');
+                keyContents = keyContents.replace('-----END RSA PRIVATE KEY-----', '');
+                keyContents = keyContents.replace('\n', '');
+                jwt.pkcs8 = keyContents;
+            } else {
+                jwt.cert = settings.CertName__c;
+            }
+
+            // Get a new token
+            jwt.iss = 'developer.force.com';
+            jwt.sub = settings.Einstein_EMail__c;
+            jwt.aud = OAUTH2;
+            jwt.exp = '3600';      
+        
             accessToken = Einstein_JWTBearerFlow.getAccessToken(OAUTH2, jwt);
         }
 

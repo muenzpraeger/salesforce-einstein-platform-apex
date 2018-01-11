@@ -198,7 +198,13 @@ public class Einstein_PlaygroundController {
             mapSettings.put('einsteinEmail', true);
         }
         if (settings.CertName__c == null) {
-            mapSettings.put('einsteinCert', false);
+            ContentVersion base64Content;
+            // Try to retrieve certificate
+            try {
+                base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' AND IsLatest=true LIMIT 1];
+            } catch (QueryException e) {
+                mapSettings.put('einsteinCert', false);
+            }
         } else {
             mapSettings.put('einsteinCert', true);
         }

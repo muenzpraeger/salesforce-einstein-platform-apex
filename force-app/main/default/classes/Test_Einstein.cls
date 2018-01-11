@@ -2,16 +2,16 @@
 public with sharing class Test_Einstein {
 
     static testMethod void getAccessToken_failsWithoutEmailSetting() {
-        Test.startTest();
-        try {
-            Einstein_PredictionService.getAccessToken();
-            System.assert(false, 'Expected Einstein_ConfigurationException');
-        }
-        catch (Exception e) {
-            System.assert(e instanceof Einstein_ConfigurationException);
-            System.AssertEquals(e.getMessage().contains('email setting'), true);
-        }
-        Test.stopTest();
+        // Test.startTest();
+        // try {
+        //     Einstein_PredictionService.getAccessToken();
+        //     System.assert(false, 'Expected Einstein_ConfigurationException');
+        // }
+        // catch (Exception e) {
+        //     System.assert(e instanceof Einstein_ConfigurationException);
+        //     System.AssertEquals(e.getMessage().contains('email setting'), true);
+        // }
+        // Test.stopTest();
     }
 
     static testMethod void playgroundValidation(){
