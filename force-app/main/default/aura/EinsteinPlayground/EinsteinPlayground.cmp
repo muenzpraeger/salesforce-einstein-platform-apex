@@ -25,23 +25,16 @@
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:preview" size="xx-small" /> Image Classification
                     </aura:set>
-                    <!-- <c:EinsteinImageClassification allModelsByType="{! v.modelsByType }" /> -->
                     <c:EinsteinGenericPlaygroundComponent dataType="image" iconName="utility:preview" allModelsByType="{! v.modelsByType }"/>
                 </lightning:tab>
                 <lightning:tab>
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:richtextbulletedlist" size="xx-small" /> Image Classification (Multi)
                     </aura:set>
-                    <!-- <c:EinsteinImageClassificationMultiImage allModelsByType="{! v.modelsByType }" /> -->
                     <c:EinsteinGenericPlaygroundComponent dataType="image-multi-label" iconName="utility:richtextbulletedlist" allModelsByType="{! v.modelsByType }" />
 
                 </lightning:tab>
-                <!-- <lightning:tab>
-                    <aura:set attribute="label">
-                        <lightning:icon iconName="utility:zoomin" size="xx-small" /> Object Detection
-                    </aura:set>
-                    <c:EinsteinObjectDetection allModelsByType="{! v.modelsByType }" />
-                </lightning:tab> -->
+
                 <lightning:tab>
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:zoomin" size="xx-small" /> Object Detection
@@ -52,7 +45,6 @@
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:like" size="xx-small" /> Sentiment
                     </aura:set>
-                    <!-- <c:EinsteinSentiment allModelsByType="{! v.modelsByType }" /> -->
                     <c:EinsteinGenericPlaygroundComponent dataType="text-sentiment" iconName="utility:like" allModelsByType="{! v.modelsByType }" />
 
                 </lightning:tab>
@@ -61,14 +53,8 @@
                         <lightning:icon iconName="utility:signpost" size="xx-small" /> Intent
                     </aura:set>
                     <c:EinsteinGenericPlaygroundComponent dataType="text-intent" iconName="utility:signpost" allModelsByType="{! v.modelsByType }" />
-                    <!-- <c:EinsteinIntent allModelsByType="{! v.modelsByType }" /> -->
                 </lightning:tab>
-                <lightning:tab>
-                    <aura:set attribute="label">
-                        <lightning:icon iconName="utility:magicwand" size="xx-small" /> Language Dataset Maker
-                    </aura:set>
-                    <c:EinsteinLanguageModelBuilder/>
-                </lightning:tab>
+
             </aura:if>
         </lightning:tabset>
 
