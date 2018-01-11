@@ -1,0 +1,16 @@
+<aura:component access="global">
+
+	<aura:attribute name="errorHandlerName" type="string" required="false" description="if set, only toasts errors when the name matches" access="global"/>
+	<aura:handler event="c:handleCallbackError" action="{!c.handleEvent}"   />
+	<aura:attribute name="logErrors" type="boolean" default="false" />
+
+	<aura:method name="passErrors" action="{!c.handleMethod}" access="global" description="the error object from a server-side call's callback">
+		<aura:attribute name="errorObject" type="object" required="true" />
+	</aura:method>
+
+	<aura:method name="passText" action="{!c.simple}" access="global" description="pass in a simple string to be used as the error message">
+		<aura:attribute name="text" type="string" required="true" />
+	</aura:method>
+
+	{!v.body}
+</aura:component>

@@ -1,5 +1,5 @@
 .THIS {
-    height: 320px;
+    /* height: 320px; */
 }
 
 .THIS .slds-card__body {
@@ -10,4 +10,8 @@
     border: 1px solid rgb(221, 219, 218);
     border-radius: .25rem;
     background-clip: padding-box;
+}
+
+.THIS .slds-badge {
+    vertical-align: middle;
 }
