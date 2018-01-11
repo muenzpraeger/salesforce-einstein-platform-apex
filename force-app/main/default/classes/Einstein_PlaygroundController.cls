@@ -27,20 +27,19 @@ public class Einstein_PlaygroundController {
     }
 
     @AuraEnabled
-    public static Einstein_ModelMetrics getModelMetrics(string modelId, string dataType){
+    public static String getModelMetrics(string modelId, string dataType){
         setType(dataType);
-        Einstein_ModelMetrics metrics = service.getModelMetrics(modelId);
+        String metrics = service.getModelMetrics(modelId);
         if (service.httpStatusCode>200) {
             throw new AuraHandledException(service.httpErrorMessage);
         }
         return metrics;
     }
 
-     @AuraEnabled
-    public static Einstein_ModelLearningCurve[] getLearningCurves(string modelId, string dataType){
+    @AuraEnabled
+    public static String getLearningCurves(string modelId, string dataType){
         setType(dataType);
-        //public Einstein_ModelLearningCurve[] getModelLearningCurve(String modelId) {
-        Einstein_ModelLearningCurve[] curves = service.getModelLearningCurve(modelId);
+        String curves = service.getModelLearningCurve(modelId);
         if (service.httpStatusCode>200) {
             throw new AuraHandledException(service.httpErrorMessage);
         }

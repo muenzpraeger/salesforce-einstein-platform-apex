@@ -74,14 +74,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Einstein_ModelLearningCurve</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Einstein_ModelMetrics</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>Einstein_NoValuesException</apexClass>
         <enabled>true</enabled>
     </classAccesses>

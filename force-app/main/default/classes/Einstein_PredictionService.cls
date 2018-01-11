@@ -482,9 +482,9 @@ public class Einstein_PredictionService {
     * @param modelId
     * The model id for which the learning curve should be fetched.
     * @return
-    * An array of object Einstein_ModelLearningCurve
+    * The JSON response as raw String
     */
-    public Einstein_ModelLearningCurve[] getModelLearningCurve(String modelId) {
+    public String getModelLearningCurve(String modelId) {
         System.debug('Starting getModelLearningCurve call with parameter ' + modelId);
         Einstein_HttpClient client = new Einstein_HttpClient(this, '/models/' + modelId + '/lc');
         System.debug('Target URL is ' + client.getUrl());
@@ -494,7 +494,7 @@ public class Einstein_PredictionService {
         }
         System.debug('Call getModelLearningCurve has been executed.');
         if (!client.isError()) {
-            Einstein_ModelLearningCurve[] modelLearningCurve = (Einstein_ModelLearningCurve[])client.getParser().readValueAs(Einstein_ModelLearningCurve[].class);
+            String modelLearningCurve = client.getResponseAsString();
             System.debug('ModelLearningCurve has been read.');
             return modelLearningCurve;
         }
@@ -507,9 +507,9 @@ public class Einstein_PredictionService {
     * @param modelId
     * The model id for which the metrics should be fetched.
     * @return
-    * An object of type Einstein_ModelMetrics
+    * The JSON response as raw String
     */
-    public Einstein_ModelMetrics getModelMetrics(String modelId) {
+    public String getModelMetrics(String modelId) {
         System.debug('Starting getModelMetrics call with parameter ' + modelId);
         Einstein_HttpClient client = new Einstein_HttpClient(this, '/models/' + modelId);
         System.debug('Target URL is ' + client.getUrl());
@@ -520,7 +520,7 @@ public class Einstein_PredictionService {
         System.debug('Call getModelMetrics has been executed.');
         if (!client.isError()) {
             system.debug(client);
-            Einstein_ModelMetrics modelMetrics = (Einstein_ModelMetrics)client.getParser().readValueAs(Einstein_ModelMetrics.class);
+            String modelMetrics = client.getResponseAsString();
             System.debug('ModelMetrics have been read.');
             return modelMetrics;
         }
