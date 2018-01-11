@@ -18,10 +18,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Einstein_EpochResult</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>Einstein_Example</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -75,14 +71,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Einstein_Model</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Einstein_ModelLearningCurve</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Einstein_ModelMetrics</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
