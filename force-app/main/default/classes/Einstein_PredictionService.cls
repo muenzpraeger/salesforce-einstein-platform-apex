@@ -1,11 +1,11 @@
 public class Einstein_PredictionService {
-
+    
     // Base URL for the PredictionService
     private static String BASE_URL = 'https://api.einstein.ai/v2';
-
+    
     private String API_USAGE = BASE_URL + '/apiusage';
     private static String OAUTH2 = BASE_URL + '/oauth2/token';
-
+    
     private boolean isExecuting = false;
     private String bearerToken = '';
     public Integer httpStatusCode = 0;
@@ -21,12 +21,12 @@ public class Einstein_PredictionService {
         SENTIMENT,
         INTENT
     }
-
+    
     /**
     * <p>Create a new object of type Einstein_PredictionService.</p>
-    *
+    * 
     * <p>The Einstein_PredictionService is the foundation for communicating with the Salesforce Einstein Platform API.
-    *
+    * 
     * @param typeEnum
     * An Enum of type Einstein_PredictionService.Types which defines the type of prediction (image, image-multi-model, sentiment or intent).
     */
@@ -36,12 +36,12 @@ public class Einstein_PredictionService {
         this.baseUrl = resolveBaseUrl();
         this.typeString = resolveType();
     }
-
+    
     /**
     * <p>Create a new object of type Einstein_PredictionService.</p>
-    *
+    * 
     * <p>The Einstein_PredictionService is the foundation for communicating with the Salesforce Einstein Platform API.
-    *
+    * 
     * @param bearerToken
     * A valid Bearer token
     * @param typeEnum
@@ -53,7 +53,7 @@ public class Einstein_PredictionService {
         this.baseUrl = resolveBaseUrl();
         this.typeString = resolveType();
     }
-
+    
     /**
     * Creates a new dataset with data from a remote file (async call).
     * @param url
@@ -107,7 +107,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Gets an existing Einstein_Dataset.
     * @param id
@@ -135,7 +135,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Gets the globally, by Salesforce provided, datasets.
     * @return
@@ -190,7 +190,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Deletes an existing dataset.
     * @param datasetId
@@ -215,7 +215,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return false;
     }
-
+    
     /**
     * Adds new image examples for the vision training.
     * @param datasetId
@@ -277,7 +277,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Adds new image examples for model feedback to vision training.
     * @param name
@@ -354,7 +354,7 @@ public class Einstein_PredictionService {
     public Einstein_Example[] getExamples(Long datasetId) {
         return getExamples(datasetId, 25, 0, Einstein_Example.Types.ALL);
     }
-
+    
     /**
     * Gets an array of all Einstein_Examples that are associated with the given dataset id.
     * @param datasetId
@@ -385,7 +385,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Starts the training of a Einstein_Dataset.
     * @param datasetId
@@ -451,7 +451,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Fetches the model for the given id.
     * @param modelId
@@ -476,15 +476,15 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Gets the learning curve of a model.
     * @param modelId
     * The model id for which the learning curve should be fetched.
     * @return
-    * The JSON response as raw String
+    * An array of object Einstein_ModelLearningCurve
     */
-    public String getModelLearningCurve(String modelId) {
+    public Einstein_ModelLearningCurve[] getModelLearningCurve(String modelId) {
         System.debug('Starting getModelLearningCurve call with parameter ' + modelId);
         Einstein_HttpClient client = new Einstein_HttpClient(this, '/models/' + modelId + '/lc');
         System.debug('Target URL is ' + client.getUrl());
@@ -494,22 +494,22 @@ public class Einstein_PredictionService {
         }
         System.debug('Call getModelLearningCurve has been executed.');
         if (!client.isError()) {
-            String modelLearningCurve = client.getResponseAsString();
+            Einstein_ModelLearningCurve[] modelLearningCurve = (Einstein_ModelLearningCurve[])client.getParser().readValueAs(Einstein_ModelLearningCurve[].class);
             System.debug('ModelLearningCurve has been read.');
             return modelLearningCurve;
         }
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Gets the metrics of a model.
     * @param modelId
     * The model id for which the metrics should be fetched.
     * @return
-    * The JSON response as raw String
+    * An object of type Einstein_ModelMetrics
     */
-    public String getModelMetrics(String modelId) {
+    public Einstein_ModelMetrics getModelMetrics(String modelId) {
         System.debug('Starting getModelMetrics call with parameter ' + modelId);
         Einstein_HttpClient client = new Einstein_HttpClient(this, '/models/' + modelId);
         System.debug('Target URL is ' + client.getUrl());
@@ -519,15 +519,14 @@ public class Einstein_PredictionService {
         }
         System.debug('Call getModelMetrics has been executed.');
         if (!client.isError()) {
-            system.debug(client);
-            String modelMetrics = client.getResponseAsString();
+            Einstein_ModelMetrics modelMetrics = (Einstein_ModelMetrics)client.getParser().readValueAs(Einstein_ModelMetrics.class);
             System.debug('ModelMetrics have been read.');
             return modelMetrics;
         }
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Gets all trained Einstein_Models that are trained for the given Einstein_Dataset id.
     * @param datasetId
@@ -648,7 +647,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Detects objects in the given image in Base64 format based a trained model.
     * @param model
@@ -680,7 +679,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Detects objects in the given image in Base64 format based a trained model.
     * @param model
@@ -712,7 +711,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
    /**
     * Predicts the association of the given image in Base64 format to a trained model.
     * @param model
@@ -744,7 +743,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Predicts the association of the given image as Blob to a trained model.
     * @param modelId
@@ -776,7 +775,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Predicts the association of the given image on a remote url to a trained model.
     * @param modelId
@@ -808,7 +807,7 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
     * Fetches data about the API usage of the authenticated PredictionService.
     * @return
@@ -831,25 +830,25 @@ public class Einstein_PredictionService {
         handleError(client.getStatusCode(), client.getResponseError());
         return null;
     }
-
+    
     /**
-    *
+    * 
     * @return
     */
     public boolean isExecuting() {
         return isExecuting;
     }
-
+    
     /**
-    *
+    * 
     * @param isExecuting
     */
     public void isExecuting(boolean isExecuting) {
         this.isExecuting = isExecuting;
     }
-
+    
     /**
-    *
+    * 
     * @param message
     */
     private void handleError(Integer statusCode, String message) {
@@ -868,7 +867,7 @@ public class Einstein_PredictionService {
         this.baseUrl = resolveBaseUrl();
         this.typeString = resolveType();
     }
-
+    
     private String resolveType() {
         if (this.typeEnum == Einstein_PredictionService.Types.IMAGE) {
             return 'image';
@@ -923,53 +922,46 @@ public class Einstein_PredictionService {
 
 
     /**
-    *
+    * 
     * @return
     */
     public String getBearerToken() {
         return bearerToken;
     }
-
+    
     public static String getAccessToken() {
         // Try to retrieve email setting
         Einstein_Settings__c settings = Einstein_Settings__c.getOrgDefaults();
-        Einstein_JWT jwt = new Einstein_JWT('RS256');
-        String accessToken = '';
-
-        if (!Test.isRunningTest()) {
-
-            if (settings.Einstein_EMail__c == null) {
-                throw new Einstein_ConfigurationException('Missing Einstein email setting. Check your Custom Settings.');
-            }
-
-            if (settings.CertName__c == null) {
-                ContentVersion base64Content;
-                // Try to retrieve certificate
-                try {
-                    base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' AND IsLatest=true LIMIT 1];
-                } catch (QueryException e) {
-                    throw new Einstein_ConfigurationException('Could not retrieve the Einstein Platform certificate file: einstein_platform', e);
-                }
-
-                String keyContents = base64Content.VersionData.tostring();
-                keyContents = keyContents.replace('-----BEGIN RSA PRIVATE KEY-----', '');
-                keyContents = keyContents.replace('-----END RSA PRIVATE KEY-----', '');
-                keyContents = keyContents.replace('\n', '');
-                jwt.pkcs8 = keyContents;
-            } else {
-                jwt.cert = settings.CertName__c;
-            }
-
-            // Get a new token
-            jwt.iss = 'developer.force.com';
-            jwt.sub = settings.Einstein_EMail__c;
-            jwt.aud = OAUTH2;
-            jwt.exp = '3600';      
+        if (settings.Einstein_EMail__c == null) {
+            throw new Einstein_ConfigurationException('Missing Einstein email setting. Check your Custom Settings.');
+        }
+        ContentVersion base64Content;
+        // Try to retrieve certificate
+        try {
+            base64Content = [SELECT Title, VersionData FROM ContentVersion where Title='einstein_platform' AND IsLatest=true LIMIT 1];
+        }
+        catch (QueryException e) {
+            throw new Einstein_ConfigurationException('Could not retrieve the Einstein Platform certificate file: einstein_platform', e);
+        }
+        String keyContents = base64Content.VersionData.tostring();
+        keyContents = keyContents.replace('-----BEGIN RSA PRIVATE KEY-----', '');
+        keyContents = keyContents.replace('-----END RSA PRIVATE KEY-----', '');
+        keyContents = keyContents.replace('\n', '');
         
+        // Get a new token
+        Einstein_JWT jwt = new Einstein_JWT('RS256');
+        jwt.pkcs8 = keyContents; // Comment this if you are using jwt.cert
+        jwt.iss = 'developer.force.com';
+        jwt.sub = settings.Einstein_EMail__c;
+        jwt.aud = OAUTH2;
+        jwt.exp = '3600';
+        String accessToken = '';
+        
+        if (!Test.isRunningTest()) {
             accessToken = Einstein_JWTBearerFlow.getAccessToken(OAUTH2, jwt);
         }
-
-        return accessToken;
+        
+        return accessToken;    
     }
-
+    
 }

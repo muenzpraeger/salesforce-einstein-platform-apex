@@ -2,7 +2,7 @@ public virtual class Einstein_HttpBodyPart {
 
     public Einstein_HttpBodyPart() {
     }
-
+    
     //  The boundary is alligned so it doesn't produce padding characters when base64 encoded.
     private final static string Boundary = '1ff13444ed8140c7a32fc4e6451aa76d';
 
@@ -104,26 +104,26 @@ public virtual class Einstein_HttpBodyPart {
 
         return content;
     }
-
+    
   /**
      *  Write a key-value pair to the form's body for a blob.
      */
     public static string WriteBlobBodyParameter(string key, string file64, string fileName) {
-
+        
         String mimeType = resolveMimeType(fileName);
-
+        
         string contentDisposition = 'Content-Disposition: form-data; name="' + key + '"; filename="'+fileName+'"';
         string contentDispositionCrLf = contentDisposition + '\r\n';
         blob contentDispositionCrLfBlob = blob.valueOf(contentDispositionCrLf);
         string contentDispositionCrLf64 = EncodingUtil.base64Encode(contentDispositionCrLfBlob);
         string content = SafelyPad(contentDisposition, contentDispositionCrLf64, '\r\n');
-
+        
         string contentTypeHeader = 'Content-Type: ' + mimeType;
         string contentTypeCrLf = contentTypeHeader + '\r\n\r\n';
         blob contentTypeCrLfBlob = blob.valueOf(contentTypeCrLf);
         string contentTypeCrLf64 = EncodingUtil.base64Encode(contentTypeCrLfBlob);
         content += SafelyPad(contentTypeHeader, contentTypeCrLf64, '\r\n\r\n');
-
+        
         integer file64Length = file64.length();
         String last4Bytes = file64.substring(file64.length()-4,file64.length());
 
@@ -161,13 +161,13 @@ public virtual class Einstein_HttpBodyPart {
             // We have appended the CR e.g. \r, still need to prepend the line feed to the footer
             ending = EndingType.Cr;
         }
-
+               
         content += file64;
-
+        
         content += WriteBoundary(ending);
         return content;
     }
-
+    
     private static String resolveMimeType(String fileName) {
         String fileType = fileName.substringAfterLast('.');
         String mimeType = 'image/png'; // fallback value
@@ -178,7 +178,7 @@ public virtual class Einstein_HttpBodyPart {
         } else if (fileType.equalsIgnoreCase('pgm')) {
             mimeType = 'image/x-portable-graymap';
         } else if (fileType.equalsIgnoreCase('ppm')) {
-            mimeType = 'image/x-portable-pixmap';
+            mimeType = 'image/x-portable-pixmap';            
         }
         return mimeType;
     }

@@ -6,12 +6,4 @@
     </applicationVisibilities>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Einstein_Platform_Playground</label>
-    <tabSettings>
-        <tab>Einstein_Usage</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Playground</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

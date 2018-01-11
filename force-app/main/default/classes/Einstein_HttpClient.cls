@@ -12,7 +12,6 @@ public class Einstein_HttpClient {
     private String errorMessage;
     private Integer statusCode;
     private String statusMessage;
-    private String stringResponse;
 
 
     public Einstein_HttpClient(Einstein_PredictionService predictionService, String url) {
@@ -107,7 +106,7 @@ public class Einstein_HttpClient {
     private void updateResponseValues(HTTPResponse response) {
         statusCode = response.getStatusCode();
         statusMessage = response.getStatus();
-        stringResponse = response.getBody();
+        System.debug(response.getBody());
         try {
             parser = JSON.createParser(response.getBody());
         } catch (Exception e) {
@@ -119,7 +118,7 @@ public class Einstein_HttpClient {
             while (parser.nextToken()!=null) {
                 if (parser.getCurrentToken()==JSONToken.FIELD_NAME) {
                     String currentProperty = parser.getText();
-                    if (currentProperty=='data') {
+                    if (currentProperty=='data' || currentProperty=='metricsData') {
                         parser.nextToken();
                         hasDataToken = true;
                         break;
@@ -150,10 +149,6 @@ public class Einstein_HttpClient {
 
     public JSONParser getParser() {
         return parser;
-    }
-
-    public String getResponseAsString() {
-        return stringResponse;
     }
 
 }
