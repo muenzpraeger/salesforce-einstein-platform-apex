@@ -1,23 +1,5 @@
 ## Changelog
 
-* Shane updates
-    - move to certificate based authentication
-    - label/model count in badges on playground
-    - model stats (confusion, f1, etc)
-    - usage/limits component/tab
-    - dataset cards can grow vertically with label count
-    - separate playground for multi-image detection
-    - refactoring/consolidation of components
-    - build language models from Salesforce data
-    - example processBuilder implementation of language predictions + feedback (inactive, don't worry!)
-    - predictions from image urls
-    - intelligent, high-contrast color coding for object detection
-    - scalable (responsive) object detection image display
-    - metrics on models in a modal
-    - failure messages for model training
-    - model retrain of most recent model (keep same modelId)
-    - friendly names (model names) for model selection dropdown
-
 * 2.5.0
     - Bubbling up errors to Lighting components in the Playground Apex controller
     - Adjusting bounding box display for object detection
@@ -34,7 +16,7 @@
     - Raised image upload limit to 5MB
 
 * 2.3.0 - 10/16/17
-    - Adding Einstein Image Detection (beta)
+    - Adding Einstein Image Detection (beta) 
     - Minor UI changes
 
 * 2.2.0 - 09/13/17

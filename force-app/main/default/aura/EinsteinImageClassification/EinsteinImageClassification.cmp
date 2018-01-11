@@ -1,0 +1,64 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="Einstein_PlaygroundController" access="global">
+
+    <aura:attribute name="modelId" type="String" />
+    <aura:attribute name="imageType" type="String" />
+
+    <aura:attribute name="files" type="Object[]" />
+    <aura:attribute name="predictions" type="Object[]" />
+    <aura:attribute name="rawPredictions" type="String" />
+    <aura:attribute name="pictureSrc" type="String" />
+    <aura:attribute name="fileName" type="String" />
+    <aura:attribute name="selectionModels" type="List" />
+    <aura:attribute name="defaultUrl" type="String" default="http://einstein.ai/images/mountainvsbeach.zip" />
+
+    <aura:registerEvent name="waitingEvent" type="c:EventEinsteinWaiting" />
+
+    <div>
+
+        <lightning:select name="selectImageType" value="{!v.imageType}" onchange="{!c.switchDefaultUrl}">
+            <option value="image">Image (standard)</option>
+            <option value="image-multi-label">Image (multi-label)</option>
+        </lightning:select>
+        <br></br>
+        <lightning:tabset>
+            <lightning:tab label="1. Data and Training">
+                <c:EinsteinDataAndTraining dataType="{!v.imageType}" defaultUrl="{!v.defaultUrl}" />
+            </lightning:tab>
+            <lightning:tab label="2. Prediction">
+                <lightning:layout class="request-response">
+                    <lightning:layoutitem size="6" class="request">
+                        <div class="slds-text-title_caps">Request</div>
+                        <lightning:select name="selectModel" label="Model:" required="true" value="{!v.modelId}">
+                            <aura:iteration items="{!v.selectionModels}" var="model">
+                                <option value="{!model.id}" text="{!model.label}"></option>
+                            </aura:iteration>
+                        </lightning:select>
+                        <lightning:input aura:id="fileInput" type="file" name="file" multiple="false" accept="image/*;capture=camera" files="{!v.files}"
+                            onchange="{! c.readFile }" label="Image (max. 5MB):" />
+                        <img src="{!v.pictureSrc}" />
+                    </lightning:layoutitem>
+                    <lightning:layoutitem size="6" class="response">
+                        <div class="slds-text-title_caps">Response</div>
+                        <lightning:tabset>
+                            <lightning:tab label="Formatted">
+                                <aura:iteration items="{!v.predictions}" var="prediction">
+                                    <lightning:layout class="result-grid">
+                                        <lightning:layoutitem>
+                                            <lightning:icon iconName="utility:preview" size="x-small" /></lightning:layoutitem>
+                                        <lightning:layoutitem>{! prediction.formattedProbability}</lightning:layoutitem>
+                                        <lightning:layoutitem flexibility="grow">{!prediction.label}</lightning:layoutitem>
+                                    </lightning:layout>
+                                </aura:iteration>
+                            </lightning:tab>
+                            <lightning:tab label="Raw">
+                                <pre>{!v.rawPredictions}</pre>
+                            </lightning:tab>
+                        </lightning:tabset>
+                    </lightning:layoutitem>
+                </lightning:layout>
+            </lightning:tab>
+        </lightning:tabset>
+    </div>
+
+
+</aura:component>
