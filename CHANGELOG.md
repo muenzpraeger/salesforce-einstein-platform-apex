@@ -1,5 +1,9 @@
 ## Changelog
 
+* René updates
+    - Got rid of modelmetrics and learning curve classes, replaced with String
+    - Added alternative support for einstein cert as File to make transition easier
+
 * Shane updates
     - move to certificate based authentication
     - label/model count in badges on playground

@@ -1,0 +1,20 @@
+<aura:component>
+	<aura:attribute name="matrix" type="object[]" access="public" required="true"/>
+	<lightning:overlayLibrary aura:id="overlayLib"/>
+
+	<lightning:layout horizontalAlign="space">
+		<aura:iteration items="{!v.matrix}" var="item">
+			<lightning:layoutItem flexibility="grow" class="{!'slds-text-align_center' + ' ' + item.class}">
+				<aura:if isTrue="{!item.value>0}">
+					<a href="" id="{!item.key}" onclick="{!c.showPopover}">
+						{!item.value}
+					</a>
+				</aura:if>
+				<aura:if isTrue="{!item.value==0}">
+					{!item.value}
+				</aura:if>
+
+			</lightning:layoutItem>
+		</aura:iteration>
+	</lightning:layout>
+</aura:component>

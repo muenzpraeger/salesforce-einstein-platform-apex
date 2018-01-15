@@ -41,22 +41,34 @@
 
   openMetrics : function(component, event, helper) {
     console.log("opening metrics for type " + component.get("v.dataset.type"));
-    $A.createComponent("c:einsteinModelMetrics", {
+    // $A.createComponent("c:einsteinModelMetrics", {
+    //     "modelId": event.getSource().get("v.name"),
+    //     "dataset" : component.get("v.dataset"),
+    //     "dataType" : component.get("v.dataset.type")
+    //   },
+    //   function (content, status) {
+    //     if (status === "SUCCESS") {
+    //       component.find('overlayLib').showCustomModal({
+    //         header: `Metrics for ${component.get("v.dataset.name")}/${event.getSource().get("v.name")}`,
+    //         body: content,
+    //         showCloseButton: true,
+    //         cssClass: "slds-modal_large"
+    //       })
+    //     }
+    //   });
+    $A.get("e.force:navigateToComponent")
+    .setParams({
+      componentDef: "c:einsteinModelMetrics",
+      componentAttributes: {
         "modelId": event.getSource().get("v.name"),
         "dataset" : component.get("v.dataset"),
-        "dataType" : component.get("v.dataset.type")
-      },
-      function (content, status) {
-        if (status === "SUCCESS") {
-          component.find('overlayLib').showCustomModal({
-            header: `Metrics for ${component.get("v.dataset.name")}/${event.getSource().get("v.name")}`,
-            body: content,
-            showCloseButton: true,
-            cssClass: "slds-modal_large"
-          })
-        }
-      });
+        "dataType" : component.get("v.dataset.type"),
+        "header": `Metrics for ${component.get("v.dataset.name")}/${event.getSource().get("v.name")}`
+      }
+    })
+    .fire();
   },
+
 
   onTrainModel: function(component, event, helper) {
     var action = component.get("c.trainDataset");
