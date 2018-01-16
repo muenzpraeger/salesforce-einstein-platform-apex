@@ -69,7 +69,8 @@
 									{!label.id}
 								</th>
 								<th scope="row" data-label="f1">
-									<lightning:formattedNumber maximumFractionDigits="4" value="{!label.f1}" />
+									<c:f1Displayer f1="{!label.f1}" />
+									<!-- <lightning:formattedNumber maximumFractionDigits="4" value="{!label.f1}" /> -->
 								</th>
 								<th scope="row" data-label="Confusion Matrix">
 									<c:confusionMatrix matrix="{!label.confusionFormatted}"/>
@@ -113,10 +114,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<aura:iteration items="{!v.LCdata}" var="epoch">
+							<aura:iteration items="{!v.LCdata}" var="epoch" indexVar="counter">
 								<tr>
 									<th scope="row" data-label="Epoch">
-										<a href="" onclick="{!c.getEpochDetails}" id="{!epoch.epoch}">{!epoch.epoch}</a>
+										<a href="" onclick="{!c.getEpochDetails}" id="{!counter}">{!epoch.epoch}</a>
 									</th>
 									<th scope="row" data-label="Examples">
 										{!epoch.metricsData.testAccuracy}
@@ -153,7 +154,8 @@
 															</td>
 															<td scope="col">
 																<div class="slds-truncate">
-																	<lightning:formattedNumber maximumFractionDigits="4" value="{!l.f1}" />
+																	<c:f1Displayer f1="{!l.f1}"/>
+																	<!-- <lightning:formattedNumber maximumFractionDigits="4" value="{!l.f1}" /> -->
 																</div>
 															</td>
 															<td scope="col">

@@ -134,7 +134,7 @@
       component.set("v.iconName", "utility:signpost");
     } else if (dataset.type === 'text-sentiment') {
       component.set("v.iconName", "utility:like");
-    } else if (dataset.type === 'object-detection') {
+    } else if (dataset.type === 'image-detection') {
       component.set("v.iconName", "utility:zoomin");
     } else {
       component.set("v.iconName", "utility:preview");
