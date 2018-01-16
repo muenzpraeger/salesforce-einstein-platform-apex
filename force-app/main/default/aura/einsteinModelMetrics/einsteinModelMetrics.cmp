@@ -13,6 +13,19 @@
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 	<c:LightningErrorHandler aura:id="leh" />
 
+	<div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_dark">
+		<div class="slds-media__figure">
+			<lightning:icon iconName="utility:info" size="small" variant="inverse"/>
+		</div>
+		<div class="slds-media__body">
+			<p>
+			Not all model types have all information. For example, confusion matrices are not available for image-detection. Correct/incorrect example inforamtion is avaialbe only for image/multi-image.
+			</p>
+			<p>
+				Additional information (raw metrics and learning curve responses) available in the browser console.
+			</p>
+		</div>
+	</div>
 
 
 	<aura:if isTrue="{!v.done}">
@@ -186,5 +199,7 @@
 			<lightning:spinner aura:id="spinner" />
 		</div>
 	</aura:if>
+
+
 
 </aura:component>
