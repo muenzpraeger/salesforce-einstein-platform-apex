@@ -1,0 +1,25 @@
+<aura:component>
+		<aura:attribute name="f1" type="object" access="public" required="true" />
+
+		<aura:attribute name="f1Type" type="string"/>
+
+		<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+		<aura:if isTrue="{!v.f1Type=='array'}">
+			<lightning:layout horizontalAlign="space">
+				<aura:iteration items="{!v.f1}" var="item">
+					<lightning:layoutItem flexibility="grow" class="slds-text-align_center">
+						{!item}
+					</lightning:layoutItem>
+				</aura:iteration>
+			</lightning:layout>
+		</aura:if>
+
+
+		<aura:if isTrue="{!v.f1Type=='number'}">
+			<lightning:formattedNumber maximumFractionDigits="4" value="{!v.f1}" />
+		</aura:if>
+
+
+
+</aura:component>

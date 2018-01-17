@@ -11,6 +11,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Language_Model_Builder</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Playground</tab>
         <visibility>Visible</visibility>
     </tabSettings>

@@ -1,4 +1,12 @@
 ## Changelog
+* Shane updates
+    - model metrics available as a separate component, nav'd to by clicking the metrics link
+    - browser back button takes you back to playground
+    - nested table for epoch label information, where available
+    - color-coded confusion matrix cells
+    - for image/multi-image clicking on a non-zero confusion matrix cell opens the list of examples for that cell
+    - epochs display for multi-image are split across labels, with child rows for positive/negative for each label
+    - additional info for object detection (precision, recall) logged to browser console where displaying on screen won't make sense.
 
 * René updates
     - Got rid of modelmetrics and learning curve classes, replaced with String

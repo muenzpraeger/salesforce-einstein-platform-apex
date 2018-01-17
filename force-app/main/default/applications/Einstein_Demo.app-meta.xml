@@ -8,6 +8,7 @@
     <navType>Standard</navType>
     <tab>Playground</tab>
     <tab>Einstein_Usage</tab>
+    <tab>Language_Model_Builder</tab>
     <uiType>Lightning</uiType>
     <utilityBar>Einstein_Demo_UtilityBar</utilityBar>
 </CustomApplication>
