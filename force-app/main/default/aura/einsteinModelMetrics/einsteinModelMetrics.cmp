@@ -19,10 +19,10 @@
 		</div>
 		<div class="slds-media__body">
 			<p>
-			Not all model types have all information. For example, confusion matrices are not available for image-detection. Correct/incorrect example inforamtion is avaialbe only for image/multi-image.
+			Not all model types have all information. For example, confusion matrices are not available for image-detection. Correct/incorrect example inforamtion is avaialabe only for image/multi-image.
 			</p>
 			<p>
-				Additional information (raw metrics and learning curve responses) available in the browser console.
+				Additional information (raw metrics and learning curve responses) is available in the browser console.
 			</p>
 		</div>
 	</div>
