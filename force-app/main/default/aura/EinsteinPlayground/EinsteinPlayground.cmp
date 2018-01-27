@@ -3,7 +3,6 @@
     <aura:attribute name="spinnerWaiting" type="Boolean" default="false" />
 
     <aura:attribute name="modelsByType" type="object" />
-    <aura:attribute name="setupComplete" type="Boolean" />
     <aura:attribute name="einsteinEmail" type="Boolean" />
     <aura:attribute name="einsteinCert" type="Boolean" />
     <aura:handler name="waitingEvent" event="c:EventEinsteinWaiting" action="{!c.changeSpinner}" />
@@ -12,22 +11,20 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInitPlayground}" />
 
     <div>
-        <lightning:tabset>
-            <lightning:tab>
+        <lightning:tabset >
+            <lightning:tab >
                 <aura:set attribute="label">
                     <lightning:icon iconName="utility:info" size="xx-small" /> Intro
                 </aura:set>
-                <c:EinsteinPlaygroundIntroduction setupComplete="{!v.setupComplete}" einsteinEmail="{!v.einsteinEmail}" einsteinFile="{!v.einsteinCert}"
-                />
+                <c:EinsteinPlaygroundIntroduction />
             </lightning:tab>
-            <aura:if isTrue="{!v.setupComplete}">
-                <lightning:tab>
+                <lightning:tab >
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:preview" size="xx-small" /> Image Classification
                     </aura:set>
                     <c:EinsteinGenericPlaygroundComponent dataType="image" iconName="utility:preview" allModelsByType="{! v.modelsByType }"/>
                 </lightning:tab>
-                <lightning:tab>
+                <lightning:tab >
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:richtextbulletedlist" size="xx-small" /> Image Classification (Multi)
                     </aura:set>
@@ -35,27 +32,26 @@
 
                 </lightning:tab>
 
-                <lightning:tab>
+                <lightning:tab >
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:zoomin" size="xx-small" /> Object Detection
                     </aura:set>
                     <c:EinsteinGenericPlaygroundComponent dataType="image-detection" iconName="utility:like" allModelsByType="{! v.modelsByType }" />
                 </lightning:tab>
-                <lightning:tab>
+                <lightning:tab >
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:like" size="xx-small" /> Sentiment
                     </aura:set>
                     <c:EinsteinGenericPlaygroundComponent dataType="text-sentiment" iconName="utility:like" allModelsByType="{! v.modelsByType }" />
 
                 </lightning:tab>
-                <lightning:tab>
+                <lightning:tab >
                     <aura:set attribute="label">
                         <lightning:icon iconName="utility:signpost" size="xx-small" /> Intent
                     </aura:set>
                     <c:EinsteinGenericPlaygroundComponent dataType="text-intent" iconName="utility:signpost" allModelsByType="{! v.modelsByType }" />
                 </lightning:tab>
 
-            </aura:if>
         </lightning:tabset>
 
         <aura:if isTrue="{! v.spinnerWaiting }">
