@@ -1,0 +1,9 @@
+.THIS .slds-card__body {
+    padding: 0 12px;
+}
+
+.THIS .slds-card {
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    background-clip: padding-box;
+}

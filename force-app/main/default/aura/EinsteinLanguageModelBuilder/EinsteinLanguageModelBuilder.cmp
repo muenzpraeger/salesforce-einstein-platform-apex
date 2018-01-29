@@ -1,0 +1,76 @@
+<aura:component controller="Einstein_PlaygroundController" implements="flexipage:availableForAllPageTypes">
+
+	<aura:attribute name="objects" type="object[]" />
+	<aura:attribute name="selectedObject" type="string" />
+
+	<aura:attribute name="sourceFields" type="object[]" />
+	<aura:attribute name="selectedSourceField" type="string" />
+
+	<aura:attribute name="classificationFields" type="object[]" />
+	<aura:attribute name="selectedclassificationField" type="string" />
+
+	<aura:attribute name="dataType" type="string" default="text-intent"/>
+	<aura:attribute name="CV" type="object" />
+	<aura:attribute name="CDist" type="object" />
+
+	<ltng:require scripts="{!$Resource.lodash}" afterScriptsLoaded="{!c.doInit}" />
+
+	<c:LightningErrorHandler aura:id="leh" />
+
+		<lightning:card title="Create Dataset from Salesforce Data">
+			<div class="slds-p-around_medium">
+
+				<div class="slds-m-bottom_medium">
+					<lightning:select label="Model Type" value="{!v.dataType}">
+						<option text="Intent" value="text-intent" />
+						<option text="Sentiment" value="text-sentiment" />
+					</lightning:select>
+				</div>
+
+				<div class="slds-m-bottom_medium">
+					<lightning:select label="Select an Object" value="{!v.selectedObject}" onchange="{!c.getFields}">
+						<option text="-- Select --" value="" />
+
+						<aura:iteration items="{!v.objects}" var="object">
+							<option value="{!object.name}" text="{!object.label}" />
+						</aura:iteration>
+					</lightning:select>
+				</div>
+
+				<aura:if isTrue="{!v.selectedObject}">
+					<div class="slds-m-bottom_medium">
+						<lightning:select label="What text field you want to classify?" value="{!v.selectedSourceField}">
+							<option text="-- Select --" value="" />
+							<aura:iteration items="{!v.sourceFields}" var="field">
+								<option value="{!field.name}" text="{!field.label}" />
+							</aura:iteration>
+						</lightning:select>
+					</div>
+
+					<div class="slds-m-bottom_medium">
+						<lightning:select label="Where are the existing classifications? (picklist/boolean)" value="{!v.selectedclassificationField}">
+							<option text="-- Select --" value="" />
+							<aura:iteration items="{!v.classificationFields}" var="field">
+								<option value="{!field.name}" text="{!field.label}" />
+							</aura:iteration>
+						</lightning:select>
+					</div>
+				</aura:if>
+
+				<aura:if isTrue="{!and(!v.CV, and(v.selectedSourceField, v.selectedclassificationField))}">
+					<div class="">
+						<lightning:buttonGroup>
+							<lightning:button variant="brand" label="Get File" onclick="{! c.createFile }" />
+							<!-- <lightning:button variant="brand" label="Build Dataset" onclick="{! c.makeModel }" /> -->
+						</lightning:buttonGroup>
+					</div>
+				</aura:if>
+
+				<aura:if isTrue="{!v.CV}">
+					<lightning:button variant="neutral" label="Download" onclick="{! c.viewFile }" />
+					<lightning:button variant="neutral" label="Preview" onclick="{! c.previewFile }" />
+					<lightning:button variant="neutral" label="Create Dataset" onclick="{! c.createDataset }" />
+				</aura:if>
+			</div>
+		</lightning:card>
+</aura:component>

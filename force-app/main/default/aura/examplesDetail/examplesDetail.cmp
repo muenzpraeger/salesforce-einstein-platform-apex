@@ -1,0 +1,9 @@
+<aura:component>
+
+	<aura:attribute name="detail" type="object[]" access="public" required="false"/>
+
+	<aura:iteration items="{!v.detail}" var="item" indexVar="counter">
+		<p>{!counter+1}. {!item}</p>
+	</aura:iteration>
+
+</aura:component>

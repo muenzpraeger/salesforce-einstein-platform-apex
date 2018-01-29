@@ -1,0 +1,50 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="Einstein_PlaygroundController">
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<c:LightningErrorHandler aura:id="leh"/>
+
+	<aura:attribute name="usage" type="object[]"/>
+
+	<lightning:card title="Prediction Usage">
+		<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
+			<thead>
+				<tr class="slds-text-title_caps">
+					<th scope="col">
+						<div class="slds-truncate" title="Start">Start</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="End">End</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Used">Used</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Remaining">Remaining</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<aura:iteration items="{!v.usage}" var="usage">
+					<tr>
+						<td> <ui:outputDateTime value="{!usage.startsAt}" format="M/d/yyyy ha"/> </td>
+						<td> <ui:outputDateTime value="{!usage.endsAt}" format="M/d/yyyy ha"/> </td>
+						<td> {!usage.predictionsUsed}/{!usage.predictionsMax} </td>
+						<td> {!usage.predictionsRemaining} </td>
+					</tr>
+				</aura:iteration>
+			</tbody>
+		</table>
+		<!-- <aura:set attribute="footer">
+			<ul class="slds-list_horizontal slds-has-dividers_right slds-has-block-links_space">
+	      <li class="slds-item">OrgId: {!v.usage[0].organizationId}</li>
+	      <li class="slds-item">License: {!v.usage[0].licenseId}</li>
+	      <li class="slds-item">Source: {!v.usage[0].planData[0].source}</li>
+	      <li class="slds-item">Plan: {!v.usage[0].planData[0].plan}</li>
+	      <li class="slds-item">Amount: {!v.usage[0].planData[0].amount}</li>
+    	</ul>
+    </aura:set> -->
+
+	</lightning:card>
+
+
+</aura:component>

@@ -1,0 +1,205 @@
+<aura:component controller="Einstein_PlaygroundController">
+
+	<aura:attribute name="modelId" type="string" access="public" required="true"/>
+	<aura:attribute name="header" type="string" access="public" required="true" />
+	<aura:attribute name="dataType" type="string" access="public" required="true" />
+	<aura:attribute name="dataset" type="object" access="public"  />
+
+	<aura:attribute name="data" type="object" />
+	<aura:attribute name="LCdata" type="object[]" />
+
+	<aura:attribute name="done" type="boolean" default="false" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<c:LightningErrorHandler aura:id="leh" />
+
+	<div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_dark">
+		<div class="slds-media__figure">
+			<lightning:icon iconName="utility:info" size="small" variant="inverse"/>
+		</div>
+		<div class="slds-media__body">
+			<p>
+			Not all model types have all information. For example, confusion matrices are not available for image-detection. Correct/incorrect example inforamtion is avaialabe only for image/multi-image.
+			</p>
+			<p>
+				Additional information (raw metrics and learning curve responses) is available in the browser console.
+			</p>
+		</div>
+	</div>
+
+
+	<aura:if isTrue="{!v.done}">
+			<lightning:card>
+				<aura:set attribute="title">
+					 Summary: {!v.header}
+				</aura:set>
+				<aura:set attribute="footer">
+					<ul class="slds-list_horizontal slds-has-dividers_left">
+						<aura:if isTrue="{!v.data.testAccuracy}">
+							<li class="slds-item">TestAccuracy : <ui:outputNumber value="{!v.data.testAccuracy*100}" format=".00" /></li>
+						</aura:if>
+
+						<aura:if isTrue="{!v.data.trainingAccuracy}">
+							<li class="slds-item">TrainingAccuracy : <ui:outputNumber value="{!v.data.trainingAccuracy*100}" format=".00" /></li>
+						</aura:if>
+
+						<aura:if isTrue="{!v.data.trainingLoss}">
+							<li class="slds-item">TrainingLoss : <ui:outputNumber value="{!v.data.trainingLoss*100}" format=".00" /></li>
+						</aura:if>
+					</ul>
+				</aura:set>
+
+				<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+					<thead>
+						<tr class="slds-text-title_caps">
+							<th scope="col">
+								<div class="slds-truncate" title="Label">Label ({!v.dataset.totalLabels})</div>
+							</th>
+							<th scope="col">
+								<div class="slds-truncate" title="Label">Examples ({!v.dataset.totalExamples})</div>
+							</th>
+							<th scope="col">
+								<div class="slds-truncate" title="Label">Id</div>
+							</th>
+							<th scope="col">
+								<div class="slds-truncate" title="Label">f1</div>
+							</th>
+							<th scope="col">
+								<div class="slds-truncate slds-text-align_center" title="Label">Confusion matrix</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<aura:iteration items="{!v.dataset.labelSummary.labels}" var="label">
+							<tr>
+								<th scope="row" data-label="Label">
+									{!label.name}
+								</th>
+								<th scope="row" data-label="Examples">
+									{!label.numExamples}
+								</th>
+								<th scope="row" data-label="Id">
+									{!label.id}
+								</th>
+								<th scope="row" data-label="f1">
+									<c:f1Displayer f1="{!label.f1}" />
+									<!-- <lightning:formattedNumber maximumFractionDigits="4" value="{!label.f1}" /> -->
+								</th>
+								<th scope="row" data-label="Confusion Matrix">
+									<c:confusionMatrix matrix="{!label.confusionFormatted}"/>
+								</th>
+							</tr>
+						</aura:iteration>
+					</tbody>
+				</table>
+
+			</lightning:card>
+			<aura:set attribute="else">
+				<aura:if isTrue="{!v.data.available}">
+					<div class="slds-box slds-theme_shade">
+						<p class="slds-text-heading_medium slds-text-color_error">No stats available for this model</p>
+					</div>
+				</aura:if>
+				<aura:if isTrue="{!v.data.statusMsg=='UPLOADING'}">
+					<div class="slds-box slds-theme_shade">
+						<p class="slds-text-heading_medium">Dataset isn't ready yet</p>
+					</div>
+				</aura:if>
+			</aura:set>
+
+			<aura:if isTrue="{!v.data}">
+				<lightning:card title="Model Epoch Details">
+					<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+						<thead>
+							<tr class="slds-text-title_caps">
+								<th scope="col">
+									<div class="slds-truncate" title="Label">Epoch</div>
+								</th>
+								<th scope="col">
+									<div class="slds-truncate" title="Label">Test Accuracy</div>
+								</th>
+								<th scope="col">
+									<div class="slds-truncate" title="Label">Training Accuracy</div>
+								</th>
+								<th scope="col">
+									<div class="slds-truncate" title="Label">Training Loss</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<aura:iteration items="{!v.LCdata}" var="epoch" indexVar="counter">
+								<tr>
+									<th scope="row" data-label="Epoch">
+										<a href="" onclick="{!c.getEpochDetails}" id="{!counter}">{!epoch.epoch}</a>
+									</th>
+									<th scope="row" data-label="Examples">
+										{!epoch.metricsData.testAccuracy}
+									</th>
+									<th scope="row" data-label="Id">
+										{!epoch.metricsData.trainingAccuracy}
+									</th>
+									<th scope="row" data-label="Id">
+										{!epoch.metricsData.trainingLoss}
+									</th>
+								</tr>
+								<aura:if isTrue="{!epoch.open}">
+									<tr>
+										<td colspan="4">
+											<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+												<thead>
+													<tr class="slds-text-title_caps">
+														<th scope="col">
+															<div class="slds-truncate" title="Label">Label</div>
+														</th>
+														<th scope="col">
+															<div class="slds-truncate" title="Label">F1</div>
+														</th>
+														<th scope="col">
+															<div class="slds-truncate slds-text-align_center" title="Label">Confusion</div>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													<aura:iteration items="{!epoch.labelData}" var="l">
+														<tr class="">
+															<td scope="col">
+																<div class="slds-truncate">{!l.label}</div>
+															</td>
+															<td scope="col">
+																<div class="slds-truncate">
+																	<c:f1Displayer f1="{!l.f1}"/>
+																	<!-- <lightning:formattedNumber maximumFractionDigits="4" value="{!l.f1}" /> -->
+																</div>
+															</td>
+															<td scope="col">
+																<c:confusionMatrix matrix="{!l.confusionFormatted}" />
+															</td>
+														</tr>
+													</aura:iteration>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</aura:if>
+							</aura:iteration>
+						</tbody>
+					</table>
+
+				</lightning:card>
+				<aura:set attribute="else">
+					<div class="slds-box slds-theme_shade">
+						<p class="slds-text-heading_medium slds-text-color_error">No learning curves were found for this model</p>
+					</div>
+				</aura:set>
+			</aura:if>
+	</aura:if>
+
+	<aura:if isTrue="{!!v.done}">
+		<div class="spinner" style="position:relative">
+			<lightning:spinner aura:id="spinner" />
+		</div>
+	</aura:if>
+
+
+
+</aura:component>

@@ -1,18 +1,29 @@
 <aura:component controller="Einstein_PlaygroundController">
 
     <aura:attribute name="dataset" type="Einstein_Dataset" />
+
     <aura:attribute name="models" type="Einstein_Model[]" />
     <aura:attribute name="currentTab" type="String" default="labels" />
+    <aura:attribute name="iconName" type="string" default="utility:preview"/>
+
 
     <aura:registerEvent name="waitingEvent" type="c:EventEinsteinWaiting" />
     <aura:registerEvent name="modelEvent" type="c:EventEinsteinModels" />
     <aura:registerEvent name="databaseEvent" type="c:EventEinsteinDataset" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+    <lightning:overlayLibrary aura:id="overlayLib" />
+    <c:LightningErrorHandler aura:id="leh"/>
 
     <div class="slds-card">
-        <lightning:card title="{!v.dataset.name}" iconName="utility:preview">
+        <lightning:card title="{!v.dataset.name}" iconName="{!v.iconName}">
 
             <aura:set attribute="actions">
                 <aura:if isTrue="{!v.currentTab=='labels'}">
+                    <aura:if isTrue="{!and ( v.models.length>0 , v.models[0].status=='SUCCEEDED')}">
+                        <lightning:button variant="brand" label="Retrain" onclick="{!c.onReTrainModel}" />
+                    </aura:if>
                     <lightning:button label="Train" onclick="{!c.onTrainModel}" />
                     <lightning:button label="Delete" onclick="{!c.onDeleteDataset}" />
                 </aura:if>
@@ -21,12 +32,25 @@
                 </aura:if>
             </aura:set>
 
-            Dataset Id: {!v.dataset.id}
+            <aura:set attribute="footer">
+                <ul class="slds-list_horizontal slds-has-dividers_left slds-text-body_small">
+                    <li class="slds-item">Dataset Id:{!v.dataset.id}</li>
+                    <li class="slds-item">Created:<lightning:formattedDateTime value="{!v.dataset.createdAt}"/></li>
+                    <li class="slds-item">Updated:<lightning:formattedDateTime value="{!v.dataset.updatedAt}" /></li>
+                    <li class="slds-item">Available:{!v.dataset.available}</li>
+                    <li class="slds-item">Status:{!v.dataset.statusMsg}</li>
+                    <li class="slds-item">Type:{!v.dataset.type}</li>
+                </ul>
+            </aura:set>
+
             <lightning:tabset>
-                <lightning:tab label="Labels" onactive="{!c.onLabelsTab}">
-                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                <lightning:tab onactive="{!c.onLabelsTab}">
+                    <aura:set attribute="label">
+                        Labels <lightning:badge class="slds-badge_inverse" label="{!v.dataset.labelSummary.labels.length}" />
+                    </aura:set>
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
                         <thead>
-                            <tr class="slds-text-title--caps">
+                            <tr class="slds-text-title_caps">
                                 <th scope="col">
                                     <div class="slds-truncate" title="Name">Label</div>
                                 </th>
@@ -49,10 +73,13 @@
                         </tbody>
                     </table>
                 </lightning:tab>
-                <lightning:tab label="Models" onactive="{!c.onModelsTab}">
-                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                <lightning:tab onactive="{!c.onModelsTab}">
+                    <aura:set attribute="label">
+                        Models <lightning:badge class="slds-badge_inverse" label="{!v.models.length}" />
+                    </aura:set>
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
                         <thead>
-                            <tr class="slds-text-title--caps">
+                            <tr class="slds-text-title_caps">
                                 <th scope="col">
                                     <div class="slds-truncate" title="Model Id">Model Id</div>
                                 </th>
@@ -61,6 +88,9 @@
                                 </th>
                                 <th scope="col">
                                     <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Stats"></div>
                                 </th>
                             </tr>
                         </thead>
@@ -74,7 +104,15 @@
                                         <div class="slds-truncate" title="{!model.progress}">{!model.progress * 100} %</div>
                                     </td>
                                     <td data-label="Status">
-                                        <div class="slds-truncate" title="{!model.status}">{!model.status}</div>
+                                        <div class="{!'slds-truncate' + if(model.status == 'FAILED', ' slds-text-color_error', '')}" title="{!model.status}">{!model.status}</div>
+                                    </td>
+                                    <td data-label="Metrics">
+                                        <aura:if isTrue="{!model.status=='SUCCEEDED'}">
+                                            <lightning:button variant="base" label="Metrics" onclick="{!c.openMetrics}" name="{!model.modelId}"/>
+                                        </aura:if>
+                                        <aura:if isTrue="{!model.status=='FAILED'}">
+                                            <lightning:helptext content="{!model.failureMsg}"/>
+                                         </aura:if>
                                     </td>
                                 </tr>
                             </aura:iteration>

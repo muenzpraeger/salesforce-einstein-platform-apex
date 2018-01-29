@@ -1,0 +1,7 @@
+<aura:event type="APPLICATION" description="Event template" access="global">
+	
+	<aura:attribute name="errors" type="object[]" required="true" description="the errors object from getError() on a callback event" access="global"/>
+
+	<aura:attribute name="errorComponentName" type="string" required="false" description="if specified, an error component only emits toasts when this matches the name attribute on the component.  Use this to prevent mass toast chaos when multiple errorHandlers exist on the same page" access="global"/>
+
+</aura:event>

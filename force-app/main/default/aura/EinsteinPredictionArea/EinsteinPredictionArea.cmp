@@ -1,0 +1,96 @@
+<aura:component controller="Einstein_PlaygroundController">
+
+	<aura:attribute name="allModelsByType" type="Object" />
+	<aura:attribute name="dataType" type="string" />
+	<aura:attribute name="iconName" type="string" />
+
+	<aura:attribute name="files" type="Object[]" />
+	<aura:attribute name="predictions" type="Object[]" />
+	<aura:attribute name="rawPredictions" type="String" />
+	<aura:attribute name="pictureSrc" type="String" />
+	<aura:attribute name="predictionMethod" type="String" />
+	<aura:attribute name="phrase" type="String" />
+	<aura:attribute name="imageURL" type="String" />
+	<aura:attribute name="markupPending" type="boolean" default="false" />
+
+	<aura:attribute name="modelId" type="String" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:handler name="change" value="{!v.modelId}" action="{!c.predict}" />
+
+	<aura:if isTrue="{!v.dataType=='image-detection'}">
+		<ltng:require scripts="{! $Resource.resize }" />
+		<ltng:require scripts="{! $Resource.lodash }" />
+	</aura:if>
+
+	<lightning:layout class="slds-m-around_small" pullToBoundary="small">
+		<lightning:layoutitem size="6" padding="around-small" class="border-right">
+			<div class="slds-text-heading_medium slds-m-bottom_small"><b>Request</b></div>
+
+			<div class="slds-m-bottom_small">
+				<c:EinsteinModelSelect dataType="{!v.dataType}" allModels="{!v.allModelsByType}" modelId="{!v.modelId}"/>
+			</div>
+
+			<aura:if isTrue="{!v.dataType == 'image' || v.dataType == 'image-multi-label' || v.dataType == 'image-detection'}">
+
+				<lightning:layout class="slds-m-bottom_small" verticalAlign="end" pullToBoundary="small">
+					<lightning:layoutItem flexibility="grow" padding="around-small">
+						<lightning:input aura:id="urlInput" type="url" name="url" label="Image URL" value="{!v.imageURL}" />
+					</lightning:layoutItem>
+					<lightning:layoutItem flexibility="shrink" padding="around-small">
+						<lightning:button label="Send" onclick="{!c.predictURL}" disabled="{!empty(v.imageURL)}" />
+					</lightning:layoutItem>
+				</lightning:layout>
+
+				<div class="slds-m-bottom_small">
+					<lightning:input aura:id="fileInput" type="file" name="file" multiple="false" accept="image/*;capture=camera" files="{!v.files}"
+					onchange="{! c.readFile }" label="Image (max. 5MB):" />
+				</div>
+
+
+				<img src="{!v.pictureSrc}" />
+
+			</aura:if>
+
+			<aura:if isTrue="{!v.dataType == 'text-sentiment' || v.dataType == 'text-intent'}">
+				<lightning:textarea label="Text:" value="{!v.phrase}"/>
+				<lightning:button label="Send" onclick="{!c.predict}" disabled="{!empty(v.phrase)}" />
+			</aura:if>
+
+		</lightning:layoutitem>
+		<lightning:layoutitem size="6" padding="around-small">
+			<div class="slds-text-heading_medium slds-m-bottom_small"><b>Response</b></div>
+			<lightning:tabset>
+				<lightning:tab label="Formatted">
+
+					<aura:if isTrue="{!v.dataType!='image-detection'}">
+						<aura:iteration items="{!v.predictions}" var="prediction">
+							<lightning:layout pullToBoundary="small">
+								<lightning:layoutitem size="1" padding="around-small">
+									<lightning:icon iconName="{!v.iconName}" size="x-small" /></lightning:layoutitem>
+								<lightning:layoutitem size="1" padding="around-small">{! prediction.formattedProbability}</lightning:layoutitem>
+								<lightning:layoutitem padding="around-small" flexibility="grow">{!prediction.label}</lightning:layoutitem>
+							</lightning:layout>
+						</aura:iteration>
+					</aura:if>
+
+					<!-- image detection always has to be special -->
+					<aura:if isTrue="{!v.dataType=='image-detection'}">
+						<div class="image-container">
+							<img aura:id="imgItself" src="{!v.pictureSrc}" class="{!v.markupPending ? 'transparent' : ''}" />
+							<div aura:id="imgContainer" class="{!v.markupPending ? 'after slds-hidden' : 'after slds-visible'}">
+							</div>
+						</div>
+					</aura:if>
+
+				</lightning:tab>
+				<lightning:tab label="Raw">
+					<pre>{!v.rawPredictions}</pre>
+				</lightning:tab>
+			</lightning:tabset>
+		</lightning:layoutitem>
+	</lightning:layout>
+
+
+
+</aura:component>

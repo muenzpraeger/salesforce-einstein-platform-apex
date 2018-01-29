@@ -1,0 +1,49 @@
+<aura:component controller="Einstein_PlaygroundController">
+
+	<aura:attribute name="dataType" type="String" required="true"/>
+
+	<aura:attribute name="userId" type="String" />
+	<aura:attribute name="fileUrl" type="String" />
+	<aura:attribute name="iconName" type="String" />
+
+	<aura:attribute name="filesAllowed" type="String"/>
+
+	<aura:registerEvent name="waitingEvent" type="c:EventEinsteinWaiting" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<c:LightningErrorHandler aura:id="leh"/>
+
+
+	<div class="slds-card">
+
+		<lightning:card title="Create Dataset from URL"  iconName="{!v.iconName}" variant="base">
+			<aura:set attribute="actions">
+				<lightning:button onclick="{!c.onCreateDataset}">Create</lightning:button>
+			</aura:set>
+			<aura:set attribute="footer">
+				<!--footer markup-->
+			</aura:set>
+			<div class="slds-p-horizontal_medium">
+				<lightning:layoutitem flexibility="grow">
+					<lightning:input type="URL" label="File url:" aura:id="fileUrl" value="{!v.fileUrl}" />
+				</lightning:layoutitem>
+			</div>
+		</lightning:card>
+	</div>
+
+	<div class="slds-card">
+		<lightning:card title="Create Dataset from File" iconName="{!v.iconName}" variant="base" >
+			<aura:set attribute="actions">
+				<lightning:button onclick="{!c.onCreateDataset}">Create</lightning:button>
+			</aura:set>
+			<aura:set attribute="footer">
+				<!--footer markup-->
+			</aura:set>
+			<div class="slds-p-horizontal_medium">
+					<lightning:fileUpload label="Upload examples" multiple="false" accept="{!v.filesAllowed}" recordId="{!v.userId}" onuploadfinished="{!c.handleUploadFinished}"/>
+			</div>
+		</lightning:card>
+	</div>
+
+
+</aura:component>

@@ -34,40 +34,21 @@ Clone the repo to your local file system.
 git clone https://github.com/muenzpraeger/salesforce-einstein-platform-apex
 ```
 
-Change into the git repo directory and create a new scratch org
-
+run the orgInit.sh script
 ```
-sfdx force:org:create -s -f config/project-scratch-def.json
-```
-
-Push the source to the newly created org.
-```
-sfdx force:source:push
+./orgInit
 ```
 
-Assign the Einstein Platform Playground permission set to your user
-
-```
-sfdx force:user:permset:assign -n Einstein_Platform_Playground
-````
-
-Open the scratch org
-
-```
-sfdx force:org:open
-```
-
-### Salesforce DX - existing scratch org
-
-If you want to add the wrapper to an existing org you can either copy the contents manually from this repo.
-
-Alternatively you can use [Wade's OSS plugin for Salesforce DX](https://www.npmjs.com/package/sfdx-waw-plugin).
-
-### Salesforce DX - deploy online into a scratch org
+### Salesforce DX - deploy to an org from your hub
 
 Again thanks to Wade for creating this neat feature.
 
 [![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/)
+
+### Salesforce DX - deploy into a free publicly hosted hub
+
+[![Deploy](https://raw.githubusercontent.com/mshanemc/deploy-to-sfdx/master/assets/sfdx_it_now.png)](https://hosted-scratch.herokuapp.com/launch?template=https://github.com/mshanemc/salesforce-einstein-platform-apex)
+
 
 ### Salesforce DX - deploy into developer edition or production org
 

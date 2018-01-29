@@ -1,52 +1,57 @@
 <aura:component implements="flexipage:availableForAllPageTypes" controller="Einstein_PlaygroundController" access="global">
 
     <aura:attribute name="spinnerWaiting" type="Boolean" default="false" />
-    <aura:attribute name="datasetModelsImageClassification" type="List"></aura:attribute>
-    <aura:attribute name="datasetModelsObjectDetection" type="List"></aura:attribute>
-    <aura:attribute name="datasetModelsIntent" type="List"></aura:attribute>
-    <aura:attribute name="datasetModelsSentiment" type="List"></aura:attribute>
-    <aura:attribute name="setupComplete" type="Boolean" />
+
+    <aura:attribute name="modelsByType" type="object" />
     <aura:attribute name="einsteinEmail" type="Boolean" />
-    <aura:attribute name="einsteinFile" type="Boolean" />
+    <aura:attribute name="einsteinCert" type="Boolean" />
     <aura:handler name="waitingEvent" event="c:EventEinsteinWaiting" action="{!c.changeSpinner}" />
     <aura:handler name="modelEvent" event="c:EventEinsteinModels" action="{!c.updateModelSelection}" />
+
     <aura:handler name="init" value="{!this}" action="{!c.doInitPlayground}" />
 
     <div>
-        <lightning:tabset>
-            <lightning:tab>
+        <lightning:tabset >
+            <lightning:tab >
                 <aura:set attribute="label">
-                    <lightning:icon iconName="utility:info" size="small" /> Introduction
+                    <lightning:icon iconName="utility:info" size="xx-small" /> Intro
                 </aura:set>
-                <c:EinsteinPlaygroundIntroduction setupComplete="{!v.setupComplete}" einsteinEmail="{!v.einsteinEmail}" einsteinFile="{!v.einsteinEmail}"
-                />
+                <c:EinsteinPlaygroundIntroduction />
             </lightning:tab>
-            <aura:if isTrue="{!v.setupComplete}">
-                <lightning:tab>
+                <lightning:tab >
                     <aura:set attribute="label">
-                        <lightning:icon iconName="utility:preview" size="small" /> Image Classification
+                        <lightning:icon iconName="utility:preview" size="xx-small" /> Image Classification
                     </aura:set>
-                    <c:EinsteinImageClassification selectionModels="{! v.datasetModelsImageClassification }" />
+                    <c:EinsteinGenericPlaygroundComponent dataType="image" iconName="utility:preview" allModelsByType="{! v.modelsByType }"/>
                 </lightning:tab>
-                <lightning:tab>
+                <lightning:tab >
                     <aura:set attribute="label">
-                        <lightning:icon iconName="utility:zoomin" size="small" /> Object Detection
+                        <lightning:icon iconName="utility:richtextbulletedlist" size="xx-small" /> Image Classification (Multi)
                     </aura:set>
-                    <c:EinsteinObjectDetection selectionModels="{! v.datasetModelsObjectDetection }" />
+                    <c:EinsteinGenericPlaygroundComponent dataType="image-multi-label" iconName="utility:richtextbulletedlist" allModelsByType="{! v.modelsByType }" />
+
                 </lightning:tab>
-                <lightning:tab>
+
+                <lightning:tab >
                     <aura:set attribute="label">
-                        <lightning:icon iconName="utility:like" size="small" /> Language Sentiment
+                        <lightning:icon iconName="utility:zoomin" size="xx-small" /> Object Detection
                     </aura:set>
-                    <c:EinsteinSentiment selectionModels="{! v.datasetModelsSentiment }" />
+                    <c:EinsteinGenericPlaygroundComponent dataType="image-detection" iconName="utility:like" allModelsByType="{! v.modelsByType }" />
                 </lightning:tab>
-                <lightning:tab>
+                <lightning:tab >
                     <aura:set attribute="label">
-                        <lightning:icon iconName="utility:signpost" size="small" /> Language Intent
+                        <lightning:icon iconName="utility:like" size="xx-small" /> Sentiment
                     </aura:set>
-                    <c:EinsteinIntent selectionModels="{! v.datasetModelsIntent }" />
+                    <c:EinsteinGenericPlaygroundComponent dataType="text-sentiment" iconName="utility:like" allModelsByType="{! v.modelsByType }" />
+
                 </lightning:tab>
-            </aura:if>
+                <lightning:tab >
+                    <aura:set attribute="label">
+                        <lightning:icon iconName="utility:signpost" size="xx-small" /> Intent
+                    </aura:set>
+                    <c:EinsteinGenericPlaygroundComponent dataType="text-intent" iconName="utility:signpost" allModelsByType="{! v.modelsByType }" />
+                </lightning:tab>
+
         </lightning:tabset>
 
         <aura:if isTrue="{! v.spinnerWaiting }">
