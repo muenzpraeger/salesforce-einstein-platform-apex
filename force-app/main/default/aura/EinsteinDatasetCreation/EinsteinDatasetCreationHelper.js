@@ -44,7 +44,7 @@
         } else if (component.get("v.dataType") === 'text-intent'){
             component.set("v.fileUrl", "http://einstein.ai/text/case_routing_intent.csv");
         } else if (component.get("v.dataType")=== 'image-detection'){
-            component.set("v.fileUrl", "https://s3.eu-central-1.amazonaws.com/salesforce-demos/object-detection-beta.zip");
+            component.set("v.fileUrl", "https://einstein.ai/images/alpine.zip");
         }
     },
 })
