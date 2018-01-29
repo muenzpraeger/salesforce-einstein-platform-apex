@@ -15,8 +15,11 @@
         } else if (dataType === 'image-multi-label') {
             models.push({ id: "MultiLabelImageClassifier", label: "Pre-Built - Multi-Label Image Classifier" });
         }
-        // add any custom models to the default
-        models = models.concat(component.get("v.allModels")[dataType]);
+
+        // add any custom models to the default if they exist
+        if (component.get("v.allModels")[dataType] && component.get("v.allModels")[dataType].length>0){
+            models = models.concat(component.get("v.allModels")[dataType]);
+        }
 
         // if there are any models, make the first one selected
         if (models.length>0){
