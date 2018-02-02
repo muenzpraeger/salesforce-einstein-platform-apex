@@ -8,6 +8,11 @@
         component.set("v.markupPending", true);
 
         var action = this.actionBuilder(component);
+        
+        if (action==null) {
+            return;
+        }
+        
         action.setParams(this.paramBuilder(component));
 
         action.setCallback(this, function (a) {
@@ -55,7 +60,7 @@
         var dataType = component.get("v.dataType");
 
         if (dataType === 'image' || dataType === 'image-multi-label') {
-            if (component.get("v.files").length > 0){
+            if (component.get("v.files")[0].length > 0){
                 action = component.get("c.predictImageClassification");
             } else if (component.get("v.imageURL")){
                 action = component.get("c.predictImageClassificationURL");
@@ -65,7 +70,7 @@
         } else if (dataType === 'text-sentiment'){
             action = component.get("c.predictSentiment");
         } else if (dataType === 'image-detection'){
-            if (component.get("v.files").length > 0) {
+            if (component.get("v.files")[0].length > 0) {
                 action = component.get("c.predictImageDetection");
             } else if (component.get("v.imageURL")) {
                 action = component.get("c.predictImageDetectionURL");
@@ -84,7 +89,7 @@
         if (dataType === 'text-intent' || dataType === 'text-sentiment'){
             params.phrase = component.get("v.phrase");
         } else if (dataType === 'image' || dataType === 'image-multi-label' || dataType === 'image-detection' ){
-            if (component.get("v.files").length > 0) {
+            if (component.get("v.files")[0].length > 0) {
                 params.base64 = component.get("v.pictureSrc").match(/,(.*)$/)[1];
             } else if (component.get("v.imageURL")) {
                 params.url = component.get("v.pictureSrc");
