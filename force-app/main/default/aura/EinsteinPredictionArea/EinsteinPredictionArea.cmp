@@ -22,8 +22,11 @@
 		<ltng:require scripts="{! $Resource.resize }" />
 		<ltng:require scripts="{! $Resource.lodash }" />
 	</aura:if>
+    
+    <lightning:overlayLibrary aura:id="overlayLib" />
+    <c:LightningErrorHandler aura:id="leh"/>
 
-	<lightning:layout class="slds-m-around_small" pullToBoundary="small">
+	<lightning:layout class="slds-m-around_small">
 		<lightning:layoutitem size="6" padding="around-small" class="border-right">
 			<div class="slds-text-heading_medium slds-m-bottom_small"><b>Request</b></div>
 
@@ -60,7 +63,7 @@
 		</lightning:layoutitem>
 		<lightning:layoutitem size="6" padding="around-small">
 			<div class="slds-text-heading_medium slds-m-bottom_small"><b>Response</b></div>
-			<lightning:tabset>
+			<lightning:tabset >
 				<lightning:tab label="Formatted">
 
 					<aura:if isTrue="{!v.dataType!='image-detection'}">
