@@ -68,7 +68,7 @@
 
 					<aura:if isTrue="{!v.dataType!='image-detection'}">
 						<aura:iteration items="{!v.predictions}" var="prediction">
-							<lightning:layout pullToBoundary="small">
+							<lightning:layout class="result-grid">
 								<lightning:layoutitem size="1" padding="around-small">
 									<lightning:icon iconName="{!v.iconName}" size="x-small" /></lightning:layoutitem>
 								<lightning:layoutitem size="1" padding="around-small">{! prediction.formattedProbability}</lightning:layoutitem>
