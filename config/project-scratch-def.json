@@ -1,7 +1,8 @@
 {
-    "orgName": "einstein-ai",
+    "orgName": "muenzpraeger land",
     "edition": "Developer",
     "orgPreferences" : {
-        "enabled": ["S1DesktopEnabled"]
+        "enabled": ["S1DesktopEnabled"],
+        "disabled": ["S1EncryptedStoragePref2"]
     }
 }
