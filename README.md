@@ -45,10 +45,6 @@ Again thanks to Wade for creating this neat feature.
 
 [![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/)
 
-### Salesforce DX - deploy into a free publicly hosted hub
-
-[![Deploy](https://raw.githubusercontent.com/mshanemc/deploy-to-sfdx/master/assets/sfdx_it_now.png)](https://hosted-scratch.herokuapp.com/launch?template=https://github.com/mshanemc/salesforce-einstein-platform-apex)
-
 
 ### Salesforce DX - deploy into developer edition or production org
 
