@@ -28,3 +28,9 @@
 .THIS .transparent {
 	opacity: 0.2;
 }
+
+.THIS .result-grid > div {
+    padding: 2px 3px 0 3px;
+    font-size: 12px;
+    border-bottom: 1px dashed rgb(216, 221, 230);
+}

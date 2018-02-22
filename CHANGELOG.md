@@ -1,4 +1,8 @@
 ## Changelog
+
+* René updates
+    - final UI fixes
+
 * Shane updates
     - model metrics available as a separate component, nav'd to by clicking the metrics link
     - browser back button takes you back to playground

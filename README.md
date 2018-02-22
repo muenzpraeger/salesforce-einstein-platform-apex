@@ -14,7 +14,7 @@ See the included Playground in action.
 
 ## Version history
 
-The current version is 2.5.0 (git tag). Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md).
+Check out the full [changelog](https://github.com/muenzpraeger/salesforce-einstein-platform-apex/blob/master/CHANGELOG.md).
 
 ## Prerequisites
 
@@ -44,10 +44,6 @@ run the orgInit.sh script
 Again thanks to Wade for creating this neat feature.
 
 [![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com/)
-
-### Salesforce DX - deploy into a free publicly hosted hub
-
-[![Deploy](https://raw.githubusercontent.com/mshanemc/deploy-to-sfdx/master/assets/sfdx_it_now.png)](https://hosted-scratch.herokuapp.com/launch?template=https://github.com/mshanemc/salesforce-einstein-platform-apex)
 
 
 ### Salesforce DX - deploy into developer edition or production org
