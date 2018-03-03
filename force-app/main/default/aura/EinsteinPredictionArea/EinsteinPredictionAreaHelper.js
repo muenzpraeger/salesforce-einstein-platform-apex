@@ -141,27 +141,26 @@
             );
             var points = [];
             points.push(
-                probability.boundingBox.minX * proportion + leftPos +
+                (probability.boundingBox.minX * proportion + leftPos) +
                 "," +
-                probability.boundingBox.minY * proportion + topPos
+                (probability.boundingBox.minY * proportion + topPos)
             );
             points.push(
-                probability.boundingBox.maxX * proportion + leftPos +
+                (probability.boundingBox.maxX * proportion + leftPos) +
                 "," +
-                probability.boundingBox.minY * proportion + topPos
+                (probability.boundingBox.minY * proportion + topPos)
             );
             points.push(
-                probability.boundingBox.maxX * proportion + leftPos +
+                (probability.boundingBox.maxX * proportion + leftPos) +
                 "," +
-                probability.boundingBox.maxY * proportion + topPos
+                (probability.boundingBox.maxY * proportion + topPos)
             );
             points.push(
-                probability.boundingBox.minX * proportion + leftPos +
+                (probability.boundingBox.minX * proportion + leftPos) +
                 "," +
-                probability.boundingBox.maxY * proportion + topPos
+                (probability.boundingBox.maxY * proportion + topPos)
             );
             polygon.setAttribute("points", points.join(" "));
-            console.log(polygon);
 
             svg.appendChild(polygon);
 

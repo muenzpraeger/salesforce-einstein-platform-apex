@@ -17,7 +17,6 @@ before_install:
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile server.key --username
   $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
-- sfdx force:config:set apiVersion='41.0' --global
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg -c -r human
