@@ -3,12 +3,9 @@
       {
         "path": "force-app",
         "default": true
-      },
-      {
-        "path": "LightningErrorHandler"
       }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "41.0"
+    "sourceApiVersion": "42.0"
   }

@@ -1,5 +1,7 @@
 ## Changelog
 
+* Better support for displaying bounding boxes in object detection
+
 * René updates
     - final UI fixes
 
