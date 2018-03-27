@@ -285,7 +285,7 @@ public class Einstein_PlaygroundController {
 		ContentVersion CV = new ContentVersion();
 		CV.VersionData = blob.valueof(makeCSV(obj, src, classify));
 		CV.PathOnClient = obj +'-' + classify + '.csv';
-		CV.Title = obj +'_' + classify + 'by' + src;
+		CV.Title = obj +'_' + classify + '_by_' + src;
 
 		insert CV;
         //requery to get contentdocumentID that was created

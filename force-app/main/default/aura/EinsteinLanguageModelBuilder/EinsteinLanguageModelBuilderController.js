@@ -2,7 +2,7 @@
 ({
     doInit: function (component, event, helper) {
         var action = component.get("c.getObjectOptions");
-        action.setCallback(this, function(a){
+        action.setCallback(this, function (a) {
             var state = a.getState();
             if (state === "SUCCESS") {
                 console.log(JSON.parse(a.getReturnValue()));
@@ -21,7 +21,7 @@
             "objectName": component.get("v.selectedObject"),
             "sourceOrLabel": "Source"
         });
-        source.setCallback(this, function(a){
+        source.setCallback(this, function (a) {
             var state = a.getState();
             if (state === "SUCCESS") {
                 console.log(a);
@@ -38,7 +38,7 @@
             "objectName": component.get("v.selectedObject"),
             "sourceOrLabel": "Label"
         });
-        target.setCallback(this, function(a){
+        target.setCallback(this, function (a) {
             var state = a.getState();
             if (state === "SUCCESS") {
                 console.log(a);
@@ -51,7 +51,7 @@
         $A.enqueueAction(target);
     },
 
-    createFile : function(component, event, helper) {
+    createFile: function (component, event, helper) {
 
         var action = component.get("c.saveFileToFiles");
         action.setParams({
@@ -59,7 +59,7 @@
             src: component.get("v.selectedSourceField"),
             classify: component.get("v.selectedclassificationField")
         });
-        action.setCallback(this, function(a){
+        action.setCallback(this, function (a) {
             var state = a.getState();
             if (state === "SUCCESS") {
                 console.log(a.getReturnValue());
@@ -73,7 +73,7 @@
 
     },
 
-    viewFile : function(component, event, helper) {
+    viewFile: function (component, event, helper) {
         var navEvt = $A.get("e.force:navigateToSObject");
         navEvt.setParams({
             "recordId": component.get("v.CV").Id
@@ -81,13 +81,13 @@
         navEvt.fire();
     },
 
-    previewFile : function(component, event, helper) {
+    previewFile: function (component, event, helper) {
         $A.get('e.lightning:openFiles').fire({
             recordIds: [component.get("v.CV.ContentDocumentId")]
         });
     },
 
-    createDataset : function(component, event, helper) {
+    createDataset: function (component, event, helper) {
         var self = this;
 
         //first, create the distribution
@@ -106,11 +106,11 @@
                     dataType: component.get("v.dataType")
                 });
                 send.setCallback(self, function (b) {
-                    if (b.getState() === "SUCCESS"){
+                    if (b.getState() === "SUCCESS") {
                         console.log(b.getReturnValue());
-                        $A.get("e.ltng:sendMessage")
-                            .setParams({ "message": "message", "newDataset": "EinsteinDatasetCreation" })
-                            .fire();
+                        // $A.get("e.ltng:sendMessage")
+                        //     .setParams({ "message": "message", "newDataset": "EinsteinDatasetCreation" })
+                        //     .fire();
                         $A.get("e.force:showToast").setParams({ "type": "success", "message": "Dataset Created!" }).fire();
                     } else if (b.getState() === "ERROR") {
                         console.log(b.getError());
@@ -119,7 +119,7 @@
                 })
 
                 $A.enqueueAction(send);
-            } else if(a.getState() === "ERROR") {
+            } else if (a.getState() === "ERROR") {
                 console.log(a.getError());
                 component.find("leh").passErrors(a.getError());
             }
