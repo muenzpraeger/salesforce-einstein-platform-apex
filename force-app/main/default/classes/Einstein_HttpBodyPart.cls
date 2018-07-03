@@ -174,7 +174,7 @@ public virtual class Einstein_HttpBodyPart {
         if (fileType.equalsIgnoreCase('png')) {
             mimeType = 'image/png';
         } else if (fileType.equalsIgnoreCase('jpeg') || fileType.equalsIgnoreCase('jpg')) {
-            mimeType = 'image/jpg';
+            mimeType = 'image/jpeg';
         } else if (fileType.equalsIgnoreCase('pgm')) {
             mimeType = 'image/x-portable-graymap';
         } else if (fileType.equalsIgnoreCase('ppm')) {

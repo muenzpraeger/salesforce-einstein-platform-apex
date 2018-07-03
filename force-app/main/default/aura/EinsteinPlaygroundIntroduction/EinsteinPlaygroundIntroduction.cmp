@@ -10,11 +10,11 @@
                 <div class="error">
                     <ul>
                             <li>- Set the value for
-                                <strong>Einstein EMail</strong> in
-                                <i>Setup => Custom Settings => Einstein Settings (via the "Manage" button)</i> for your org
+                                <strong>Einstein EMail</strong> in 
+                                <i>Setup => Custom Settings => Einstein Settings (via the "Manage" button)</i> for your org 
                                 to the email address that you've used to sign up for Einstein Platform.</li>
-                            <li>- Store the certificate as certificate in the Certificate Management section of your org (DEPRECATED, OLD WAY => Store the Einstein Platform file as File in the org. The name must be
-                                <i>einstein_platform</i>).</li>
+                            <li>- Store the Einstein Platform file as File in the org. The name must be 
+                                <i>einstein_platform</i>. An option is for example to create and store a custom encrypted blob, and then decrypt via code.</li>
                     </ul>
                 </div>
 

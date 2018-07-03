@@ -76,12 +76,14 @@ sfdx force:mdapi:deploy -d mdapi -u yourOrgAlias
 After you've added the wrapper files two steps are required:
 
 * Set the value for _Einstein EMail_ in Custom Settings => Einstein Settings (via the _Manage_ button) for that org to the email address that you've used to sign up for Einstein Platform.
-* Store the Einstein Platform file as File in the org. The name must be _einstein_platform_.
+* Store the Einstein Platform file as File in the org. The name must be _einstein_platform_. If you want to use this in production make sure that the certificate isn't shared publicly. An option is for example to create and store a custom encrypted blob, and then decrypt via code.
 
 If you went through [my Trailhead project](https://trailhead.salesforce.com/projects/build-a-cat-rescue-app-that-recognizes-cat-breeds) you likely went through that excercise already.
 
 The installation adds a new Lightning App to your Salesforce org for the included Playground.
 ![playground](resources/einstein_platform.png)
+
+*If you want to use this in production make sure that the certificate isn't shared publicly. Options are for example to create and store a custom encrypted blob, and then decrypt via code.*
 
 ## Usage examples
 ### Creating a PredictionService
